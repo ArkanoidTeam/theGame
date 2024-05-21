@@ -12,7 +12,6 @@ const AppRoutes: FC = () => {
           <Route path={View.Arkanoid.uri} element={<div>Arkanoid</div>} />
         </Route>
       </Route>
-
       <Route path={Page.LOGIN} element={<div>login</div>} />
       <Route path={Page.UNAVAILABLE} element={<div>500</div>} />
       <Route path={Page.NOT_FOUND} element={<div>404</div>} />

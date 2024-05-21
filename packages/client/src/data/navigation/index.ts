@@ -1,6 +1,5 @@
 import { ViewGroupItems, ViewItems } from '../../utils/types'
 
-// NAVIGATION MENU
 export const ViewGroup: ViewGroupItems = Object.freeze({
   Games: {
     key: '10',
