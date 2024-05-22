@@ -7,6 +7,7 @@ const SIGNUP_PAGE_URI = 'signup'
 const LEADERBOARD_PAGE_URI = 'leaderboard'
 const PROFILE_PAGE_URI = 'profile'
 const NOT_FOUND_URI = '*'
+const ARKANOID_PAGE_URI = 'arkanoid'
 export const Page = {
   MAIN: MAIN_PAGE_URI,
   LOGIN: LOGIN_PAGE_URI,
@@ -16,4 +17,5 @@ export const Page = {
   SIGNUP: SIGNUP_PAGE_URI,
   LEADERBOARD: LEADERBOARD_PAGE_URI,
   PROFILE: PROFILE_PAGE_URI,
+  ARKANOID: ARKANOID_PAGE_URI,
 }
