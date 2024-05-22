@@ -12,9 +12,12 @@ const AppRoutes: FC = () => {
           <Route path={View.Arkanoid.uri} element={<div>Arkanoid</div>} />
         </Route>
       </Route>
-      <Route path={Page.LOGIN} element={<div>login</div>} />
+      <Route path={Page.SIGNIN} element={<div>login</div>} />
+      <Route path={Page.SIGNUP} element={<div>signup</div>} />
+      <Route path={Page.PROFILE} element={<div>profile</div>} />
       <Route path={Page.UNAVAILABLE} element={<div>500</div>} />
       <Route path={Page.NOT_FOUND} element={<div>404</div>} />
+      <Route path={Page.LEADERBOARD} element={<div>leaderboard</div>} />
     </Routes>
   )
 }

@@ -1,11 +1,19 @@
-export const DEFAULT_VIEW_URI = 'welcome'
-export const MAIN_PAGE_URI = '/'
-export const LOGIN_PAGE_URI = 'login'
-export const UNAVAILABLE_PAGE_URI = 'unavailable'
-export const NOT_FOUND_URI = '*'
+const DEFAULT_VIEW_URI = 'welcome'
+const MAIN_PAGE_URI = '/'
+const LOGIN_PAGE_URI = 'login'
+const UNAVAILABLE_PAGE_URI = 'unavailable'
+const SIGNIN_PAGE_URI = 'signin'
+const SIGNUP_PAGE_URI = 'signup'
+const LEADERBOARD_PAGE_URI = 'leaderboard'
+const PROFILE_PAGE_URI = 'profile'
+const NOT_FOUND_URI = '*'
 export const Page = {
   MAIN: MAIN_PAGE_URI,
   LOGIN: LOGIN_PAGE_URI,
   UNAVAILABLE: UNAVAILABLE_PAGE_URI,
   NOT_FOUND: NOT_FOUND_URI,
+  SIGNIN: SIGNIN_PAGE_URI,
+  SIGNUP: SIGNUP_PAGE_URI,
+  LEADERBOARD: LEADERBOARD_PAGE_URI,
+  PROFILE: PROFILE_PAGE_URI,
 }
