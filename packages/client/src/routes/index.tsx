@@ -1,20 +1,26 @@
 import { FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Page } from '../utils/constants/navigation'
-import { Main } from '../pages/main'
+import { Header } from '../components'
+import * as Pages from '../pages'
 
 const AppRoutes: FC = () => {
   return (
-    <Routes>
-      <Route path={Page.MAIN} element={<Main />} />
-      <Route path={Page.ARKANOID} element={<div>Arkanoid</div>} />
-      <Route path={Page.SIGNIN} element={<div>login</div>} />
-      <Route path={Page.SIGNUP} element={<div>signup</div>} />
-      <Route path={Page.PROFILE} element={<div>profile</div>} />
-      <Route path={Page.UNAVAILABLE} element={<div>500</div>} />
-      <Route path={Page.NOT_FOUND} element={<div>404</div>} />
-      <Route path={Page.LEADERBOARD} element={<div>leaderboard</div>} />
-    </Routes>
+    <>
+      <Header />
+      <main className="main">
+        <Routes>
+          <Route path={Page.MAIN} element={<Pages.Main />} />
+          <Route path={Page.ARKANOID} element={<Pages.Arkanoid />} />
+          <Route path={Page.SIGNIN} element={<Pages.Signin />} />
+          <Route path={Page.SIGNUP} element={<Pages.Signup />} />
+          <Route path={Page.PROFILE} element={<Pages.Profile />} />
+          <Route path={Page.UNAVAILABLE} element={<Pages.Unavailable />} />
+          <Route path={Page.NOT_FOUND} element={<Pages.NotFound />} />
+          <Route path={Page.LEADERBOARD} element={<Pages.Leaderboard />} />
+        </Routes>
+      </main>
+    </>
   )
 }
 
