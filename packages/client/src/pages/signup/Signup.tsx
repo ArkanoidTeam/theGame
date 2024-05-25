@@ -10,9 +10,7 @@ const Signup: FC = () => {
   return (
     <>
       <h1>Регистрация</h1>
-      <Button variant="outlined" size="small" onClick={handleClick}>
-        На главную
-      </Button>
+      <Button onClick={handleClick}>На главную</Button>
     </>
   )
 }

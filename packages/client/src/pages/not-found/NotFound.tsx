@@ -10,9 +10,7 @@ const NotFound: FC = () => {
   return (
     <>
       <h1>404 Not Found</h1>
-      <Button variant="outlined" size="small" onClick={handleClick}>
-        На главную
-      </Button>
+      <Button onClick={handleClick}>На главную</Button>
     </>
   )
 }

@@ -10,9 +10,7 @@ const Leaderboard: FC = () => {
   return (
     <>
       <h1>Доска лидеров</h1>
-      <Button variant="outlined" size="small" onClick={handleClick}>
-        На главную
-      </Button>
+      <Button onClick={handleClick}>На главную</Button>
     </>
   )
 }

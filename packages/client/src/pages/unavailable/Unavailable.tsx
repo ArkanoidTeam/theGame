@@ -10,9 +10,7 @@ const Unavailable: FC = () => {
   return (
     <>
       <h1>Error 500, уже чиним!</h1>
-      <Button variant="outlined" size="small" onClick={handleClick}>
-        На главную
-      </Button>
+      <Button onClick={handleClick}>На главную</Button>
     </>
   )
 }
