@@ -1,43 +1,33 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Button, Grid, TextField } from '@mui/material'
 import {
-  Button,
-  Typography,
-  Container,
-  Grid,
-  TextField,
-  Link,
-} from '@mui/material'
-import './styles.scss'
+  ButtonsContainer,
+  StyledContainer,
+  StyledForm,
+  StyledWrapper,
+} from './styled'
+import { Typography } from '../../components/Typography'
 const Signin: FC = () => {
-  const navigate = useNavigate()
-  const handleClick = () => {
-    navigate('/') // путь к странице, на которую вы хотите перейти
-  }
-
   return (
-    <Container component="main" maxWidth="xs">
-      <div className="paper">
-        <Typography component="h1" variant="h5">
-          Вход
-        </Typography>
-        <form className="form" noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+    <StyledContainer component="main" maxWidth="xs">
+      <StyledWrapper>
+        <Typography component="h1" variant="h2" context="Arkanoid" />
+        <Typography component="h3" variant="h3" context="Вход" />
+        <StyledForm>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={8}>
               <TextField
-                variant="outlined"
-                required
+                variant="standard"
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
+                id="login"
+                label="Логин"
+                name="login"
+                autoComplete="login"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
               <TextField
-                variant="outlined"
-                required
+                variant="standard"
                 fullWidth
                 name="password"
                 label="Пароль"
@@ -47,24 +37,24 @@ const Signin: FC = () => {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className="submit">
-            Войти
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                Еще не зарегистрированы? Регистрация
-              </Link>
+          <ButtonsContainer>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className="submit">
+              Войти
+            </Button>
+            <Grid container>
+              <Button fullWidth variant="text" href="/signup">
+                Зарегистрироваться
+              </Button>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </ButtonsContainer>
+        </StyledForm>
+      </StyledWrapper>
+    </StyledContainer>
   )
 }
 
