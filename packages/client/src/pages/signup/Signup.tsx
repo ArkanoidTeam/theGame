@@ -1,19 +1,80 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Button } from '@mui/material'
-
+import { Button, Grid, TextField } from '@mui/material'
+import {
+  ButtonsContainer,
+  StyledContainer,
+  StyledForm,
+  StyledWrapper,
+} from './styled'
+import { Typography } from '../../components/Typography'
 const Signup: FC = () => {
-  const navigate = useNavigate()
-  const handleClick = () => {
-    navigate('/') // путь к странице, на которую вы хотите перейти
-  }
   return (
-    <>
-      <h1>Регистрация</h1>
-      <Button variant="outlined" size="small" onClick={handleClick}>
-        На главную
-      </Button>
-    </>
+    <StyledContainer component="main" maxWidth="xs">
+      <StyledWrapper>
+        <Typography component="h1" variant="h2" context="Arkanoid" />
+        <Typography component="h3" variant="h3" context="Регистрация" />
+        <StyledForm>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={8}>
+              <TextField
+                variant="standard"
+                fullWidth
+                id="email"
+                label="Почта"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                variant="standard"
+                fullWidth
+                id="login"
+                label="Логин"
+                name="login"
+                autoComplete="login"
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                variant="standard"
+                fullWidth
+                name="password"
+                label="Пароль"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                variant="standard"
+                fullWidth
+                name="password-repeat"
+                label="Пароль еще раз"
+                type="password"
+                id="password-repeat"
+              />
+            </Grid>
+          </Grid>
+          <ButtonsContainer>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className="submit">
+              Зарегистрироваться
+            </Button>
+            <Grid container>
+              <Button fullWidth variant="text" href="/signin">
+                Войти
+              </Button>
+            </Grid>
+          </ButtonsContainer>
+        </StyledForm>
+      </StyledWrapper>
+    </StyledContainer>
   )
 }
 
