@@ -1,26 +1,38 @@
-import './Header.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '../../utils/constants/navigation'
+import { Button, ButtonGroup, styled } from '@mui/material'
+
+const StyledHeader = styled('header')(() => ({
+  width: '100%'
+}));
+
+const StyledNav = styled('nav')(() => ({
+  width: '100%'
+}));
+
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none'
+}));
 
 const Header: React.FC = () => {
   const pages = Object.entries(Page)
   return (
-    <header className="header">
-      <nav className="header__nav">
-        <ul className="header__nav-list">
+    <StyledHeader>
+      <StyledNav>
+        <ButtonGroup variant='text'>
           {pages.map(([path, name]) => {
             return (
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to={name}>
+              <Button>
+                <StyledLink to={name}>
                   {path.toLowerCase()}
-                </Link>
-              </li>
+                </StyledLink>
+              </Button>
             )
           })}
-        </ul>
-      </nav>
-    </header>
+        </ButtonGroup>
+      </StyledNav>
+    </StyledHeader>
   )
 }
 
