@@ -1,14 +1,12 @@
 import { FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Page } from '../utils/constants/navigation'
-import { Header } from '../components'
 import * as Pages from '../pages'
 import ErrorBoundary from '../hoc/error-boundary'
 
 const AppRoutes: FC = () => {
   return (
     <>
-      <Header />
       <main className="main">
         <ErrorBoundary>
           <Routes>
