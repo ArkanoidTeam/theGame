@@ -5,13 +5,16 @@ import {
   ThemeProvider as MUIThemeProvider,
 } from '@mui/material/styles'
 import { getDesignTokens } from './palette'
-import { components } from './components'
+import { components, fontFamily } from './components'
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
   // TODO: Сделать переключение темы
   const mode = 'light'
 
   const theme = createTheme({
+    typography: {
+      fontFamily,
+    },
     palette: getDesignTokens(mode),
     components,
     shape: { borderRadius: 5 },
