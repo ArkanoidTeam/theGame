@@ -5,9 +5,14 @@ export const getDesignTokens = (mode: PaletteMode): PaletteOptions => ({
   mode,
   ...(mode === 'light'
     ? {
-      primary: {
-        main: '#3968DA',
-      },
-    }
+        primary: {
+          main: '#3968DA',
+        },
+        layout: {
+          fontColor: '#273443',
+          pageBackgroundColor: '#F3F8FE',
+          headerAndFooterBackgroundColor: '#E9F3FF',
+        },
+      }
     : {}),
 })

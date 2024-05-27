@@ -10,12 +10,16 @@ import { components, fontFamily } from './components'
 const ThemeProvider = ({ children }: PropsWithChildren) => {
   // TODO: Сделать переключение темы
   const mode = 'light'
+  const palette = getDesignTokens(mode)
 
   const theme = createTheme({
     typography: {
       fontFamily,
+      allVariants: {
+        color: palette.layout.fontColor,
+      },
     },
-    palette: getDesignTokens(mode),
+    palette,
     components,
     shape: { borderRadius: 5 },
   })
