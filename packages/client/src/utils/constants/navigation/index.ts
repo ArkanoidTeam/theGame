@@ -1,6 +1,4 @@
-const DEFAULT_VIEW_URI = 'welcome'
 const MAIN_PAGE_URI = '/'
-const LOGIN_PAGE_URI = 'login'
 const UNAVAILABLE_PAGE_URI = 'unavailable'
 const SIGNIN_PAGE_URI = 'signin'
 const SIGNUP_PAGE_URI = 'signup'
