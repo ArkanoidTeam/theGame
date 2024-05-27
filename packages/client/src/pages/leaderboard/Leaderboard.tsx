@@ -18,7 +18,7 @@ const Leaderboard = () => {
     <Page>
       <Header alignItems="flex-start">
         <Button variant="text" onClick={() => navigate('/')}>
-          Выйти
+          ← Вернуться
         </Button>
       </Header>
       <PageContent title="Arkanoid" subtitle="Рейтинг">
