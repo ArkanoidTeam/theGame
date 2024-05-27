@@ -18,8 +18,6 @@ const Unavailable: FC = () => {
       />
       <StyledBackground />
 
-      <p>Кажется, что то с сервером...</p>
-
       <Button variant="outlined" size="small" onClick={handleClick}>
         На главную
       </Button>
