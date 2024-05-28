@@ -1,7 +1,7 @@
-import { Stack, useTheme } from '@mui/material'
+import { Stack, StackProps, useTheme } from '@mui/material'
 import { PropsWithChildren } from 'react'
 
-const Page = ({ children }: PropsWithChildren) => {
+const Page = ({ children, ...stackProps }: PropsWithChildren & StackProps) => {
   const theme = useTheme()
 
   return (
@@ -12,7 +12,8 @@ const Page = ({ children }: PropsWithChildren) => {
       sx={{
         backgroundColor: theme.palette.layout.pageBackgroundColor,
       }}
-      minHeight="100vh">
+      minHeight="100vh"
+      {...stackProps}>
       {children}
     </Stack>
   )
