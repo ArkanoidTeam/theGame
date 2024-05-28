@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { StyledCustomStarIcon } from './styled'
 import players, { Player } from './players'
-import { Header, Page, PageContent } from '../../components'
+import { Footer, Header, Page, PageContent } from '../../components'
 import { useNavigate } from 'react-router-dom'
 import { ArrowBack } from '@mui/icons-material'
 
@@ -55,6 +55,7 @@ const Leaderboard = () => {
           ))}
         </List>
       </PageContent>
+      <Footer />
     </Page>
   )
 }
