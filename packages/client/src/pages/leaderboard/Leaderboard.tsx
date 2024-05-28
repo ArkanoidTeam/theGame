@@ -10,6 +10,7 @@ import { StyledCustomStarIcon } from './styled'
 import players, { Player } from './players'
 import { Header, Page, PageContent } from '../../components'
 import { useNavigate } from 'react-router-dom'
+import { ArrowBack } from '@mui/icons-material'
 
 const Leaderboard = () => {
   const navigate = useNavigate()
@@ -17,8 +18,12 @@ const Leaderboard = () => {
   return (
     <Page>
       <Header alignItems="flex-start">
-        <Button variant="text" onClick={() => navigate('/')}>
-          ← Вернуться
+        <Button
+          variant="text"
+          onClick={() => navigate('/')}
+          startIcon={<ArrowBack />}
+        >
+          Вернуться
         </Button>
       </Header>
       <PageContent title="Arkanoid" subtitle="Рейтинг">

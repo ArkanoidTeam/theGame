@@ -7,6 +7,22 @@ import {
 import { getDesignTokens } from './palette'
 import { components, fontFamily } from './components'
 
+declare module '@mui/material/styles/createPalette' {
+  type TLayout = {
+    fontColor: string
+    pageBackgroundColor: string
+    headerAndFooterBackgroundColor: string
+  }
+
+  interface Palette {
+    layout: TLayout
+  }
+
+  interface PaletteOptions {
+    layout: TLayout
+  }
+}
+
 const ThemeProvider = ({ children }: PropsWithChildren) => {
   // TODO: Сделать переключение темы
   const mode = 'light'
@@ -18,6 +34,12 @@ const ThemeProvider = ({ children }: PropsWithChildren) => {
       allVariants: {
         color: palette.layout.fontColor,
       },
+      h2: {
+        fontWeight: 400
+      },
+      h4: {
+        fontWeight: 300
+      }
     },
     palette,
     components,
