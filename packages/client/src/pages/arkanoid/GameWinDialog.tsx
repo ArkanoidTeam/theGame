@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react'
-import { Dialog } from '../../components'
+import { Button, DialogActions } from '@mui/material'
+import { Modal } from '../../components'
 
 const GameOverDialog: FC = () => {
-  const [isOpen, setOpen] = useState(true)
+  const [isOpen, setOpen] = useState(false)
 
   const handleStart = () => {
     setOpen(false)
@@ -13,12 +14,21 @@ const GameOverDialog: FC = () => {
   }
 
   return (
-    <Dialog
-      isOpen={isOpen}
+    <Modal
+      open={isOpen}
       onClose={handleCancel}
-      onConfirm={handleStart}
       title="Поздравляем!"
       content="Уровень пройден"
+      footerButtons={
+        <DialogActions>
+          <Button variant="contained" onClick={handleStart} autoFocus>
+            Следующий уровень
+          </Button>
+          <Button variant="contained" onClick={handleCancel}>
+            Выйти
+          </Button>
+        </DialogActions>
+      }
     />
   )
 }
