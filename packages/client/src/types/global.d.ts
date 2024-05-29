@@ -1,5 +1,6 @@
 type User = {
   [key: string]: string | number | null
+  id: number
   login: string
   password: string
   email: string

@@ -36,7 +36,7 @@ export const VisuallyHiddenInput = styled('input')({
   width: 1,
 })
 
-export const StyledModalBody = styled('div')({
+export const StyledModalBody = styled('form')({
   width: '100%',
   display: 'flex',
   alignItems: 'center',
