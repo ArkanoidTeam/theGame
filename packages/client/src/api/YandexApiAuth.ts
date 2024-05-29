@@ -2,12 +2,10 @@ import Http from '../utils/Http'
 const BASE_API_URI = 'https://ya-praktikum.tech/api/v2'
 const AUTH_PATH = '/auth'
 
-enum ENDPOINTS {
-  SIGNUP = '/signup',
-  SIGIN = '/signin',
-  USER = '/user',
-  LOGOUT = '/logout',
-}
+const SIGNUP = '/signup'
+const SIGNIN = '/signin'
+const USER = '/user'
+const LOGOUT = '/logout'
 
 export default class YandexApiAuth extends Http {
   options: RequestInit | undefined
@@ -16,24 +14,24 @@ export default class YandexApiAuth extends Http {
     this.options = { headers: { 'Content-Type': 'application/json' } }
   }
   signin = (body: BodyInit) => {
-    return this.post(ENDPOINTS.SIGIN, {
+    return this.post(SIGNIN, {
       ...this.options,
       credentials: 'include',
       body,
     })
   }
   signup = (body: BodyInit) => {
-    return this.post(ENDPOINTS.SIGNUP, {
+    return this.post(SIGNUP, {
       ...this.options,
       credentials: 'include',
       body,
     })
   }
   user = () => {
-    return this.get(ENDPOINTS.USER, { ...this.options, credentials: 'include' })
+    return this.get(USER, { ...this.options, credentials: 'include' })
   }
   logout = () => {
-    return this.post(ENDPOINTS.LOGOUT, {
+    return this.post(LOGOUT, {
       ...this.options,
       credentials: 'include',
     })

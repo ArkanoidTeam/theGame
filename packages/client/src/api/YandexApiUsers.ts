@@ -2,12 +2,10 @@ import Http from '../utils/Http'
 const BASE_API_URI = 'https://ya-praktikum.tech/api/v2'
 const AUTH_PATH = '/user'
 
-enum ENDPOINTS {
-  PROFILE = '/profile',
-  AVATAR = '/profile/avatar',
-  PASSWORD = '/password',
-  SEARCH = '/search',
-}
+const PROFILE = '/profile'
+const AVATAR = '/profile/avatar'
+const PASSWORD = '/password'
+const SEARCH = '/search'
 
 export default class YandexApiUsers extends Http {
   options: RequestInit | undefined
@@ -16,24 +14,24 @@ export default class YandexApiUsers extends Http {
     this.options = { headers: { 'Content-Type': 'application/json' } }
   }
   profile = (body: BodyInit) => {
-    return this.put(ENDPOINTS.PROFILE, {
+    return this.put(PROFILE, {
       ...this.options,
       credentials: 'include',
       body,
     })
   }
   avatar = (body: BodyInit) => {
-    return this.put(ENDPOINTS.AVATAR, { credentials: 'include', body })
+    return this.put(AVATAR, { credentials: 'include', body })
   }
   password = (body: BodyInit) => {
-    return this.put(ENDPOINTS.PASSWORD, {
+    return this.put(PASSWORD, {
       ...this.options,
       credentials: 'include',
       body,
     })
   }
   search = (body: BodyInit) => {
-    return this.post(ENDPOINTS.SEARCH, {
+    return this.post(SEARCH, {
       ...this.options,
       credentials: 'include',
       body,
