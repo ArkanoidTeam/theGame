@@ -24,6 +24,7 @@ export const PageContainer = styled.div`
   min-height: 100vh;
   max-height: 100vh;
   height: 100%;
+  overflow: hidden;
 `
 
 export const MainContent = styled.div`
