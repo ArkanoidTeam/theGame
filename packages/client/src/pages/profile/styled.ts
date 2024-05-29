@@ -23,6 +23,9 @@ export const StyledForm = styled.form`
 
 export const ButtonsContainer = styled.div`
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   margin: 40px auto;
 `
 
