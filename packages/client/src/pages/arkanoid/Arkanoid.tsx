@@ -1,5 +1,6 @@
-import React, { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { Button, DialogActions } from '@mui/material'
+import { Game } from '../../utils/arkanoid-logic/game'
 import {
   Header,
   Footer,
@@ -58,7 +59,18 @@ const Arkanoid: FC = () => {
     setOpen(false)
     navigate('/')
   }
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  useEffect(() => {
+    const canvas = canvasRef.current as HTMLCanvasElement
+    if (!canvas) {
+      console.error('Canvas element not found')
+      return
+    }
+    const context = canvas.getContext('2d') as CanvasRenderingContext2D
+    const newGame = new Game(canvas, context)
+    newGame.init()
+  }, [])
   return (
     <PageContainer>
       <Header>
@@ -68,6 +80,7 @@ const Arkanoid: FC = () => {
       </Header>
       <MainContent>
         <StyledContainer component="main" maxWidth="md">
+          <canvas width="400" height="500" id="game" ref={canvasRef} />
           <StyledWrapper />
         </StyledContainer>
       </MainContent>
