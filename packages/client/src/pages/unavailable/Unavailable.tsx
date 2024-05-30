@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
+import { Typography } from '../../components/Typography'
+import { StyledBackground, StyledContainer } from './styled'
 
 const Unavailable: FC = () => {
   const navigate = useNavigate()
@@ -8,10 +10,18 @@ const Unavailable: FC = () => {
     navigate('/') // путь к странице, на которую вы хотите перейти
   }
   return (
-    <>
-      <h1>Error 500, уже чиним!</h1>
-      <Button onClick={handleClick}>На главную</Button>
-    </>
+    <StyledContainer style={{ flexDirection: 'column' }}>
+      <Typography
+        component="h1"
+        variant="h3"
+        context="Ошибка сервера, уже чиним!"
+      />
+      <StyledBackground />
+
+      <Button variant="outlined" size="small" onClick={handleClick}>
+        На главную
+      </Button>
+    </StyledContainer>
   )
 }
 
