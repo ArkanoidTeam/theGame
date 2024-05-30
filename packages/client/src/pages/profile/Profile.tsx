@@ -1,10 +1,10 @@
 import { FC, useState } from 'react'
 import { Button } from '@mui/material'
-import { ButtonsContainer, StyledContainer, StyledWrapper } from './styled'
-import { Typography } from '../../components/Typography'
+import { ButtonsContainer } from './styled'
 import { ProfileAvatar } from './components'
 import { ChangeDataForm } from './components'
 import { ChangePasswordForm } from './components'
+import { Footer, Header, Page, PageContent } from '../../components'
 
 interface IProfileProps {
   propUserData: User
@@ -20,10 +20,9 @@ const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
   }
 
   return (
-    <StyledContainer component="main" maxWidth="xs">
-      <StyledWrapper>
-        <Typography component="h1" variant="h2" context="Arkanoid" />
-        <Typography component="h3" variant="h3" context="Аккаунт" />
+    <Page>
+      <Header />
+      <PageContent title="Arkanoid" subtitle="Аккаунт">
         <ProfileAvatar
           propUserData={propUserData}
           onDataChanged={onDataChanged}
@@ -70,8 +69,9 @@ const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
             </Button>
           </ButtonsContainer>
         )}
-      </StyledWrapper>
-    </StyledContainer>
+      </PageContent>
+      <Footer />
+    </Page>
   )
 }
 
