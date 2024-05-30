@@ -13,9 +13,7 @@ import {
 } from './styled'
 import { useNavigate } from 'react-router-dom'
 import { Typography } from '../../components/Typography'
-import GameOverDialog from './GameOverDialog'
-import GameWinDialog from './GameWinDialog'
-import { Modal } from '../../components'
+import { Modal, GameDialog } from '../../components'
 
 interface LevelProps {
   levelNumber: number
@@ -45,6 +43,7 @@ const Arkanoid: FC = () => {
   const navigate = useNavigate()
   const [isOpen, setOpen] = useState(true)
   const [isStart, setStart] = useState(false)
+  const [isGameEnd, setGameEnd] = useState(true)
 
   const initialLevel = 1 // Заглушка для номера уровня
   const initialScore = 100500 // Заглушка для значения очков
@@ -119,8 +118,7 @@ const Arkanoid: FC = () => {
           </DialogActions>
         }
       />
-      <GameOverDialog />
-      <GameWinDialog />
+      <GameDialog isOpen={isGameEnd} onClose={() => setGameEnd(false)} />
     </PageContainer>
   )
 }
