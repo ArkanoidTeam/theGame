@@ -48,7 +48,7 @@ const Footer = ({
   const navigate = useNavigate()
 
   return (
-    <StyledFooter isFill>
+    <StyledFooter isFill={isFill}>
       {hasLinks ? (
         <ButtonGroup variant="text" fullWidth>
           {pages.map(({ key, path, label }) => {

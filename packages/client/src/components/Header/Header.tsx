@@ -7,6 +7,7 @@ type THeaderProps = {
 
 const StyledHeader = styled('header')(({ isFill }: THeaderProps) => {
   const theme = useTheme()
+  console.log(isFill)
 
   return {
     width: '100%',
@@ -23,7 +24,7 @@ const Header = ({
   ...stackProps
 }: PropsWithChildren & THeaderProps & StackProps) => {
   return (
-    <StyledHeader isFill>
+    <StyledHeader isFill={isFill}>
       <Stack flexDirection="row" {...stackProps}>
         {children}
       </Stack>
