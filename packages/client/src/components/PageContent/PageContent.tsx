@@ -19,7 +19,7 @@ const PageContent = ({
         borderRadius: '5px',
         border: '1px solid #ddd',
         maxWidth: '650px',
-        padding: '80px 50px',
+        padding: '70px 60px',
       }}
       alignSelf="center"
       alignItems="center"

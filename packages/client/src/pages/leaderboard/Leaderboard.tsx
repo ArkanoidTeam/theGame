@@ -21,8 +21,7 @@ const Leaderboard = () => {
         <Button
           variant="text"
           onClick={() => navigate('/')}
-          startIcon={<ArrowBack />}
-        >
+          startIcon={<ArrowBack />}>
           Вернуться
         </Button>
       </Header>
@@ -55,7 +54,7 @@ const Leaderboard = () => {
           ))}
         </List>
       </PageContent>
-      <Footer />
+      <Footer hasLinks />
     </Page>
   )
 }

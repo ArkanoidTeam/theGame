@@ -17,7 +17,7 @@ const Main = () => {
           Начать игру
         </Button>
       </PageContent>
-      <Footer />
+      <Footer hasLinks />
     </Page>
   )
 }
