@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import { Button } from '@mui/material'
+import { Button, DialogActions } from '@mui/material'
 import { Game } from '../../utils/arkanoid-logic/game'
 import {
   Header,
@@ -12,8 +12,8 @@ import {
   VerticalDivider,
 } from './styled'
 import { useNavigate } from 'react-router-dom'
-import { Dialog } from '../../components'
 import { Typography } from '../../components/Typography'
+import { Modal, GameDialog } from '../../components'
 
 interface LevelProps {
   levelNumber: number
@@ -43,6 +43,8 @@ const Arkanoid: FC = () => {
   const navigate = useNavigate()
   const [isOpen, setOpen] = useState(true)
   const [isStart, setStart] = useState(false)
+  const [isGameEnd, setGameEnd] = useState(true)
+
   const initialLevel = 1 // Заглушка для номера уровня
   const initialScore = 100500 // Заглушка для значения очков
   const userName = 'user_name' // Заглушка для пользователя
@@ -102,13 +104,21 @@ const Arkanoid: FC = () => {
           </Button>
         </FooterButtonsContainer>
       </Footer>
-      <Dialog
-        isOpen={isOpen}
+      <Modal
+        open={isOpen}
         onClose={handleCancel}
-        onConfirm={handleStart}
         title="Правила игры"
         content="Краткое описание правил игры..."
+        footerButtons={
+          <DialogActions>
+            <Button variant="contained" onClick={handleStart} autoFocus>
+              К игре
+            </Button>
+            <Button onClick={handleCancel}>Отмена</Button>
+          </DialogActions>
+        }
       />
+      <GameDialog isOpen={isGameEnd} onClose={() => setGameEnd(false)} />
     </PageContainer>
   )
 }
