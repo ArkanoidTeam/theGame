@@ -1,8 +1,11 @@
 import React, { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, DialogActions } from '@mui/material'
 import { Modal } from '../../components'
 
 const GameOverDialog: FC = () => {
+  const navigate = useNavigate()
+
   const [isOpen, setOpen] = useState(false)
 
   const handleStart = () => {
@@ -11,6 +14,7 @@ const GameOverDialog: FC = () => {
 
   const handleCancel = () => {
     setOpen(false)
+    navigate('/')
   }
 
   return (
