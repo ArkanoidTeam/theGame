@@ -28,7 +28,7 @@ interface ScoreProps {
 }
 
 const Score: FC<ScoreProps> = ({ scoreValue }) => {
-  return <Typography context={`Уровень: ${scoreValue.toString()}`} />
+  return <Typography context={`Счет: ${scoreValue.toString()}`} />
 }
 
 interface UserNameProps {
@@ -43,10 +43,10 @@ const Arkanoid: FC = () => {
   const navigate = useNavigate()
   const [isOpen, setOpen] = useState(true)
   const [isStart, setStart] = useState(false)
-  const [isGameEnd, setGameEnd] = useState(true)
+  const [isGameEnd, setGameEnd] = useState(false)
 
   const initialLevel = 1 // Заглушка для номера уровня
-  const initialScore = 100500 // Заглушка для значения очков
+  const initialScore = 0 // Заглушка для значения очков
   const userName = 'user_name' // Заглушка для пользователя
 
   const handleStart = () => {
@@ -59,7 +59,7 @@ const Arkanoid: FC = () => {
     navigate('/')
   }
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
+  let game
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
     if (!canvas) {
@@ -67,8 +67,8 @@ const Arkanoid: FC = () => {
       return
     }
     const context = canvas.getContext('2d') as CanvasRenderingContext2D
-    const newGame = new Game(canvas, context)
-    newGame.init()
+    game = new Game(canvas, context, initialLevel)
+    game.init()
   }, [])
   return (
     <PageContainer>
