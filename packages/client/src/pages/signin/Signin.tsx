@@ -1,5 +1,4 @@
 import { FC, FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Button, Grid, TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -11,23 +10,31 @@ import {
 import { Typography } from '../../components/Typography'
 import { YandexApiAuth } from '../../api/YandexApiAuth'
 import { login as loginLayer } from '../../store/auth'
+import { useAppDispatch } from '../../hooks/use-app-dispatch'
 
 const Signin: FC = () => {
-  const [login, setLogin] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatch = useDispatch()
+  const [state, setState] = useState({ login: '', password: '' })
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const logut = () => {
     return YandexApiAuth.logout()
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setState(prevState => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
     const userData: SignInData = {
-      login,
-      password,
+      login: state.login,
+      password: state.password,
     }
 
     try {
@@ -37,7 +44,7 @@ const Signin: FC = () => {
         loginLayer({
           isAuth: true,
           user: {
-            name: login,
+            name: state.login,
           },
           accessToken: null,
         })
@@ -64,8 +71,8 @@ const Signin: FC = () => {
                 label="Логин"
                 name="login"
                 autoComplete="login"
-                value={login}
-                onChange={e => setLogin(e.target.value)}
+                value={state.login}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -77,8 +84,8 @@ const Signin: FC = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                value={state.password}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>

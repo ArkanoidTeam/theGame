@@ -1,6 +1,6 @@
 export const BASE_API_URI = 'https://ya-praktikum.tech/api/v2'
 
-export enum END_POINTS {
+export enum ENDPOINTS {
   SIGN_IN = '/auth/signin',
   SIGN_UP = '/auth/signup',
   LOGOUT = '/auth/logout',

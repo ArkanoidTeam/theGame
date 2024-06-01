@@ -1,20 +1,20 @@
-import { END_POINTS } from '../utils/constants/api'
+import { ENDPOINTS } from '../utils/constants/api'
 import { axiosInstance } from './AxiosInstance'
 
 export const YandexApiAuth = {
   signin(data: SignInData) {
-    return axiosInstance.post(END_POINTS.SIGN_IN, data)
+    return axiosInstance.post(ENDPOINTS.SIGN_IN, data)
   },
 
   signup(data: SignupData) {
-    return axiosInstance.post(END_POINTS.SIGN_UP, data)
+    return axiosInstance.post(ENDPOINTS.SIGN_UP, data)
   },
 
   logout() {
-    return axiosInstance.post(END_POINTS.LOGOUT)
+    return axiosInstance.post(ENDPOINTS.LOGOUT)
   },
 
   user() {
-    return axiosInstance.get(END_POINTS.USER)
+    return axiosInstance.get(ENDPOINTS.USER)
   },
 }

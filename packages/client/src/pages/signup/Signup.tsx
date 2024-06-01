@@ -1,6 +1,5 @@
 import { FC, FormEvent, useState } from 'react'
 import { Button, Grid, TextField } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import { YandexApiAuth } from '../../api/YandexApiAuth'
 import {
   ButtonsContainer,
@@ -11,27 +10,39 @@ import {
 import { Typography } from '../../components/Typography'
 import { login as loginLayer } from '../../store/auth'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../hooks/use-app-dispatch'
 
 const Signup: FC = () => {
-  const [first_name, setFirstName] = useState('')
-  const [second_name, setSecondName] = useState('')
-  const [email, setEmail] = useState('')
-  const [login, setLogin] = useState('')
-  const [password, setPassword] = useState('')
-  const [password_repeat, setPasswordRepeat] = useState('')
-  const [phone, setPhone] = useState('')
-  const dispatch = useDispatch()
+  const [state, setState] = useState({
+    first_name: '',
+    second_name: '',
+    email: '',
+    login: '',
+    password: '',
+    password_repeat: '',
+    phone: '',
+  })
+
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setState(prevState => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const userData: SignupData = {
-      first_name,
-      second_name,
-      email,
-      login,
-      password,
-      phone,
+      first_name: state.first_name,
+      second_name: state.second_name,
+      email: state.email,
+      login: state.login,
+      password: state.password,
+      phone: state.phone,
     }
 
     try {
@@ -41,8 +52,8 @@ const Signup: FC = () => {
         loginLayer({
           isAuth: true,
           user: {
-            name: login,
-            email,
+            name: state.login,
+            email: state.email,
           },
           accessToken: null,
         })
@@ -69,8 +80,8 @@ const Signup: FC = () => {
                 label="Имя"
                 name="first_name"
                 autoComplete="first_name"
-                value={first_name}
-                onChange={e => setFirstName(e.target.value)}
+                value={state.first_name}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -81,8 +92,8 @@ const Signup: FC = () => {
                 label="Фамилия"
                 name="second_name"
                 autoComplete="second_name"
-                value={second_name}
-                onChange={e => setSecondName(e.target.value)}
+                value={state.ssecond_name}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -93,8 +104,8 @@ const Signup: FC = () => {
                 label="Логин"
                 name="login"
                 autoComplete="login"
-                value={login}
-                onChange={e => setLogin(e.target.value)}
+                value={state.login}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -105,8 +116,8 @@ const Signup: FC = () => {
                 label="Почта"
                 name="email"
                 autoComplete="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                value={state.email}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -119,20 +130,21 @@ const Signup: FC = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                value={state.password}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
               <TextField
                 variant="standard"
                 fullWidth
-                name="password-repeat"
+                name="password_repeat" // updated to match state key
                 label="Пароль еще раз"
                 type="password"
-                id="password-repeat"
-                value={password_repeat}
-                onChange={e => setPasswordRepeat(e.target.value)}
+                id="password_repeat"
+                value={state.password_repeat}
+                autoComplete="password-repeat"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -143,8 +155,8 @@ const Signup: FC = () => {
                 label="Телефон"
                 type="tel"
                 id="phone"
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
+                value={state.phone}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
