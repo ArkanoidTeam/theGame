@@ -92,7 +92,7 @@ const Signup: FC = () => {
                 label="Фамилия"
                 name="second_name"
                 autoComplete="second_name"
-                value={state.ssecond_name}
+                value={state.second_name}
                 onChange={handleChange}
               />
             </Grid>
