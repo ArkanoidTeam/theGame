@@ -138,7 +138,7 @@ const Signup: FC = () => {
               <TextField
                 variant="standard"
                 fullWidth
-                name="password_repeat" // updated to match state key
+                name="password_repeat"
                 label="Пароль еще раз"
                 type="password"
                 id="password_repeat"
