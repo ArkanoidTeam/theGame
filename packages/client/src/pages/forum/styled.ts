@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { Button, Container, ListItem, Divider } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ChatBubbleOutlinedIcon from '@mui/icons-material/ChatBubbleOutlined'
 
 export const BackButton = styled(Button)({
   textTransform: 'none',
@@ -13,45 +12,6 @@ export const StyledArrowBackIcon = styled(ArrowBackIcon)({
 
 export const StyledListItem = styled(ListItem)({
   width: '100%',
-})
-
-export const ThemeCard = styled('section')({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
-  alignItems: 'flex-start',
-})
-
-export const ThemeText = styled('p')({
-  color: '#939393',
-  margin: 0,
-  maxWidth: '100%',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  paddingBottom: '0.5rem',
-})
-
-export const ThemeMetaWrapper = styled('div')({
-  display: 'flex',
-  width: '100%',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: '0.3rem',
-  fontSize: '12px',
-})
-
-export const StyledChatBubbleOutlinedIcon = styled(ChatBubbleOutlinedIcon)({
-  color: '#bdbdbd',
-  fontSize: '16px',
-})
-
-export const ThemeMeta = styled('span')({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.3rem',
-  fontSize: '12px',
-  color: 'grey',
 })
 
 type StyledDividerProps = {
