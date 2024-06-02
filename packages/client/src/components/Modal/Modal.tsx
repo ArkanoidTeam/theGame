@@ -22,42 +22,40 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 interface IModalProps {
   open: boolean
   title: string
-  content: React.ReactNode
   footerButtons: React.ReactNode
+  children: React.ReactNode
   onClose: () => void
 }
 
 const Modal: React.FC<IModalProps> = ({
   open,
   title,
-  content,
   footerButtons,
+  children,
   onClose,
 }) => {
   return (
-    <React.Fragment>
-      <BootstrapDialog
-        onClose={onClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}>
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          {title}
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme => theme.palette.grey[500],
-          }}>
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>{content}</DialogContent>
-        <DialogActions>{footerButtons}</DialogActions>
-      </BootstrapDialog>
-    </React.Fragment>
+    <BootstrapDialog
+      onClose={onClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}>
+      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+        {title}
+      </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: theme => theme.palette.grey[500],
+        }}>
+        <CloseIcon />
+      </IconButton>
+      <DialogContent dividers>{React.Children.toArray(children)}</DialogContent>
+      <DialogActions>{footerButtons}</DialogActions>
+    </BootstrapDialog>
   )
 }
 

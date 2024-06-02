@@ -3,6 +3,7 @@ import { Button, Grid, TextField } from '@mui/material'
 import { ButtonsContainer, StyledForm } from './styled'
 import saveUserData from '../../api/saveUserData'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { fields } from '.'
 
 interface IProfileProps {
   propUserData: User
@@ -17,18 +18,6 @@ const ChangeDataForm: FC<IProfileProps> = ({
   editMode,
   exitEditMode,
 }) => {
-  const fields = {
-    login: { label: 'Логин', placeholder: 'Логин', type: 'text' },
-    email: { label: 'Почта', placeholder: 'Почта', type: 'email' },
-    first_name: { label: 'Имя', placeholder: 'Имя', type: 'text' },
-    second_name: { label: 'Фамилия', placeholder: 'Фамилия', type: 'text' },
-    display_name: {
-      label: 'Имя в чате',
-      placeholder: 'Имя в чате',
-      type: 'text',
-    },
-    phone: { label: 'Телефон', placeholder: '+7 (000) 000-00-00', type: 'tel' },
-  }
   const [userData, setUserData] = useState({ ...propUserData })
   const [loading, setLoading] = useState(false)
 
@@ -91,6 +80,7 @@ const ChangeDataForm: FC<IProfileProps> = ({
                   type={fieldProps.type}
                   disabled={disabled}
                   value={fieldValue}
+                  autoComplete={fieldProps.autocomplete}
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
                     onChange(event, fieldName)
                   }

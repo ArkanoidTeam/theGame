@@ -3,6 +3,7 @@ import { Button, Grid, TextField } from '@mui/material'
 import { ButtonsContainer, StyledForm } from './styled'
 import savePasswordRequest from '../../api/savePasswordRequest'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { fields } from '.'
 
 interface IProfileProps {
   exitEditMode: () => void
@@ -10,26 +11,6 @@ interface IProfileProps {
 }
 
 const ChangePasswordForm: FC<IProfileProps> = ({ editMode, exitEditMode }) => {
-  const fields = {
-    oldPassword: {
-      label: 'Старый пароль',
-      placeholder: 'Старый пароль',
-      type: 'password',
-      value: '',
-    },
-    newPassword: {
-      label: 'Новый пароль',
-      placeholder: 'Новый пароль',
-      type: 'password',
-    },
-    newPasswordAgain: {
-      label: 'Новый пароль еще раз',
-      placeholder: 'Новый пароль еще раз',
-      type: 'password',
-      value: '',
-    },
-  }
-
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordAgain, setNewPasswordAgain] = useState('')
@@ -114,6 +95,7 @@ const ChangePasswordForm: FC<IProfileProps> = ({ editMode, exitEditMode }) => {
                   type={fieldProps.type}
                   disabled={disabled}
                   value={fieldValue}
+                  autoComplete={fieldProps.autocomplete}
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
                     onChange(event, fieldName)
                   }
