@@ -1,16 +1,10 @@
 import { FC, FormEvent, useState } from 'react'
-import { Button, Grid, TextField } from '@mui/material'
 import { YandexApiAuth } from '../../api/YandexApiAuth'
-import {
-  ButtonsContainer,
-  StyledContainer,
-  StyledForm,
-  StyledWrapper,
-} from './styled'
-import { Typography } from '../../components/Typography'
 import { login as loginLayer } from '../../store/auth'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/use-app-dispatch'
+import { Button, Grid, Stack, TextField } from '@mui/material'
+import { Page, PageContent } from '../../components'
 
 const Signup: FC = () => {
   const [state, setState] = useState({
@@ -66,12 +60,10 @@ const Signup: FC = () => {
   }
 
   return (
-    <StyledContainer component="main" maxWidth="xs">
-      <StyledWrapper>
-        <Typography component="h1" variant="h2" context="Arkanoid" />
-        <Typography component="h3" variant="h3" context="Регистрация" />
-        <StyledForm onSubmit={handleSubmit}>
-          <Grid container spacing={3} justifyContent="center">
+    <Page justifyContent="space-around" alignItems="center">
+      <form onSubmit={handleSubmit}>
+        <PageContent title="Arkanoid" subtitle="Регистрация">
+          <Grid container spacing={1} justifyContent="center">
             <Grid item xs={8}>
               <TextField
                 variant="standard"
@@ -120,7 +112,6 @@ const Signup: FC = () => {
                 onChange={handleChange}
               />
             </Grid>
-
             <Grid item xs={8}>
               <TextField
                 variant="standard"
@@ -160,7 +151,7 @@ const Signup: FC = () => {
               />
             </Grid>
           </Grid>
-          <ButtonsContainer>
+          <Stack spacing={1}>
             <Button
               type="submit"
               fullWidth
@@ -174,10 +165,10 @@ const Signup: FC = () => {
                 Войти
               </Button>
             </Grid>
-          </ButtonsContainer>
-        </StyledForm>
-      </StyledWrapper>
-    </StyledContainer>
+          </Stack>
+        </PageContent>
+      </form>
+    </Page>
   )
 }
 
