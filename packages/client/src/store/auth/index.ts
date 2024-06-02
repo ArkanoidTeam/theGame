@@ -3,7 +3,7 @@ import { RootState } from '..'
 
 interface IUser {
   name: string
-  email: string
+  email?: string
 }
 
 interface IAuthState {

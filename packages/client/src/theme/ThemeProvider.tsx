@@ -35,11 +35,11 @@ const ThemeProvider = ({ children }: PropsWithChildren) => {
         color: palette.layout.fontColor,
       },
       h2: {
-        fontWeight: 400
+        fontWeight: 400,
       },
       h4: {
-        fontWeight: 300
-      }
+        fontWeight: 300,
+      },
     },
     palette,
     components,

@@ -40,8 +40,8 @@ export const components: Components<Theme> = {
     },
     styleOverrides: {
       text: {
-        fontWeight: 400
-      }
-    }
+        fontWeight: 400,
+      },
+    },
   },
 }
