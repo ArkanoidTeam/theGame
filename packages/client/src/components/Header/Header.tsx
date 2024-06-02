@@ -1,26 +1,34 @@
-import './Header.scss'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Page } from '../../utils/constants/navigation'
+import { PropsWithChildren } from 'react'
+import { Stack, StackProps, styled, useTheme } from '@mui/material'
 
-const Header: React.FC = () => {
-  const pages = Object.entries(Page)
+type THeaderProps = {
+  isFill?: boolean
+}
+
+const StyledHeader = styled('header')(({ isFill }: THeaderProps) => {
+  const theme = useTheme()
+  console.log(isFill)
+
+  return {
+    width: '100%',
+    padding: '20px',
+    backgroundColor: isFill
+      ? theme.palette.layout.headerAndFooterBackgroundColor
+      : 'transparent',
+  }
+})
+
+const Header = ({
+  children,
+  isFill = false,
+  ...stackProps
+}: PropsWithChildren & THeaderProps & StackProps) => {
   return (
-    <header className="header">
-      <nav className="header__nav">
-        <ul className="header__nav-list">
-          {pages.map(([path, name]) => {
-            return (
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to={name}>
-                  {path.toLowerCase()}
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
-    </header>
+    <StyledHeader isFill={isFill}>
+      <Stack flexDirection="row" {...stackProps}>
+        {children}
+      </Stack>
+    </StyledHeader>
   )
 }
 

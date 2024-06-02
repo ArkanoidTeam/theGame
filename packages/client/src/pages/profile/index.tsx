@@ -4,6 +4,7 @@ import getUserData from './api/getUserData'
 import CircularProgress from '@mui/material/CircularProgress'
 
 // const mockUserData: User = {
+//   id: 1,
 //   login: 'mockUser',
 //   password: 'mockPassword',
 //   email: 'mockUser@some-domain.com',
