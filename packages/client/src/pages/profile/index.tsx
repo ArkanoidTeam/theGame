@@ -1,78 +1,39 @@
-import { FC, useState } from 'react'
-import { Button } from '@mui/material'
-import { ButtonsContainer, StyledContainer, StyledWrapper } from './styled'
-import { Typography } from '../../components/Typography'
-import { ProfileAvatar } from './components'
-import { ChangeDataForm } from './components'
-import { ChangePasswordForm } from './components'
+import { FC, useState, useEffect } from 'react'
+import Profile from './Profile'
+import getUserData from './api/getUserData'
+import CircularProgress from '@mui/material/CircularProgress'
 
-interface IProfileProps {
-  propUserData: User
-  onDataChanged: () => void
-}
+const ProfileHoc: FC = () => {
+  const [userData, setUserData] = useState<User | null>(null)
+  const [loading, setLoading] = useState(false)
 
-const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
-  const [userEditMode, setUserEditMode] = useState(false)
-  const [passwordEditMode, setPasswordEditMode] = useState(false)
-
-  const onDeleteAccount = () => {
-    console.log('user account deleted')
+  const fetchData = async () => {
+    setLoading(true)
+    try {
+      const data = (await getUserData()) as User
+      if (data.id) {
+        setUserData(data)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  return (
-    <StyledContainer component="main" maxWidth="xs">
-      <StyledWrapper>
-        <Typography component="h1" variant="h2" context="Arkanoid" />
-        <Typography component="h3" variant="h3" context="Аккаунт" />
-        <ProfileAvatar
-          propUserData={propUserData}
-          onDataChanged={onDataChanged}
-        />
-        {!passwordEditMode && (
-          <ChangeDataForm
-            propUserData={propUserData}
-            onDataChanged={onDataChanged}
-            exitEditMode={() => setUserEditMode(false)}
-            editMode={userEditMode}
-          />
-        )}
-        {passwordEditMode && (
-          <ChangePasswordForm
-            exitEditMode={() => setPasswordEditMode(false)}
-            editMode={passwordEditMode}
-          />
-        )}
-        {!userEditMode && !passwordEditMode && (
-          <ButtonsContainer>
-            <Button
-              fullWidth
-              variant="contained"
-              type="button"
-              color="primary"
-              onClick={() => setUserEditMode(true)}>
-              Изменить данные
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              type="button"
-              color="primary"
-              onClick={() => setPasswordEditMode(true)}>
-              Изменить пароль
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              type="button"
-              color="error"
-              onClick={() => onDeleteAccount()}>
-              Удалить аккаунт
-            </Button>
-          </ButtonsContainer>
-        )}
-      </StyledWrapper>
-    </StyledContainer>
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const onDataChanged = () => {
+    fetchData()
+  }
+
+  return loading || !userData ? (
+    <CircularProgress disableShrink />
+  ) : (
+    <Profile propUserData={userData} onDataChanged={onDataChanged} />
   )
 }
 
-export default Profile
+export default ProfileHoc
