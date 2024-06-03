@@ -32,8 +32,7 @@ const grey = {
   900: '#1C2025',
 }
 
-export const Textarea = styled(BaseTextareaAutosize)(
-  ({ theme }) => `
+export const Textarea = styled(BaseTextareaAutosize)(`
   box-sizing: border-box;
   width: 100%;
   font-weight: 400;
@@ -58,5 +57,4 @@ export const Textarea = styled(BaseTextareaAutosize)(
   &:focus-visible {
     outline: 0;
   }
-`
-)
+`)

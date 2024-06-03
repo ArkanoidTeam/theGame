@@ -1,12 +1,10 @@
 import { FC, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { ButtonsContainer } from './styled'
-import { Typography } from '../../components/Typography'
 import { ProfileAvatar } from './components'
 import { ChangeDataForm } from './components'
 import { ChangePasswordForm } from './components'
-import PageTemplate from '../../components/PageTemplate/PageTemplate'
+import { PageTemplate } from '../../components'
 
 interface IProfileProps {
   propUserData: User
@@ -16,7 +14,6 @@ interface IProfileProps {
 const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
   const [userEditMode, setUserEditMode] = useState(false)
   const [passwordEditMode, setPasswordEditMode] = useState(false)
-  const navigate = useNavigate()
 
   const onDeleteAccount = () => {
     console.log('user account deleted')

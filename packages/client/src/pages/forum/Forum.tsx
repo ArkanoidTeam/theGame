@@ -2,7 +2,7 @@ import { FC, useState, Fragment } from 'react'
 import { ThemeCard } from './components'
 import { List, Fab } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import PageTemplate from '../../components/PageTemplate/PageTemplate'
+import { PageTemplate } from '../../components'
 import { StyledListItem, StyledDivider, AddThemeButtonWrapper } from './styled'
 import { AddThemeModal } from './components'
 
