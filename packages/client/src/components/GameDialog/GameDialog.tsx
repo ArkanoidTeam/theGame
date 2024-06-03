@@ -30,7 +30,6 @@ const GameDialog: FC<GameDialogProps> = ({
       open={isOpen}
       onClose={handleCancel}
       title={isWin ? 'Поздравляем!' : 'Упс...'}
-      content={isWin ? 'Уровень пройден!' : 'Вы проиграли'}
       footerButtons={
         <DialogActions>
           <Button variant="contained" onClick={handleStart}>
@@ -40,8 +39,9 @@ const GameDialog: FC<GameDialogProps> = ({
             Выйти
           </Button>
         </DialogActions>
-      }
-    />
+      }>
+      {isWin ? 'Уровень пройден!' : 'Вы проиграли'}
+    </Modal>
   )
 }
 
