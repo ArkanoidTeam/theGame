@@ -92,6 +92,7 @@ const ChangeDataForm: FC<IProfileProps> = ({
               <Grid item xs={8} key={fieldName}>
                 <ValidatedTextField
                   label={fieldProps.label}
+                  // @ts-ignore
                   name={fieldName}
                   control={control}
                   rules={{
