@@ -103,7 +103,7 @@ const ProfileAvatar: FC<IAvatarProps> = ({ propUserData, onDataChanged }) => {
       <Modal
         open={modalOpen}
         onClose={onClose}
-        title="Модальное окно"
+        title="Смена аватара"
         footerButtons={
           <Box sx={{ m: 1, position: 'relative' }}>
             <Button

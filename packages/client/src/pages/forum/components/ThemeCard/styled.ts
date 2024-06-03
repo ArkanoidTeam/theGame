@@ -9,7 +9,7 @@ export const StyledThemeCard = styled('section')({
 })
 
 export const ThemeText = styled('p')({
-  color: '#939393',
+  color: '#535353',
   margin: 0,
   maxWidth: '100%',
   whiteSpace: 'nowrap',

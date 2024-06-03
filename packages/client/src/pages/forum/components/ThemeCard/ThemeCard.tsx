@@ -1,6 +1,8 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { Typography } from '../../../../components/Typography'
-import { Link, Avatar } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Avatar } from '@mui/material'
+import getDateTimeString from '../../../../utils/getDateTimeString'
 
 import {
   ThemeText,
@@ -11,36 +13,52 @@ import {
   StyledChatBubbleOutlinedIcon,
 } from './styled'
 
-const ThemeCard: FC = () => {
+type ThemeCardProps = {
+  title: string
+  text: string
+  user_avatar: string
+  user_name: string
+  date: string
+  answers_count: number
+  id: number
+}
+const ThemeCard: FC<ThemeCardProps> = (props: ThemeCardProps) => {
+  const { title, text, user_avatar, user_name, date, answers_count, id } = props
+  const dateString = useMemo(
+    () => getDateTimeString(date, 'fullNoSecs'),
+    [date]
+  )
+  const linkStyle = {
+    color: '#1976d2',
+    textDecoration: 'none',
+  }
   return (
     <StyledThemeCard>
       <Typography
         component="h6"
         variant="h6"
         context={
-          <Link href="#" underline="none">
-            Как настроить игру чтобы играть с максимальным комфортом?
+          <Link to={String(id)} style={linkStyle}>
+            {title}
           </Link>
         }
       />
-      <ThemeText>
-        Пытался смотреть настройки, но постоянно натыкаюсь на какие-то трудности
-        Пытался смотреть настройки, но постоянно натыкаюсь на какие-то трудности
-      </ThemeText>
+      <ThemeText>{text}</ThemeText>
       <ThemeMetaWrapper>
         <ThemeMeta>
-          <StyledChatBubbleOutlinedIcon /> 3
+          <StyledChatBubbleOutlinedIcon />
+          <span>{answers_count}</span>
         </ThemeMeta>
         <ThemeMeta>
           <ThemeMetaUser>
             <Avatar
               alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
+              src={user_avatar}
               sx={{ width: 16, height: 16, fontSize: '0.7rem' }}
             />
-            <span>Remy Sharp</span>
+            <span>{user_name}</span>
           </ThemeMetaUser>
-          <span>18.05.24 18:05</span>
+          <span>{dateString}</span>
         </ThemeMeta>
       </ThemeMetaWrapper>
     </StyledThemeCard>

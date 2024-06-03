@@ -13,7 +13,7 @@ export const StyledDivider = styled(Divider)<StyledDividerProps>(() => ({
   marginLeft: 0,
 }))
 export const AddThemeButtonWrapper = styled('div')({
-  padding: '10px',
+  padding: '20px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',

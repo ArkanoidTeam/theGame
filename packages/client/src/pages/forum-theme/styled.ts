@@ -1,6 +1,22 @@
 import styled from '@emotion/styled'
-import { Button, Container } from '@mui/material'
+import { Button, Container, Divider } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+
+export const MessagesContainer = styled('div')({
+  flexGrow: 1,
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+})
+
+type StyledDividerProps = {
+  component: string
+}
+
+export const StyledDivider = styled(Divider)<StyledDividerProps>(() => ({
+  marginLeft: 0,
+}))
 
 export const BackButton = styled(Button)({
   textTransform: 'none',
@@ -22,17 +38,17 @@ type StyledContainerProps = {
   component: string
 }
 
-export const StyledContainer = styled(Container)<StyledContainerProps>(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  minWidth: '464px',
-  backgroundColor: '#fff',
-  border: '1px solid #ddd',
-  borderRadius: '8px',
-  alignItems: 'center',
-  flexGrow: 1,
-  padding: '24px',
-}))
+export const StyledContainer = styled(Container)<StyledContainerProps>`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 1rem;
+  min-width: '464px';
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+`
 
 export const PageContainer = styled.div`
   display: flex;
@@ -49,11 +65,8 @@ export const MainContent = styled.div`
   align-items: center;
   padding-bottom: 20px;
 `
-
-export const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  overflow-x: hidden;
-`
+export const InputMessageForm = styled('form')({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+})

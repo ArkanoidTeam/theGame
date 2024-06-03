@@ -18,6 +18,7 @@ const AppRoutes: FC = () => {
           <Route path={Page.NOT_FOUND} element={<Pages.NotFound />} />
           <Route path={Page.LEADERBOARD} element={<Pages.Leaderboard />} />
           <Route path={Page.FORUM} element={<Pages.Forum />} />
+          <Route path={Page.FORUM_THEME} element={<Pages.ForumTheme />} />
         </Routes>
       </ErrorBoundary>
     </>
