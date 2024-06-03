@@ -1,20 +1,56 @@
-import { FC } from 'react'
-import { Button, Grid, TextField } from '@mui/material'
-import {
-  ButtonsContainer,
-  StyledContainer,
-  StyledForm,
-  StyledWrapper,
-} from './styled'
-import { Typography } from '../../components/Typography'
+import { FC, FormEvent, useState } from 'react'
+import { Button, Grid, Stack, TextField } from '@mui/material'
+import { Page, PageContent } from '../../components'
+import { useNavigate } from 'react-router-dom'
+import { YandexApiAuth } from '../../api/YandexApiAuth'
+import { login as loginLayer } from '../../store/auth'
+import { useAppDispatch } from '../../hooks/use-app-dispatch'
+
 const Signin: FC = () => {
+  const [state, setState] = useState({ login: '', password: '' })
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setState(prevState => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
+    const userData: SignInData = {
+      login: state.login,
+      password: state.password,
+    }
+
+    try {
+      await YandexApiAuth.signin(userData)
+
+      dispatch(
+        loginLayer({
+          isAuth: true,
+          user: {
+            name: state.login,
+          },
+          accessToken: null,
+        })
+      )
+
+      navigate('/')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
-    <StyledContainer component="main" maxWidth="xs">
-      <StyledWrapper>
-        <Typography component="h1" variant="h2" context="Arkanoid" />
-        <Typography component="h3" variant="h3" context="Вход" />
-        <StyledForm>
-          <Grid container spacing={3} justifyContent="center">
+    <Page justifyContent="space-around" alignItems="center">
+      <form onSubmit={handleSubmit}>
+        <PageContent title="Arkanoid" subtitle="Вход">
+          <Grid container spacing={1} justifyContent="center">
             <Grid item xs={8}>
               <TextField
                 variant="standard"
@@ -23,6 +59,8 @@ const Signin: FC = () => {
                 label="Логин"
                 name="login"
                 autoComplete="login"
+                value={state.login}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -34,10 +72,12 @@ const Signin: FC = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={state.password}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
-          <ButtonsContainer>
+          <Stack spacing={1}>
             <Button
               type="submit"
               fullWidth
@@ -51,10 +91,10 @@ const Signin: FC = () => {
                 Зарегистрироваться
               </Button>
             </Grid>
-          </ButtonsContainer>
-        </StyledForm>
-      </StyledWrapper>
-    </StyledContainer>
+          </Stack>
+        </PageContent>
+      </form>
+    </Page>
   )
 }
 

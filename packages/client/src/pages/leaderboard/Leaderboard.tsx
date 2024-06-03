@@ -1,18 +1,32 @@
-import { FC } from 'react'
-import { Box, Avatar, List, ListItem, ListItemText } from '@mui/material'
-import { StyledContainer, StyledCustomStarIcon } from './styled'
-import { Typography } from '../../components/Typography'
+import {
+  Box,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+} from '@mui/material'
+import { StyledCustomStarIcon } from './styled'
 import players, { Player } from './players'
+import { Footer, Header, Page, PageContent } from '../../components'
+import { useNavigate } from 'react-router-dom'
+import { ArrowBack } from '@mui/icons-material'
 
-const Leaderboard: FC = () => {
+const Leaderboard = () => {
+  const navigate = useNavigate()
+
   return (
-    <StyledContainer component="main" maxWidth="sm">
-      <Box textAlign={'center'}>
-        <Typography component="h1" variant="h2" context="Arkanoid" />
-        <Typography component="h3" variant="h3" context="Рейтинг" />
-      </Box>
-      <Box>
-        <List>
+    <Page>
+      <Header alignItems="flex-start">
+        <Button
+          variant="text"
+          onClick={() => navigate('/')}
+          startIcon={<ArrowBack />}>
+          Вернуться
+        </Button>
+      </Header>
+      <PageContent title="Arkanoid" subtitle="Рейтинг">
+        <List sx={{ width: '100%' }}>
           {players.map((player: Player, index: number) => (
             <ListItem key={player.name}>
               <ListItemText>
@@ -39,8 +53,9 @@ const Leaderboard: FC = () => {
             </ListItem>
           ))}
         </List>
-      </Box>
-    </StyledContainer>
+      </PageContent>
+      <Footer hasLinks />
+    </Page>
   )
 }
 
