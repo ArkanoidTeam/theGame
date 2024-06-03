@@ -33,3 +33,9 @@ type ProfileData = {
   email: string
   phone: string
 }
+
+type ChangePasswordData = {
+  oldPassword: string
+  newPassword: string
+  newPasswordAgain: string
+}
