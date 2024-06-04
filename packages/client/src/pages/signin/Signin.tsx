@@ -1,32 +1,20 @@
-import { FC, FormEvent, useState } from 'react'
-import { Button, Grid, Stack, TextField } from '@mui/material'
-import { Page, PageContent } from '../../components'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button, Grid, Stack } from '@mui/material'
+import { Page, PageContent, ValidatedTextField } from '../../components'
 import { useNavigate } from 'react-router-dom'
 import { YandexApiAuth } from '../../api/YandexApiAuth'
 import { login as loginLayer } from '../../store/auth'
 import { useAppDispatch } from '../../hooks/use-app-dispatch'
+import { ValidationType, validationPatterns } from '../../utils/validation'
 
 const Signin: FC = () => {
-  const [state, setState] = useState({ login: '', password: '' })
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setState(prevState => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
+  const { control, handleSubmit } = useForm<SignInData>({ mode: 'onBlur' });
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-
-    const userData: SignInData = {
-      login: state.login,
-      password: state.password,
-    }
-
+  const onSubmit: SubmitHandler<SignInData> = async (userData) => {
     try {
       await YandexApiAuth.signin(userData)
 
@@ -34,7 +22,7 @@ const Signin: FC = () => {
         loginLayer({
           isAuth: true,
           user: {
-            name: state.login,
+            name: userData.login,
           },
           accessToken: null,
         })
@@ -48,32 +36,30 @@ const Signin: FC = () => {
 
   return (
     <Page justifyContent="space-around" alignItems="center">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <PageContent title="Arkanoid" subtitle="Вход">
           <Grid container spacing={1} justifyContent="center">
             <Grid item xs={8}>
-              <TextField
-                variant="standard"
-                fullWidth
-                id="login"
-                label="Логин"
-                name="login"
-                autoComplete="login"
-                value={state.login}
-                onChange={handleChange}
+              <ValidatedTextField
+                label='Логин'
+                name='login'
+                control={control}
+                rules={{
+                  pattern: validationPatterns[ValidationType.LOGIN]
+                }}
+                autoComplete='login'
               />
             </Grid>
             <Grid item xs={8}>
-              <TextField
-                variant="standard"
-                fullWidth
-                name="password"
-                label="Пароль"
+              <ValidatedTextField
+                label='Пароль'
+                name='password'
+                control={control}
+                rules={{
+                  pattern: validationPatterns[ValidationType.PASSOWRD]
+                }}
                 type="password"
-                id="password"
                 autoComplete="current-password"
-                value={state.password}
-                onChange={handleChange}
               />
             </Grid>
           </Grid>

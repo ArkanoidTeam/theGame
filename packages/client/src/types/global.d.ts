@@ -17,6 +17,7 @@ type SignupData = {
   login: string
   email: string
   password: string
+  password_repeat: string
   phone: string
 }
 
@@ -28,8 +29,13 @@ type SignInData = {
 type ProfileData = {
   first_name: string
   second_name: string
-  display_name: string
   login: string
   email: string
   phone: string
+}
+
+type ChangePasswordData = {
+  oldPassword: string
+  newPassword: string
+  newPasswordAgain: string
 }
