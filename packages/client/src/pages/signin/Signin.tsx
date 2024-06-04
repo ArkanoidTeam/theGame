@@ -12,9 +12,9 @@ const Signin: FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { control, handleSubmit } = useForm<SignInData>({ mode: 'onBlur' });
+  const { control, handleSubmit } = useForm<SignInData>({ mode: 'onBlur' })
 
-  const onSubmit: SubmitHandler<SignInData> = async (userData) => {
+  const onSubmit: SubmitHandler<SignInData> = async userData => {
     try {
       await YandexApiAuth.signin(userData)
 
@@ -41,22 +41,22 @@ const Signin: FC = () => {
           <Grid container spacing={1} justifyContent="center">
             <Grid item xs={8}>
               <ValidatedTextField
-                label='Логин'
-                name='login'
+                label="Логин"
+                name="login"
                 control={control}
                 rules={{
-                  pattern: validationPatterns[ValidationType.LOGIN]
+                  pattern: validationPatterns[ValidationType.LOGIN],
                 }}
-                autoComplete='login'
+                autoComplete="login"
               />
             </Grid>
             <Grid item xs={8}>
               <ValidatedTextField
-                label='Пароль'
-                name='password'
+                label="Пароль"
+                name="password"
                 control={control}
                 rules={{
-                  pattern: validationPatterns[ValidationType.PASSOWRD]
+                  pattern: validationPatterns[ValidationType.PASSOWRD],
                 }}
                 type="password"
                 autoComplete="current-password"
