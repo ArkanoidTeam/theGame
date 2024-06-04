@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Page } from '../utils/constants/navigation'
 import * as Pages from '../pages'
 import ErrorBoundary from '../hoc/error-boundary'
-import { ProtectedRoute } from '../hooks/protected-route'
+import ProtectedRoute from '../hoc/protected-route'
 
 const AppRoutes: FC = () => {
   return (
