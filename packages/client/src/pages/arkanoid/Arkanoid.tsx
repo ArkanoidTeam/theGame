@@ -2,8 +2,6 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { Button, DialogActions } from '@mui/material'
 import { Game } from '../../utils/arkanoid-logic/game'
 import {
-  Header,
-  Footer,
   FooterButtonsContainer,
   StyledContainer,
   StyledWrapper,
@@ -12,8 +10,15 @@ import {
   VerticalDivider,
 } from './styled'
 import { useNavigate } from 'react-router-dom'
+import {
+  Header,
+  Footer,
+  Page,
+  PageContent,
+  Modal,
+  GameDialog,
+} from '../../components'
 import { Typography } from '../../components/Typography'
-import { Modal, GameDialog } from '../../components'
 
 interface LevelProps {
   levelNumber: number
@@ -28,7 +33,7 @@ interface ScoreProps {
 }
 
 const Score: FC<ScoreProps> = ({ scoreValue }) => {
-  return <Typography context={`Счет: ${scoreValue.toString()}`} />
+  return <Typography context={`Очки: ${scoreValue.toString()}`} />
 }
 
 interface UserNameProps {
@@ -71,19 +76,16 @@ const Arkanoid: FC = () => {
     game.init()
   }, [])
   return (
-    <PageContainer>
-      <Header>
+    <Page>
+      <Header isFill={true} justifyContent="space-between">
         <Level levelNumber={initialLevel} />
         <Score scoreValue={initialScore} />
         <UserName userName={userName} />
       </Header>
-      <MainContent>
-        <StyledContainer component="main" maxWidth="md">
-          <canvas width="400" height="500" id="game" ref={canvasRef} />
-          <StyledWrapper />
-        </StyledContainer>
-      </MainContent>
-      <Footer>
+      <PageContent>
+        <canvas width="400" height="500" id="game" ref={canvasRef} />
+      </PageContent>
+      <Footer isFill={true}>
         <FooterButtonsContainer>
           <Button variant="text" className="logout">
             Начать заново
@@ -119,7 +121,7 @@ const Arkanoid: FC = () => {
         }
       />
       <GameDialog isOpen={isGameEnd} onClose={() => setGameEnd(false)} />
-    </PageContainer>
+    </Page>
   )
 }
 
