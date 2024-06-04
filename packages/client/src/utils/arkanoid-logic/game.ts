@@ -5,8 +5,9 @@ import {
   WallSize,
   colorMap,
 } from '../constants/game_utils'
-import { level1 } from '../constants/levels'
+import { levels } from '../constants/levels'
 import { Ball } from './ball'
+import { Drawer } from './drawer'
 import { Paddle } from './paddle'
 interface Brick {
   x: number
@@ -29,14 +30,26 @@ export class Game {
   paddle: Paddle
   ball: Ball
   level: number
+  drawer: Drawer
 
-  constructor(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+  constructor(
+    canvas: HTMLCanvasElement,
+    context: CanvasRenderingContext2D,
+    initiallevel: number
+  ) {
     this.canvas = canvas
     this.context = context
     this.bricks = []
     this.paddle = new Paddle(canvas)
     this.ball = new Ball(canvas)
-    this.level = 1
+    this.level = initiallevel
+    this.drawer = new Drawer(
+      this.context,
+      this.canvas,
+      this.ball,
+      this.paddle,
+      this.bricks
+    )
   }
 
   init() {
@@ -46,9 +59,10 @@ export class Game {
   }
 
   createBricks() {
-    for (let row = 0; row < level1.length; row++) {
-      for (let col = 0; col < level1[row].length; col++) {
-        const colorCode = level1[row][col]
+    const currentLevel = levels[this.level]
+    for (let row = 0; row < currentLevel.length; row++) {
+      for (let col = 0; col < currentLevel[row].length; col++) {
+        const colorCode = currentLevel[row][col]
 
         this.bricks.push({
           x: WallSize + (BrickWidth + BrickGap) * col,
@@ -135,37 +149,7 @@ export class Game {
   }
 
   draw() {
-    this.context.fillStyle = 'lightgrey'
-    this.context.fillRect(0, 0, this.canvas.width, WallSize)
-    this.context.fillRect(0, 0, WallSize, this.canvas.height)
-    this.context.fillRect(
-      this.canvas.width - WallSize,
-      0,
-      WallSize,
-      this.canvas.height
-    )
-
-    if (this.ball.dx || this.ball.dy) {
-      this.context.fillRect(
-        this.ball.x,
-        this.ball.y,
-        this.ball.width,
-        this.ball.height
-      )
-    }
-
-    this.bricks.forEach(brick => {
-      this.context.fillStyle = brick.color
-      this.context.fillRect(brick.x, brick.y, brick.width, brick.height)
-    })
-
-    this.context.fillStyle = 'red'
-    this.context.fillRect(
-      this.paddle.x,
-      this.paddle.y,
-      this.paddle.width,
-      this.paddle.height
-    )
+    this.drawer.draw()
   }
   eventListeners() {
     document.addEventListener('keydown', e => {

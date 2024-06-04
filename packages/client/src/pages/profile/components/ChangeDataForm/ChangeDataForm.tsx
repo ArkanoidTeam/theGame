@@ -1,8 +1,14 @@
-import { FC, FormEvent, useState, ChangeEvent } from 'react'
-import { Button, Grid, TextField } from '@mui/material'
+import { FC, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button, Grid } from '@mui/material'
 import { ButtonsContainer, StyledForm } from './styled'
 import saveUserData from '../../api/saveUserData'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import {
+  ValidationType,
+  validationPatterns,
+} from '../../../../utils/validation'
+import { ValidatedTextField } from '../../../../components'
 import { fields } from '.'
 
 interface IProfileProps {
@@ -18,23 +24,49 @@ const ChangeDataForm: FC<IProfileProps> = ({
   editMode,
   exitEditMode,
 }) => {
-  const [userData, setUserData] = useState({ ...propUserData })
+  const fields = {
+    login: {
+      label: 'Логин',
+      placeholder: 'Логин',
+      type: 'text',
+      pattern: validationPatterns[ValidationType.LOGIN],
+    },
+    email: {
+      label: 'Почта',
+      placeholder: 'Почта',
+      type: 'email',
+      pattern: validationPatterns[ValidationType.EMAIL],
+    },
+    first_name: {
+      label: 'Имя',
+      placeholder: 'Имя',
+      type: 'text',
+      pattern: validationPatterns[ValidationType.USER],
+    },
+    second_name: {
+      label: 'Фамилия',
+      placeholder: 'Фамилия',
+      type: 'text',
+      pattern: validationPatterns[ValidationType.USER],
+    },
+    phone: {
+      label: 'Телефон',
+      placeholder: '+7 (000) 000-00-00',
+      type: 'tel',
+      pattern: validationPatterns[ValidationType.PHONE],
+    },
+  }
   const [loading, setLoading] = useState(false)
 
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault()
+  const { control, handleSubmit } = useForm<ProfileData>({
+    mode: 'onBlur',
+    defaultValues: propUserData,
+  })
+
+  const onSubmit: SubmitHandler<ProfileData> = async userData => {
     setLoading(true)
     try {
-      const { login, email, first_name, second_name, display_name, phone } =
-        userData
-      await saveUserData({
-        login,
-        email,
-        first_name,
-        second_name,
-        display_name,
-        phone,
-      })
+      await saveUserData(userData)
     } catch (err) {
       console.log(err)
     } finally {
@@ -43,41 +75,33 @@ const ChangeDataForm: FC<IProfileProps> = ({
       onDataChanged()
     }
   }
-  const onChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    fieldName: string
-  ) => {
-    const value = event.target.value
-    const data = { ...userData }
-    data[fieldName] = value
-    setUserData({ ...data })
-  }
 
   const onCancel = () => {
-    setUserData({ ...propUserData })
     exitEditMode()
   }
 
   return (
-    <StyledForm onSubmit={onSubmit}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} justifyContent="center">
         {loading && <LoadingSpinner />}
         {!loading &&
           Object.entries(fields).map(item => {
             const [fieldName, fieldProps] = item
             const disabled = !editMode
-            const fieldValue =
-              userData[fieldName] === null ? '' : userData[fieldName]
+
             return (
               <Grid item xs={8} key={fieldName}>
-                <TextField
-                  variant="standard"
-                  fullWidth
-                  id={fieldName}
+                <ValidatedTextField
                   label={fieldProps.label}
+                  // @ts-ignore
                   name={fieldName}
-                  placeholder={fieldProps.placeholder}
+                  control={control}
+                  rules={{
+                    pattern: fieldProps.pattern,
+                  }}
+                  autoComplete={fieldName}
                   type={fieldProps.type}
+                  placeholder={fieldProps.placeholder}
                   disabled={disabled}
                   value={fieldValue}
                   autoComplete={fieldProps.autocomplete}
@@ -91,12 +115,7 @@ const ChangeDataForm: FC<IProfileProps> = ({
       </Grid>
       {editMode && (
         <ButtonsContainer>
-          <Button
-            fullWidth
-            variant="contained"
-            type="submit"
-            color="primary"
-            onSubmit={onSubmit}>
+          <Button fullWidth variant="contained" type="submit" color="primary">
             Сохранить
           </Button>
           <Button
