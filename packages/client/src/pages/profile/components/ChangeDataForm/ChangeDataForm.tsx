@@ -4,10 +4,7 @@ import { Button, Grid } from '@mui/material'
 import { ButtonsContainer, StyledForm } from './styled'
 import saveUserData from '../../api/saveUserData'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
-import {
-  ValidationType,
-  validationPatterns,
-} from '../../../../utils/validation'
+
 import { ValidatedTextField } from '../../../../components'
 import { fields } from '.'
 
@@ -24,38 +21,6 @@ const ChangeDataForm: FC<IProfileProps> = ({
   editMode,
   exitEditMode,
 }) => {
-  const fields = {
-    login: {
-      label: 'Логин',
-      placeholder: 'Логин',
-      type: 'text',
-      pattern: validationPatterns[ValidationType.LOGIN],
-    },
-    email: {
-      label: 'Почта',
-      placeholder: 'Почта',
-      type: 'email',
-      pattern: validationPatterns[ValidationType.EMAIL],
-    },
-    first_name: {
-      label: 'Имя',
-      placeholder: 'Имя',
-      type: 'text',
-      pattern: validationPatterns[ValidationType.USER],
-    },
-    second_name: {
-      label: 'Фамилия',
-      placeholder: 'Фамилия',
-      type: 'text',
-      pattern: validationPatterns[ValidationType.USER],
-    },
-    phone: {
-      label: 'Телефон',
-      placeholder: '+7 (000) 000-00-00',
-      type: 'tel',
-      pattern: validationPatterns[ValidationType.PHONE],
-    },
-  }
   const [loading, setLoading] = useState(false)
 
   const { control, handleSubmit } = useForm<ProfileData>({
@@ -99,15 +64,10 @@ const ChangeDataForm: FC<IProfileProps> = ({
                   rules={{
                     pattern: fieldProps.pattern,
                   }}
-                  autoComplete={fieldName}
+                  autoComplete={fieldProps.autocomplete}
                   type={fieldProps.type}
                   placeholder={fieldProps.placeholder}
                   disabled={disabled}
-                  value={fieldValue}
-                  autoComplete={fieldProps.autocomplete}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    onChange(event, fieldName)
-                  }
                 />
               </Grid>
             )

@@ -9,7 +9,6 @@ import {
   validationPatterns,
 } from '../../../../utils/validation'
 import { ValidatedTextField } from '../../../../components'
-import { fields } from '.'
 
 interface IProfileProps {
   exitEditMode: () => void
@@ -94,11 +93,6 @@ const ChangePasswordForm: FC<IProfileProps> = ({ editMode, exitEditMode }) => {
                   type={fieldProps.type}
                   placeholder={fieldProps.placeholder}
                   disabled={disabled}
-                  value={fieldValue}
-                  autoComplete={fieldProps.autocomplete}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    onChange(event, fieldName)
-                  }
                 />
               </Grid>
             )
