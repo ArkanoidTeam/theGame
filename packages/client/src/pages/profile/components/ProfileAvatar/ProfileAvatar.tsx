@@ -103,30 +103,7 @@ const ProfileAvatar: FC<IAvatarProps> = ({ propUserData, onDataChanged }) => {
       <Modal
         open={modalOpen}
         onClose={onClose}
-        title="Модальное окно"
-        content={
-          <StyledModalBody onSubmit={onSubmit}>
-            {(error || !selectedImage) && (
-              <p style={{ color: 'red' }}>{error ? error : 'Файл не выбран'}</p>
-            )}
-            {selectedImage && (
-              <img
-                src={selectedImage}
-                alt="Preview"
-                style={{ maxWidth: '300px', marginTop: '20px' }}
-              />
-            )}
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}>
-              Выбрать файл
-              <VisuallyHiddenInput type="file" onInput={handleImageChange} />
-            </Button>
-          </StyledModalBody>
-        }
+        title="Смена аватара"
         footerButtons={
           <Box sx={{ m: 1, position: 'relative' }}>
             <Button
@@ -151,7 +128,29 @@ const ProfileAvatar: FC<IAvatarProps> = ({ propUserData, onDataChanged }) => {
               />
             )}
           </Box>
-        }></Modal>
+        }>
+        <StyledModalBody onSubmit={onSubmit}>
+          {(error || !selectedImage) && (
+            <p style={{ color: 'red' }}>{error ? error : 'Файл не выбран'}</p>
+          )}
+          {selectedImage && (
+            <img
+              src={selectedImage}
+              alt="Preview"
+              style={{ maxWidth: '300px', marginTop: '20px' }}
+            />
+          )}
+          <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}>
+            Выбрать файл
+            <VisuallyHiddenInput type="file" onInput={handleImageChange} />
+          </Button>
+        </StyledModalBody>
+      </Modal>
     </>
   )
 }

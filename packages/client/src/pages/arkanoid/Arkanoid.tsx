@@ -110,7 +110,6 @@ const Arkanoid: FC = () => {
         open={isOpen}
         onClose={handleCancel}
         title="Правила игры"
-        content="Краткое описание правил игры..."
         footerButtons={
           <DialogActions>
             <Button variant="contained" onClick={handleStart} autoFocus>
@@ -118,8 +117,9 @@ const Arkanoid: FC = () => {
             </Button>
             <Button onClick={handleCancel}>Отмена</Button>
           </DialogActions>
-        }
-      />
+        }>
+        Краткое описание правил игры...
+      </Modal>
       <GameDialog isOpen={isGameEnd} onClose={() => setGameEnd(false)} />
     </Page>
   )

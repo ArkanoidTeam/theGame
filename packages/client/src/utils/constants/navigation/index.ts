@@ -6,6 +6,8 @@ const LEADERBOARD_PAGE_URI = 'leaderboard'
 const PROFILE_PAGE_URI = 'profile'
 const NOT_FOUND_URI = '*'
 const ARKANOID_PAGE_URI = 'arkanoid'
+const FORUM_PAGE_URI = 'forum'
+const FORUM_THEME_URI = 'forum/:id'
 export const Page = {
   MAIN: MAIN_PAGE_URI,
   UNAVAILABLE: UNAVAILABLE_PAGE_URI,
@@ -15,4 +17,6 @@ export const Page = {
   LEADERBOARD: LEADERBOARD_PAGE_URI,
   PROFILE: PROFILE_PAGE_URI,
   ARKANOID: ARKANOID_PAGE_URI,
+  FORUM: FORUM_PAGE_URI,
+  FORUM_THEME: FORUM_THEME_URI,
 }
