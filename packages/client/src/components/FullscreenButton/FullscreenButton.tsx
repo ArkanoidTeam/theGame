@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Button } from '@mui/material'
 import {
   CloseFullscreenOutlined,
@@ -8,23 +8,24 @@ import {
 const FullscreenButton = () => {
   const [isFullscreen, setFullscreen] = useState(false)
 
-  const onClick = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement
-        .requestFullscreen()
-        .then(() => setFullscreen(true))
-        .catch(err => {
-          console.error(`Error: ${err.message} (${err.name})`)
-        })
-    } else {
+  const onCatch = (err: { message: string; name: string }) => {
+    console.error(`Error: ${err.message} (${err.name})`)
+  }
+
+  const onClick = useCallback(() => {
+    if (document.fullscreenElement) {
       document
         .exitFullscreen()
         .then(() => setFullscreen(false))
-        .catch(err => {
-          console.error(`Error: ${err.message} (${err.name})`)
-        })
+        .catch(err => onCatch(err))
+    } else {
+      document.documentElement
+        .requestFullscreen()
+        .then(() => setFullscreen(true))
+        .catch(err => onCatch(err))
     }
-  }
+  }, [])
+
   return (
     <Button variant="text" onClick={onClick}>
       {isFullscreen ? <CloseFullscreenOutlined /> : <OpenInFullOutlined />}
