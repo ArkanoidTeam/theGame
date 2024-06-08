@@ -5,12 +5,12 @@ import {
   OpenInFullOutlined,
 } from '@mui/icons-material'
 
+const onCatch = (err: { message: string; name: string }) => {
+  console.error(`Error: ${err.message} (${err.name})`)
+}
+
 const FullscreenButton = () => {
   const [isFullscreen, setFullscreen] = useState(false)
-
-  const onCatch = (err: { message: string; name: string }) => {
-    console.error(`Error: ${err.message} (${err.name})`)
-  }
 
   const onClick = useCallback(() => {
     if (document.fullscreenElement) {
