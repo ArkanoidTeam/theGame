@@ -7,7 +7,6 @@ type THeaderProps = {
 
 const StyledHeader = styled('header')(({ isFill }: THeaderProps) => {
   const theme = useTheme()
-  console.log(isFill)
 
   return {
     width: '100%',
