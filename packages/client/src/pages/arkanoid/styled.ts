@@ -69,3 +69,22 @@ export const VerticalDivider = styled.div`
   height: 100%;
   margin: 0 10px;
 `
+export const GameContainer = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  flexGrow: 1,
+  width: '100%',
+})
+
+export const CanvasWrapper = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexGrow: 1,
+  width: '80%',
+  height: '100%',
+  backgroundColor: 'white',
+  border: '1px solid lightgrey',
+})

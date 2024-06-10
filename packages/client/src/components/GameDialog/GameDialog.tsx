@@ -7,12 +7,14 @@ interface GameDialogProps {
   isWin?: boolean
   isOpen: boolean
   onClose: () => void
+  onRestart: () => void
 }
 
 const GameDialog: FC<GameDialogProps> = ({
   isWin = false,
   isOpen,
   onClose,
+  onRestart,
 }) => {
   const navigate = useNavigate()
 
@@ -32,7 +34,7 @@ const GameDialog: FC<GameDialogProps> = ({
       title={isWin ? 'Поздравляем!' : 'Упс...'}
       footerButtons={
         <DialogActions>
-          <Button variant="contained" onClick={handleStart}>
+          <Button variant="contained" onClick={isWin ? handleStart : onRestart}>
             {isWin ? 'Следующий уровень' : 'Повторить'}
           </Button>
           <Button variant="contained" onClick={handleCancel}>

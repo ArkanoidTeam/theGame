@@ -13,7 +13,7 @@ export class Ball {
     this.width = 10
     this.height = 10
     this.x = canvas.width / 2 - this.width / 2
-    this.y = canvas.height - 40
+    this.y = canvas.height - 20
     this.dx = 0
     this.dy = 0
     this.speed = 2

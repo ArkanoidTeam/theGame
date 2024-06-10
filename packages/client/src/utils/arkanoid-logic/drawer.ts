@@ -30,24 +30,29 @@ export class Drawer {
   }
 
   public draw() {
-    this.context.fillStyle = 'lightgrey'
+    this.context.fillStyle = 'white'
     this.context.fillRect(0, 0, this.canvas.width, WallSize)
     this.context.fillRect(0, 0, WallSize, this.canvas.height)
+    this.context.fillRect(
+      0,
+      this.canvas.height - WallSize,
+      this.canvas.width,
+      this.canvas.height
+    )
     this.context.fillRect(
       this.canvas.width - WallSize,
       0,
       WallSize,
-      this.canvas.height
+      this.canvas.height - WallSize
     )
 
-    if (this.ball.dx || this.ball.dy) {
-      this.context.fillRect(
-        this.ball.x,
-        this.ball.y,
-        this.ball.width,
-        this.ball.height
-      )
-    }
+    this.context.fillStyle = 'lightgrey'
+    this.context.fillRect(
+      this.ball.x,
+      this.ball.y,
+      this.ball.width,
+      this.ball.height
+    )
 
     this.bricks.forEach(brick => {
       this.context.fillStyle = brick.color
