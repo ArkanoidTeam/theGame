@@ -10,7 +10,9 @@ const Page = ({ children, ...stackProps }: PropsWithChildren & StackProps) => {
       useFlexGap
       gap="20px"
       sx={{
-        backgroundColor: theme.palette.layout.pageBackgroundColor,
+        // todo решить вопрос с провайдером темы
+        // backgroundColor: theme.palette.layout.pageBackgroundColor
+        backgroundColor: '#F3F8FE',
       }}
       minHeight="100vh"
       {...stackProps}>
