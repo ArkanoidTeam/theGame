@@ -26,7 +26,6 @@
     "lerna": "^5.4.3"
   },
   "dependencies": {
-    "axios": "^1.7.2",
-    "lefthook-darwin-arm64": "^1.6.15"
+    "axios": "^1.7.2"
   }
 }
