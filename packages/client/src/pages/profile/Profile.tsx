@@ -5,6 +5,8 @@ import { ProfileAvatar } from './components'
 import { ChangeDataForm } from './components'
 import { ChangePasswordForm } from './components'
 import { Footer, Header, Page, PageContent } from '../../components'
+import { ArrowBack } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 
 interface IProfileProps {
   propUserData: User
@@ -14,6 +16,7 @@ interface IProfileProps {
 const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
   const [userEditMode, setUserEditMode] = useState(false)
   const [passwordEditMode, setPasswordEditMode] = useState(false)
+  const navigate = useNavigate()
 
   const onDeleteAccount = () => {
     console.log('user account deleted')
@@ -21,7 +24,14 @@ const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
 
   return (
     <Page>
-      <Header />
+      <Header alignItems="flex-start">
+        <Button
+          variant="text"
+          onClick={() => navigate('/')}
+          startIcon={<ArrowBack />}>
+          Вернуться
+        </Button>
+      </Header>
       <PageContent title="Arkanoid" subtitle="Аккаунт">
         <ProfileAvatar
           propUserData={propUserData}
@@ -70,7 +80,7 @@ const Profile: FC<IProfileProps> = ({ propUserData, onDataChanged }) => {
           </ButtonsContainer>
         )}
       </PageContent>
-      <Footer />
+      <Footer hasLinks />
     </Page>
   )
 }
