@@ -1,3 +1,4 @@
+import { WallSize } from '../constants/game_utils'
 export class Paddle {
   canvas: HTMLCanvasElement
   x: number
@@ -11,7 +12,7 @@ export class Paddle {
     this.width = 100
     this.height = 10
     this.x = canvas.width / 2 - this.width / 2
-    this.y = canvas.height - this.height
+    this.y = canvas.height - WallSize - this.height
     this.dx = 0
   }
 

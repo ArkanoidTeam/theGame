@@ -8,6 +8,8 @@ import {
   PageContainer,
   MainContent,
   VerticalDivider,
+  GameContainer,
+  CanvasWrapper,
 } from './styled'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -36,6 +38,14 @@ const Score: FC<ScoreProps> = ({ scoreValue }) => {
   return <Typography context={`Очки: ${scoreValue.toString()}`} />
 }
 
+interface LifesScoreProps {
+  lifesCount: number
+}
+
+const Lifes: FC<LifesScoreProps> = ({ lifesCount }) => {
+  return <Typography context={`Жизни: ${lifesCount.toString()}`} />
+}
+
 interface UserNameProps {
   userName: string
 }
@@ -48,10 +58,13 @@ const Arkanoid: FC = () => {
   const navigate = useNavigate()
   const [isOpen, setOpen] = useState(true)
   const [isStart, setStart] = useState(false)
-  const [isGameEnd, setGameEnd] = useState(false)
+  const [endGameModalOpen, setEndGameModalOpen] = useState(false)
+  const [score, setScore] = useState(0)
+  const [lifesCount, setLifesCount] = useState(3)
+  const [gameInstance, setGameInstance] = useState<Game | null>(null)
 
   const initialLevel = 1 // Заглушка для номера уровня
-  const initialScore = 0 // Заглушка для значения очков
+  // const initialScore = 0 // Заглушка для значения очков
   const userName = 'user_name' // Заглушка для пользователя
 
   const handleStart = () => {
@@ -64,27 +77,80 @@ const Arkanoid: FC = () => {
     navigate('/')
   }
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  let game
+
+  const handleScoreChange = (score: number) => {
+    setScore(score)
+  }
+
+  const handleLifesCountChange = (lifesCount: number) => {
+    setLifesCount(lifesCount)
+    if (lifesCount === 0) {
+      handleGameEnd()
+    }
+  }
+
+  const onGameRestart = () => {
+    setScore(0)
+    setLifesCount(3)
+    if (gameInstance) {
+      gameInstance.restart()
+      gameInstance.subscribeToScore(handleScoreChange)
+      gameInstance.subscribeToLifesCount(handleLifesCountChange)
+    }
+    setEndGameModalOpen(false)
+  }
+
+  const handleGameEnd = () => {
+    setEndGameModalOpen(true)
+  }
+
+  let game: Game
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
     if (!canvas) {
       console.error('Canvas element not found')
       return
     }
+    const parent = canvas.parentNode as HTMLElement
+
+    const style = getComputedStyle(parent)
+    const paddingLeft = parseFloat(style.paddingLeft)
+    const paddingRight = parseFloat(style.paddingRight)
+    const paddingTop = parseFloat(style.paddingTop)
+    const paddingBottom = parseFloat(style.paddingBottom)
+
+    const width = parent.clientWidth - paddingLeft - paddingRight
+    const height = parent.clientHeight - paddingTop - paddingBottom
+
+    canvas.width = width
+    canvas.height = height
+
     const context = canvas.getContext('2d') as CanvasRenderingContext2D
-    game = new Game(canvas, context, initialLevel)
+    game = new Game(canvas, context, initialLevel, lifesCount)
+    game.subscribeToScore(handleScoreChange)
+    game.subscribeToLifesCount(handleLifesCountChange)
     game.init()
+    setGameInstance(game)
+
+    return () => {
+      game.unsubscribeFromScore(handleScoreChange)
+      game.unsubscribeFromLifesCount(handleLifesCountChange)
+      game.destroy()
+    }
   }, [])
   return (
     <Page>
       <Header isFill={true} justifyContent="space-between">
         <Level levelNumber={initialLevel} />
-        <Score scoreValue={initialScore} />
+        <Score scoreValue={score} />
+        <Lifes lifesCount={lifesCount} />
         <UserName userName={userName} />
       </Header>
-      <PageContent>
-        <canvas width="400" height="500" id="game" ref={canvasRef} />
-      </PageContent>
+      <GameContainer>
+        <CanvasWrapper>
+          <canvas id="game" ref={canvasRef} />
+        </CanvasWrapper>
+      </GameContainer>
       <Footer isFill={true}>
         <FooterButtonsContainer>
           <Button variant="text" className="logout">
@@ -120,7 +186,11 @@ const Arkanoid: FC = () => {
         }>
         Краткое описание правил игры...
       </Modal>
-      <GameDialog isOpen={isGameEnd} onClose={() => setGameEnd(false)} />
+      <GameDialog
+        isOpen={endGameModalOpen}
+        onClose={() => setEndGameModalOpen(false)}
+        onRestart={onGameRestart}
+      />
     </Page>
   )
 }

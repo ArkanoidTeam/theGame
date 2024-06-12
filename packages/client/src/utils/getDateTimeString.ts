@@ -9,14 +9,6 @@
  * - timeNoSecs - 08:00
  */
 
-enum STRING_TYPES {
-  full,
-  fullNoSecs,
-  date,
-  fullTime,
-  timeNoSecs,
-}
-
 type TStringTypes = 'date' | 'full' | 'fullNoSecs' | 'fullTime' | 'timeNoSecs'
 
 export default function getDateTimeString(
