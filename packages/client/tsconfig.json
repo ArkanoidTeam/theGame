@@ -20,6 +20,6 @@
       "@types/*": ["types/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "public/sw.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
