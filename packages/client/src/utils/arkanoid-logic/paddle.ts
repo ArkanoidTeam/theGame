@@ -16,6 +16,14 @@ export class Paddle {
     this.dx = 0
   }
 
+  restore() {
+    this.width = 100
+    this.height = 10
+    this.x = this.canvas.width / 2 - this.width / 2
+    this.y = this.canvas.height - WallSize - this.height
+    this.dx = 0
+  }
+
   update() {
     this.x += this.dx
   }

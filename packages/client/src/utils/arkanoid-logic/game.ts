@@ -89,6 +89,8 @@ export class Game {
   updateGameObjects() {
     // Пересчитываем размеры и позиции игровых объектов на канвасе
     this.updateBricks()
+    this.paddle.restore()
+    this.returnBallToPlatfom()
   }
 
   /**
