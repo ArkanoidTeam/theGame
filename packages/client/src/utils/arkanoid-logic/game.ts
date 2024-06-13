@@ -76,8 +76,8 @@ export class Game {
       const width = parent.clientWidth - paddingLeft - paddingRight
       const height = parent.clientHeight - paddingTop - paddingBottom
 
-      this.canvas.width = width
-      this.canvas.height = height
+      this.canvas.width = width - 1
+      this.canvas.height = height - 1
       this.brickWidthComputed =
         (this.canvas.width - WallSize * 2 - BrickGap * 9) / 10
 
