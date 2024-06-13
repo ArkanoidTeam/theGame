@@ -1,8 +1,9 @@
-export const colorMap: { [key: string]: string } = {
-  R: 'red',
-  O: 'orange',
-  G: 'green',
-  Y: 'yellow',
+export const brickProps: { [key: string]: Record<string, string | number> } = {
+  I: { color: 'grey', durability: Infinity },
+  R: { color: 'red', durability: 4 },
+  O: { color: 'orange', durability: 3 },
+  G: { color: 'green', durability: 2 },
+  Y: { color: 'yellow', durability: 1 },
 }
 export const brickScoresMap: { [key: string]: number } = {
   R: 40,
