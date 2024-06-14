@@ -55,13 +55,13 @@ const AppRoutes = [
   {
     path: Page.ARKANOID,
     element: (
-      <ProtectedRoute
-        element={
-          <ErrorBoundary>
-            <Pages.Arkanoid />
-          </ErrorBoundary>
-        }
-      />
+      // <ProtectedRoute
+      //   element={
+      <ErrorBoundary>
+        <Pages.Arkanoid />
+      </ErrorBoundary>
+      //   }
+      // />
     ),
   },
   {
