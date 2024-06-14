@@ -1,4 +1,4 @@
-import { BrickGap, BrickHeight, WallSize } from '../constants/game_utils'
+import { BrickParams, WallSize } from '../constants/game_utils'
 import { levels } from '../constants/levels'
 import { Ball } from './ball'
 import { Drawer } from './drawer'
@@ -37,7 +37,7 @@ export class Game {
     this.canvas = canvas
 
     this.brickWidthComputed =
-      (this.canvas.width - WallSize * 2 - BrickGap * 9) / 10
+      (this.canvas.width - WallSize * 2 - BrickParams.gap * 9) / 10
 
     this.context = context
     this.bricks = []
@@ -79,7 +79,7 @@ export class Game {
       this.canvas.width = width - 1
       this.canvas.height = height - 1
       this.brickWidthComputed =
-        (this.canvas.width - WallSize * 2 - BrickGap * 9) / 10
+        (this.canvas.width - WallSize * 2 - BrickParams.gap * 9) / 10
 
       // Пересчёт всех игровых объектов
       this.updateGameObjects()
@@ -167,10 +167,10 @@ export class Game {
         const brickCode = currentLevel[row][col]
         this.bricks.push(
           new Brick({
-            x: WallSize + (brickWidthComputed + BrickGap) * col,
-            y: WallSize + (BrickHeight + BrickGap) * row,
+            x: WallSize + (brickWidthComputed + BrickParams.gap) * col,
+            y: WallSize + (BrickParams.height + BrickParams.gap) * row,
             width: brickWidthComputed,
-            height: BrickHeight,
+            height: BrickParams.height,
             brickCode,
           })
         )
@@ -187,10 +187,10 @@ export class Game {
       for (let col = 0; col < currentLevel[row].length; col++) {
         const brick = this.bricks[brickIndex]
         if (brick) {
-          brick.x = WallSize + (this.brickWidthComputed + BrickGap) * col
-          brick.y = WallSize + (BrickHeight + BrickGap) * row
+          brick.x = WallSize + (this.brickWidthComputed + BrickParams.gap) * col
+          brick.y = WallSize + (BrickParams.height + BrickParams.gap) * row
           brick.width = this.brickWidthComputed
-          brick.height = BrickHeight
+          brick.height = BrickParams.height
         }
         brickIndex++
       }
@@ -292,7 +292,7 @@ export class Game {
   }
   // Возвращаем шарик на платформу
   returnBallToPlatfom() {
-    this.ball.x = this.paddle.x + this.paddle.width / 2
+    this.ball.x = this.paddle.x + this.paddle.width / 2 - this.ball.width / 2
     this.ball.y = this.paddle.y - this.paddle.height - 1
     this.ball.dx = 0
     this.ball.dy = 0
@@ -310,16 +310,16 @@ export class Game {
     }
 
     if (key === 'ArrowLeft') {
-      this.paddle.dx = -3
+      this.paddle.dx = -this.paddle.speed
       // Если игра остановлена, то при движении платформы обновляем положение мячика
       if (!this.gameInProgress) {
-        this.ball.dx = -3
+        this.ball.dx = -this.paddle.speed
       }
     } else if (key === 'ArrowRight') {
-      this.paddle.dx = 3
+      this.paddle.dx = this.paddle.speed
       // Если игра остановлена, то при движении платформы обновляем положение мячика
       if (!this.gameInProgress) {
-        this.ball.dx = 3
+        this.ball.dx = this.paddle.speed
       }
     }
 

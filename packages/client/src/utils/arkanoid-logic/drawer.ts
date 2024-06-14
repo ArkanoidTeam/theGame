@@ -1,4 +1,4 @@
-import { WallSize } from '../constants/game_utils'
+import { BrickParams, WallSize } from '../constants/game_utils'
 import { Ball } from './ball'
 import { Paddle } from './paddle'
 interface Brick {
@@ -46,25 +46,42 @@ export class Drawer {
       this.canvas.height - WallSize
     )
 
-    this.context.fillStyle = 'lightgrey'
-    this.context.fillRect(
+    this.context.beginPath()
+    this.context.fillStyle = this.ball.color
+    this.context.roundRect(
       this.ball.x,
       this.ball.y,
       this.ball.width,
-      this.ball.height
+      this.ball.height,
+      this.ball.width / 2
     )
+    this.context.fill()
+    this.context.closePath()
 
     this.bricks.forEach(brick => {
+      this.context.beginPath()
       this.context.fillStyle = brick.color
-      this.context.fillRect(brick.x, brick.y, brick.width, brick.height)
+      this.context.roundRect(
+        brick.x,
+        brick.y,
+        brick.width,
+        brick.height,
+        BrickParams.borderRadius
+      )
+      this.context.fill()
+      this.context.closePath()
     })
 
-    this.context.fillStyle = 'red'
-    this.context.fillRect(
+    this.context.beginPath()
+    this.context.fillStyle = this.paddle.color
+    this.context.roundRect(
       this.paddle.x,
       this.paddle.y,
       this.paddle.width,
-      this.paddle.height
+      this.paddle.height,
+      this.paddle.height / 2
     )
+    this.context.fill()
+    this.context.closePath()
   }
 }
