@@ -7,14 +7,21 @@ import {
   Page,
   PageContent,
 } from '../../components'
+import { YandexApiAuth } from '../../api/YandexApiAuth'
 
 const Main = () => {
   const navigate = useNavigate()
 
+  const onExitClick = () => {
+    YandexApiAuth.logout()
+      .then(() => navigate('/signin'))
+      .catch(err => console.log(err))
+  }
+
   return (
     <Page>
       <Header alignItems="flex-end" justifyContent="space-between">
-        <Button variant="text" onClick={() => navigate('/signin')}>
+        <Button variant="text" onClick={onExitClick}>
           Выйти
         </Button>
         <FullscreenButton />

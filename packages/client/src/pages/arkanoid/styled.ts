@@ -76,6 +76,7 @@ export const GameContainer = styled('div')({
   flexDirection: 'column',
   flexGrow: 1,
   width: '100%',
+  padding: '20px 0',
 })
 
 export const CanvasWrapper = styled('div')({

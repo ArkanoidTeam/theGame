@@ -25,7 +25,7 @@ type StyledContainerProps = {
 export const StyledContainer = styled(Container)<StyledContainerProps>(() => ({
   display: 'flex',
   justifyContent: 'center',
-  minWidth: '464px',
+  width: '90%',
   backgroundColor: '#fff',
   border: '1px solid #ddd',
   borderRadius: '8px',
@@ -56,4 +56,5 @@ export const StyledWrapper = styled.div`
   align-items: center;
   gap: 20px;
   overflow-x: hidden;
+  width: 100%;
 `

@@ -1,11 +1,8 @@
 import { FC, Children, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Typography } from '../../components/Typography'
+import { Typography } from '../Typography'
 
 import {
-  Header,
-  BackButton,
-  StyledArrowBackIcon,
   StyledContainer,
   StyledWrapper,
   PageContainer,
@@ -17,20 +14,11 @@ type PageTemplateProps = {
   pageTitle: string
 }
 
-const PageTemplate: FC<PageTemplateProps> = ({ children, pageTitle }) => {
-  const navigate = useNavigate()
+const ForumContent: FC<PageTemplateProps> = ({ children, pageTitle }) => {
   return (
     <PageContainer>
-      <Header>
-        <BackButton
-          variant="text"
-          startIcon={<StyledArrowBackIcon />}
-          onClick={() => navigate('/')}>
-          Вернуться на главную
-        </BackButton>
-      </Header>
       <MainContent>
-        <StyledContainer component="main" maxWidth="md">
+        <StyledContainer component="main" maxWidth="lg">
           <StyledWrapper>
             <Typography component="h2" variant="h2" context="Arkanoid" />
             <Typography component="h4" variant="h4" context={pageTitle} />
@@ -42,4 +30,4 @@ const PageTemplate: FC<PageTemplateProps> = ({ children, pageTitle }) => {
   )
 }
 
-export default PageTemplate
+export default ForumContent

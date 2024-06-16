@@ -3,23 +3,12 @@ import { Button, DialogActions } from '@mui/material'
 import { Game } from '../../utils/arkanoid-logic/game'
 import {
   FooterButtonsContainer,
-  StyledContainer,
-  StyledWrapper,
-  PageContainer,
-  MainContent,
   VerticalDivider,
   GameContainer,
   CanvasWrapper,
 } from './styled'
 import { useNavigate } from 'react-router-dom'
-import {
-  Header,
-  Footer,
-  Page,
-  PageContent,
-  Modal,
-  GameDialog,
-} from '../../components'
+import { Header, Footer, Page, Modal, GameDialog } from '../../components'
 import { Typography } from '../../components/Typography'
 
 interface LevelProps {

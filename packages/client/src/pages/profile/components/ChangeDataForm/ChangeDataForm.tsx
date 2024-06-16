@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Grid } from '@mui/material'
-import { ButtonsContainer, StyledForm } from './styled'
+import { ButtonsContainer, StyledForm, StyledError } from './styled'
 import saveUserData from '../../api/saveUserData'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
@@ -22,6 +22,7 @@ const ChangeDataForm: FC<IProfileProps> = ({
   exitEditMode,
 }) => {
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { control, handleSubmit } = useForm<ProfileData>({
     mode: 'onBlur',
@@ -32,12 +33,17 @@ const ChangeDataForm: FC<IProfileProps> = ({
     setLoading(true)
     try {
       await saveUserData(userData)
-    } catch (err) {
-      console.log(err)
-    } finally {
-      setLoading(false)
       exitEditMode()
       onDataChanged()
+    } catch (err) {
+      const error = err as Record<
+        string,
+        Record<string, Record<string, string>>
+      >
+      const message = error.response.data.reason
+      setErrorMessage(message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -73,6 +79,7 @@ const ChangeDataForm: FC<IProfileProps> = ({
             )
           })}
       </Grid>
+      {errorMessage ? <StyledError>{errorMessage}</StyledError> : ''}
       {editMode && (
         <ButtonsContainer>
           <Button fullWidth variant="contained" type="submit" color="primary">

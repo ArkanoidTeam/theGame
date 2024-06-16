@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { YandexApiAuth } from '../../api/YandexApiAuth'
 import { login as loginLayer } from '../../store/auth'
@@ -7,10 +7,12 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch'
 import { Button, Grid, Stack, TextField } from '@mui/material'
 import { Page, PageContent, ValidatedTextField } from '../../components'
 import { ValidationType, validationPatterns } from '../../utils/validation'
+import { StyledError, StyledForm } from './styled'
 
 const Signup: FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { control, handleSubmit, watch } = useForm<SignupData>({
     mode: 'onBlur',
@@ -33,13 +35,18 @@ const Signup: FC = () => {
 
       navigate('/')
     } catch (err) {
-      console.log(err)
+      const error = err as Record<
+        string,
+        Record<string, Record<string, string>>
+      >
+      const message = error.response.data.reason
+      setErrorMessage(message)
     }
   }
 
   return (
     <Page justifyContent="space-around" alignItems="center">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <PageContent title="Arkanoid" subtitle="Регистрация">
           <Grid container spacing={1} justifyContent="center">
             <Grid item xs={8}>
@@ -127,6 +134,7 @@ const Signup: FC = () => {
               />
             </Grid>
           </Grid>
+          {errorMessage ? <StyledError>{errorMessage}</StyledError> : ''}
           <Stack spacing={1}>
             <Button
               type="submit"
@@ -143,7 +151,7 @@ const Signup: FC = () => {
             </Grid>
           </Stack>
         </PageContent>
-      </form>
+      </StyledForm>
     </Page>
   )
 }

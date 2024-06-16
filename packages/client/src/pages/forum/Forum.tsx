@@ -4,7 +4,7 @@ import { List, Fab, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { StyledListItem, StyledDivider, AddThemeButtonWrapper } from './styled'
 import { AddThemeModal } from './components'
-import { Footer, Header, Page, PageContent } from '../../components'
+import { Footer, Header, Page, ForumContent } from '../../components'
 import { mockThemes, mockUserData } from '.'
 import { ArrowBack } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
@@ -42,10 +42,10 @@ const Forum: FC = () => {
           variant="text"
           onClick={() => navigate('/')}
           startIcon={<ArrowBack />}>
-          Вернуться
+          Вернуться на главную
         </Button>
       </Header>
-      <PageContent title="Arkanoid" subtitle="Форум">
+      <ForumContent pageTitle="Форум">
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
           {themes.map(item => {
             return (
@@ -68,7 +68,7 @@ const Forum: FC = () => {
             onAddTheme={onAddTheme}
           />
         </AddThemeButtonWrapper>
-      </PageContent>
+      </ForumContent>
       <Footer hasLinks />
     </Page>
   )
