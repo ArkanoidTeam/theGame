@@ -1,8 +1,5 @@
-import * as Pages from '../../client/src/utils/constants/navigation';
 const CACHE_NAME = 'my-site-cache-v1';
-const URLS = [
-  'https://deploy-preview-31--arkanoid-team.netlify.app'
-];
+const URLS = ['/', '/assets/', '/index.html']
 
 this.addEventListener('install', async event => {
   event.waitUntil(
