@@ -11,3 +11,8 @@ export const ButtonsContainer = styled.div`
   gap: 0.5rem;
   margin: 40px auto;
 `
+export const StyledError = styled('p')({
+  color: 'red',
+  marginTop: '20px',
+  textAlign: 'center',
+})
