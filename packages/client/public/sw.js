@@ -21,7 +21,7 @@ const URLS = [
   '/index.html',
 ]
 
-self.addEventListener('install', event => {
+this.addEventListener('install', event => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
@@ -37,7 +37,7 @@ self.addEventListener('install', event => {
   console.log('install')
 })
 
-self.addEventListener('activate', event => {
+this.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(cacheNames.map(name => caches.delete(name)))
@@ -46,7 +46,7 @@ self.addEventListener('activate', event => {
   console.log('activate')
 })
 
-self.addEventListener('fetch', event => {
+this.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
