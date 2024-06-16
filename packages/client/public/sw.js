@@ -1,33 +1,24 @@
+import * as Pages from '../../client/src/utils/constants/navigation'
 const CACHE_NAME = 'my-site-cache-v1'
 const URLS = [
-  '/',
-  '/App.tsx',
-  '/index.css',
-  '/main.tsx',
-  '/built/style.css',
-  '/built/bundle.js',
-  '/api/',
-  '/app/',
-  '/assets/',
-  '/components/',
-  '/hoc/',
-  '/hooks/',
-  '/pages/',
-  '/routes/',
-  '/store/',
-  '/theme/',
-  '/types/',
-  '/utils/',
-  '/index.html',
+  Pages.MAIN,
+  Pages.UNAVAILABLE,
+  Pages.NOT_FOUND,
+  Pages.SIGNIN,
+  Pages.SIGNUP,
+  Pages.LEADERBOARD,
+  Pages.PROFILE,
+  Pages.ARKANOID,
+  Pages.FORUM,
+  Pages.FORUM_THEME,
 ]
 
-this.addEventListener('install', async event => {
+self.addEventListener('install', async event => {
   event.waitUntil(
     (async () => {
       try {
         const cache = await caches.open(CACHE_NAME)
         await cache.addAll(URLS)
-        console.log('install')
       } catch (err) {
         console.log(err)
         throw err
@@ -36,7 +27,7 @@ this.addEventListener('install', async event => {
   )
 })
 
-this.addEventListener('activate', async event => {
+self.addEventListener('activate', async event => {
   event.waitUntil(
     (async () => {
       try {
@@ -51,7 +42,7 @@ this.addEventListener('activate', async event => {
   )
 })
 
-this.addEventListener('fetch', event => {
+self.addEventListener('fetch', event => {
   event.respondWith(
     (async () => {
       try {
