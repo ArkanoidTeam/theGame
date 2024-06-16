@@ -1,16 +1,7 @@
 import * as Pages from '../../client/src/utils/constants/navigation';
 const CACHE_NAME = 'my-site-cache-v1';
 const URLS = [
-  Pages.MAIN,
-  Pages.UNAVAILABLE,
-  Pages.NOT_FOUND,
-  Pages.SIGNIN,
-  Pages.SIGNUP,
-  Pages.LEADERBOARD,
-  Pages.PROFILE,
-  Pages.ARKANOID,
-  Pages.FORUM,
-  Pages.FORUM_THEME,
+  '/'
 ];
 
 self.addEventListener('install', async event => {
