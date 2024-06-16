@@ -1,5 +1,5 @@
 const CACHE_NAME = 'my-site-cache-v1';
-const URLS = ['/', '/assets/', '/index.html']
+const URLS = ['/', '/assets/index.js', '/assets/index.css', '/index.html']
 
 this.addEventListener('install', async event => {
   event.waitUntil(
