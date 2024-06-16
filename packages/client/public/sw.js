@@ -4,7 +4,7 @@ const URLS = [
   '/'
 ];
 
-self.addEventListener('install', async event => {
+this.addEventListener('install', async event => {
   event.waitUntil(
     (async () => {
       try {
@@ -18,7 +18,7 @@ self.addEventListener('install', async event => {
   );
 });
 
-self.addEventListener('activate', async event => {
+this.addEventListener('activate', async event => {
   event.waitUntil(
     (async () => {
       try {
@@ -33,7 +33,7 @@ self.addEventListener('activate', async event => {
   );
 });
 
-self.addEventListener('fetch', event => {
+this.addEventListener('fetch', event => {
   event.respondWith(
     (async () => {
       try {
