@@ -21,63 +21,50 @@ const URLS = [
   '/index.html',
 ]
 
-self.addEventListener('install', async event => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    (async () => {
-      try {
-        const cache = await caches.open(CACHE_NAME)
-        await cache.addAll(URLS)
-        console.log('install')
-      } catch (err) {
+    caches
+      .open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache')
+        return cache.addAll(URLS)
+      })
+      .catch(err => {
         console.log(err)
         throw err
-      }
-    })()
+      })
   )
+  console.log('install')
 })
 
-self.addEventListener('activate', async event => {
+self.addEventListener('activate', event => {
   event.waitUntil(
-    (async () => {
-      try {
-        const cacheNames = await caches.keys()
-        await Promise.all(cacheNames.map(name => caches.delete(name)))
-        console.log('activate')
-      } catch (err) {
-        console.log(err)
-        throw err
-      }
-    })()
+    caches.keys().then(cacheNames => {
+      return Promise.all(cacheNames.map(name => caches.delete(name)))
+    })
   )
+  console.log('activate')
 })
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    (async () => {
-      try {
-        const response = await caches.match(event.request)
-        if (response) {
+    caches.match(event.request).then(response => {
+      if (response) {
+        return response
+      }
+
+      const fetchRequest = event.request.clone()
+      return fetch(fetchRequest).then(response => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response
         }
 
-        const fetchRequest = event.request.clone()
-        const networkResponse = await fetch(fetchRequest)
-        if (
-          !networkResponse ||
-          networkResponse.status !== 200 ||
-          networkResponse.type !== 'basic'
-        ) {
-          return networkResponse
-        }
-
-        const responseToCache = networkResponse.clone()
-        const cache = await caches.open(CACHE_NAME)
-        await cache.put(event.request, responseToCache)
-        return networkResponse
-      } catch (err) {
-        console.log(err)
-        throw err
-      }
-    })()
+        const responseToCache = response.clone()
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseToCache)
+        })
+        return response
+      })
+    })
   )
 })
