@@ -2,7 +2,8 @@
   "name": "client",
   "version": "0.0.0",
   "scripts": {
-    "dev": "tsc --project tsconfig.server.json && cross-env node server/index.js",
+    "dev": "vite",
+    "dev:ssr": "tsc --project tsconfig.server.json && cross-env node server/index.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
