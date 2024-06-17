@@ -1,19 +1,16 @@
-import dotenv from 'dotenv'
-dotenv.config()
-
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 
-const port = process.env.PORT || 80
+const port = 80
 const clientPath = path.join(__dirname, '..')
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = true
 
 async function createServer() {
   const app = express()
 
-  let vite: ViteDevServer | undefined
+  let vite: ViteDevServer
   if (isDev) {
     vite = await createViteServer({
       server: { middlewareMode: true },
