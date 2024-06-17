@@ -21,17 +21,17 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 
 function startServiceWorker() {
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
+    window.addEventListener('load', () => {
       navigator.serviceWorker
         .register('/sw.js')
-        .then(function (registration) {
+        .then(registration => {
           console.log(
             'ServiceWorker registration successful with scope: ',
             registration.scope
           )
         })
-        .catch(function (error) {
-          console.error('ServiceWorker registration failed: ', error)
+        .catch((error: string) => {
+          console.log('ServiceWorker registration failed: ', error)
         })
     })
   }
