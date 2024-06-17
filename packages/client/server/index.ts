@@ -37,10 +37,7 @@ async function createServer() {
       )
 
       template = await vite.transformIndexHtml(url, template)
-
-      render = (
-        await vite.ssrLoadModule(path.join(clientPath, 'src/entry-server.tsx'))
-      ).render
+      render = (await vite.ssrLoadModule('src/entry-server.tsx')).render
     } else {
       template = await fs.readFile(
         path.join(clientPath, 'dist/client/index.html'),
@@ -51,7 +48,6 @@ async function createServer() {
 
       render = (await import(pathToServer)).render
     }
-
     const { html: rootHtml } = await render(req)
 
     const html = template.replace(`<!--outlet-->`, rootHtml)
@@ -60,7 +56,7 @@ async function createServer() {
   })
 
   app.listen(port, () => {
-    console.log(`Client is listening on port: ${port}`)
+    console.log(`  ➜ 🎸 SSR is listening on port: ${port}`)
   })
 }
 

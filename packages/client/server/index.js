@@ -54,7 +54,7 @@ async function createServer() {
         if (vite) {
             template = await promises_1.default.readFile(path_1.default.resolve(clientPath, 'index.html'), 'utf-8');
             template = await vite.transformIndexHtml(url, template);
-            render = (await vite.ssrLoadModule(path_1.default.join(clientPath, 'src/entry-server.tsx'))).render;
+            render = (await vite.ssrLoadModule('src/entry-server.tsx')).render;
         }
         else {
             template = await promises_1.default.readFile(path_1.default.join(clientPath, 'dist/client/index.html'), 'utf-8');
@@ -66,7 +66,7 @@ async function createServer() {
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     });
     app.listen(port, () => {
-        console.log(`Client is listening on port: ${port}`);
+        console.log(`  ➜ 🎸 SSR is listening on port: ${port}`);
     });
 }
 createServer();
