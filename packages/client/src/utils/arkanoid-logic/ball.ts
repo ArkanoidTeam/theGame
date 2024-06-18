@@ -1,3 +1,5 @@
+import { BallParams } from '../constants/game_utils'
+
 export class Ball {
   canvas: HTMLCanvasElement
   x: number
@@ -7,16 +9,18 @@ export class Ball {
   width: number
   height: number
   speed: number
+  color: string
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
-    this.width = 10
-    this.height = 10
+    this.width = BallParams.size
+    this.height = BallParams.size
     this.x = canvas.width / 2 - this.width / 2
-    this.y = canvas.height - 20
+    this.y = canvas.height - this.height
     this.dx = 0
     this.dy = 0
-    this.speed = 2
+    this.speed = BallParams.speed
+    this.color = BallParams.color
   }
 
   update() {

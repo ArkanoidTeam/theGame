@@ -3,23 +3,12 @@ import { Button, DialogActions } from '@mui/material'
 import { Game } from '../../utils/arkanoid-logic/game'
 import {
   FooterButtonsContainer,
-  StyledContainer,
-  StyledWrapper,
-  PageContainer,
-  MainContent,
   VerticalDivider,
   GameContainer,
   CanvasWrapper,
 } from './styled'
 import { useNavigate } from 'react-router-dom'
-import {
-  Header,
-  Footer,
-  Page,
-  PageContent,
-  Modal,
-  GameDialog,
-} from '../../components'
+import { Header, Footer, Page, Modal, GameDialog } from '../../components'
 import { Typography } from '../../components/Typography'
 
 interface LevelProps {
@@ -104,29 +93,14 @@ const Arkanoid: FC = () => {
     setEndGameModalOpen(true)
   }
 
-  let game: Game
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
     if (!canvas) {
       console.error('Canvas element not found')
       return
     }
-    const parent = canvas.parentNode as HTMLElement
-
-    const style = getComputedStyle(parent)
-    const paddingLeft = parseFloat(style.paddingLeft)
-    const paddingRight = parseFloat(style.paddingRight)
-    const paddingTop = parseFloat(style.paddingTop)
-    const paddingBottom = parseFloat(style.paddingBottom)
-
-    const width = parent.clientWidth - paddingLeft - paddingRight
-    const height = parent.clientHeight - paddingTop - paddingBottom
-
-    canvas.width = width
-    canvas.height = height
-
     const context = canvas.getContext('2d') as CanvasRenderingContext2D
-    game = new Game(canvas, context, initialLevel, lifesCount)
+    const game = new Game(canvas, context, initialLevel, lifesCount)
     game.subscribeToScore(handleScoreChange)
     game.subscribeToLifesCount(handleLifesCountChange)
     game.init()

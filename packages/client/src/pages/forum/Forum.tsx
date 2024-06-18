@@ -1,17 +1,20 @@
 import { FC, useState, Fragment } from 'react'
 import { ThemeCard } from './components'
-import { List, Fab } from '@mui/material'
+import { List, Fab, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import { PageTemplate } from '../../components'
 import { StyledListItem, StyledDivider, AddThemeButtonWrapper } from './styled'
 import { AddThemeModal } from './components'
-
+import { Footer, Header, Page, ForumContent } from '../../components'
 import { mockThemes, mockUserData } from '.'
+import { ArrowBack } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 
 const Forum: FC = () => {
   const [themes, setThemes] = useState(mockThemes)
   const [modalOpen, setModalOpen] = useState(false)
   const [currentUser, setCurrentUser] = useState(mockUserData)
+  const navigate = useNavigate()
+
   const onAddThemeClick = () => {
     setModalOpen(true)
   }
@@ -33,30 +36,41 @@ const Forum: FC = () => {
     setModalOpen(false)
   }
   return (
-    <PageTemplate pageTitle="Форум">
-      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {themes.map(item => {
-          return (
-            <Fragment key={item.id}>
-              <StyledListItem>
-                <ThemeCard {...item} />
-              </StyledListItem>
-              <StyledDivider variant="inset" component="li" />
-            </Fragment>
-          )
-        })}
-      </List>
-      <AddThemeButtonWrapper>
-        <Fab color="primary" aria-label="add" onClick={onAddThemeClick}>
-          <AddIcon />
-        </Fab>
-        <AddThemeModal
-          modalOpen={modalOpen}
-          onClose={onModalClose}
-          onAddTheme={onAddTheme}
-        />
-      </AddThemeButtonWrapper>
-    </PageTemplate>
+    <Page>
+      <Header alignItems="flex-start">
+        <Button
+          variant="text"
+          onClick={() => navigate('/')}
+          startIcon={<ArrowBack />}>
+          Вернуться на главную
+        </Button>
+      </Header>
+      <ForumContent pageTitle="Форум">
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          {themes.map(item => {
+            return (
+              <Fragment key={item.id}>
+                <StyledListItem>
+                  <ThemeCard {...item} />
+                </StyledListItem>
+                <StyledDivider variant="inset" component="li" />
+              </Fragment>
+            )
+          })}
+        </List>
+        <AddThemeButtonWrapper>
+          <Fab color="primary" aria-label="add" onClick={onAddThemeClick}>
+            <AddIcon />
+          </Fab>
+          <AddThemeModal
+            modalOpen={modalOpen}
+            onClose={onModalClose}
+            onAddTheme={onAddTheme}
+          />
+        </AddThemeButtonWrapper>
+      </ForumContent>
+      <Footer hasLinks />
+    </Page>
   )
 }
 

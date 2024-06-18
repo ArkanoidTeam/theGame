@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Grid } from '@mui/material'
-import { ButtonsContainer, StyledForm } from './styled'
+import { ButtonsContainer, StyledForm, StyledError } from './styled'
 import savePasswordRequest from '../../api/savePasswordRequest'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import {
@@ -48,6 +48,7 @@ const ChangePasswordForm: FC<IProfileProps> = ({ editMode, exitEditMode }) => {
   }
 
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { control, handleSubmit, watch } = useForm<ChangePasswordData>({
     mode: 'onBlur',
@@ -60,11 +61,16 @@ const ChangePasswordForm: FC<IProfileProps> = ({ editMode, exitEditMode }) => {
     setLoading(true)
     try {
       await savePasswordRequest(oldPassword, newPassword)
+      exitEditMode()
     } catch (err) {
-      console.log(err)
+      const error = err as Record<
+        string,
+        Record<string, Record<string, string>>
+      >
+      const message = error.response.data.reason
+      setErrorMessage(message)
     } finally {
       setLoading(false)
-      exitEditMode()
     }
   }
 
@@ -98,6 +104,7 @@ const ChangePasswordForm: FC<IProfileProps> = ({ editMode, exitEditMode }) => {
             )
           })}
       </Grid>
+      {errorMessage ? <StyledError>{errorMessage}</StyledError> : ''}
       {editMode && (
         <ButtonsContainer>
           <Button fullWidth variant="contained" type="submit" color="primary">

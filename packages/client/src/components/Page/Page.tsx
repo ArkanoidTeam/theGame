@@ -8,7 +8,6 @@ const Page = ({ children, ...stackProps }: PropsWithChildren & StackProps) => {
     <Stack
       justifyContent="space-between"
       useFlexGap
-      gap="20px"
       sx={{
         // todo решить вопрос с провайдером темы
         // backgroundColor: theme.palette.layout.pageBackgroundColor
