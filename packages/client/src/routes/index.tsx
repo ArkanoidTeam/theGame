@@ -11,7 +11,7 @@ const AppRoutes: FC = () => {
       <Routes>
         <Route
           path={Page.MAIN}
-          element={<ProtectedRoute element={<Pages.Main />} />}
+          element={<ProtectedRoute element={<Pages.Main />} isCheckOAuth />}
         />
         <Route
           path={Page.ARKANOID}
