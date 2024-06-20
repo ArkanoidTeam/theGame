@@ -39,3 +39,12 @@ type ChangePasswordData = {
   newPassword: string
   newPasswordAgain: string
 }
+
+type OAuthServiceIdData = {
+  service_id: string;
+}
+
+type OAuthSignInData = {
+  code: string
+  redirect_uri: string
+}
