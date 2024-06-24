@@ -10,6 +10,7 @@ export class Ball {
   height: number
   speed: number
   color: string
+  power: number
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
@@ -21,10 +22,16 @@ export class Ball {
     this.dy = 0
     this.speed = BallParams.speed
     this.color = BallParams.color
+    this.power = BallParams.power
   }
 
   update() {
     this.x += this.dx
     this.y += this.dy
+  }
+
+  activateBonus(name: 'power', value: number, time: number) {
+    this[name] = this[name] * value
+    setTimeout(() => (this[name] = BallParams[name]), time)
   }
 }

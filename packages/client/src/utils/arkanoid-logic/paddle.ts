@@ -31,4 +31,9 @@ export class Paddle {
   update() {
     this.x += this.dx
   }
+
+  activateBonus(name: 'width' | 'speed', value: number, time: number) {
+    this[name] = this[name] * value
+    setTimeout(() => (this[name] = PaddleParams[name]), time)
+  }
 }
