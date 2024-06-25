@@ -1,5 +1,5 @@
 import { brickProps } from '../constants/game_utils'
-import { type Bonus } from 'utils/constants/levels'
+import { type Bonus } from '../constants/levels'
 export class Brick {
   x: number
   y: number
