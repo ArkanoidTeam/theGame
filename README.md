@@ -8,3 +8,6 @@
 - [Макет](https://www.figma.com/design/3ysOjOG6dgYJbpZSH2eZhJ/%D0%98%D0%B3%D1%80%D0%B0-%22Arkanoid%22?node-id=0-1) - Макет проекта в Figma
 
 https://arkanoid-team.netlify.app/
+
+[Отчет о проверке утечек памяти](memoryleaks.md)
+
