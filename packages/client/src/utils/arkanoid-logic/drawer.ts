@@ -3,7 +3,7 @@ import { Ball } from './ball'
 import { Paddle } from './paddle'
 import { Brick } from './brick'
 import { Tooltip } from './tooltip'
-import { Bonus } from 'utils/constants/levels'
+import { Bonus } from '../constants/levels'
 export class Drawer {
   private context: CanvasRenderingContext2D
   private canvas: HTMLCanvasElement
