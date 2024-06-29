@@ -251,7 +251,6 @@ export class Game {
             brick.visible = false
             // Обрабатываем бонусы если есть
             if (brick.bonus) {
-              console.log(brick.bonus)
               const { entity, property, value, time } = brick.bonus
               if (entity === 'brick') {
                 if (property === 'score') {

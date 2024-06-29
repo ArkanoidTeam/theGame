@@ -8,7 +8,9 @@ dotenv.config()
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    host: '0.0.0.0', // Слушает на всех интерфейсах
     port: Number(process.env.CLIENT_PORT) || 3000,
+    strictPort: true, // Не переключаться на другой порт
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),

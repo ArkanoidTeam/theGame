@@ -5,7 +5,7 @@ import path from 'path'
 
 const port = 80
 const clientPath = path.join(__dirname, '..')
-const isDev = true
+const isDev = process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
