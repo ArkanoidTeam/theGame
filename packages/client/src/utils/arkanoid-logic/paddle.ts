@@ -36,4 +36,47 @@ export class Paddle {
     this[name] = this[name] * value
     setTimeout(() => (this[name] = PaddleParams[name]), time)
   }
+
+  activatePointerLock() {
+    if (this.canvas.requestPointerLock) {
+      this.canvas.requestPointerLock()
+    } else {
+      console.warn('Pointer Lock API is not supported by this browser.')
+    }
+  }
+
+  deactivatePointerLock() {
+    if (document.exitPointerLock) {
+      document.exitPointerLock()
+    } else {
+      console.warn('Pointer Lock API is not supported by this browser.')
+    }
+  }
+
+  handleMouseMove = (event: MouseEvent) => {
+    if (document.pointerLockElement === this.canvas) {
+      this.x += event.movementX
+      // Ограничение движения платформы границами канваса
+      this.x = Math.max(
+        WallSize,
+        Math.min(this.x, this.canvas.width - this.width - WallSize)
+      )
+    }
+  }
+
+  handleMouseClick = () => {
+    if (document.pointerLockElement !== this.canvas) {
+      this.activatePointerLock()
+    }
+  }
+
+  addPointerLockEventListeners() {
+    this.canvas.addEventListener('click', this.handleMouseClick)
+    document.addEventListener('mousemove', this.handleMouseMove)
+  }
+
+  removePointerLockEventListeners() {
+    this.canvas.removeEventListener('click', this.handleMouseClick)
+    document.removeEventListener('mousemove', this.handleMouseMove)
+  }
 }

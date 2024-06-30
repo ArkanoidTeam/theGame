@@ -169,10 +169,12 @@ export class Game {
     this.createBricks(this.brickWidthComputed)
     this.loop()
     this.addEventListeners()
+    this.paddle.addPointerLockEventListeners()
   }
 
   destroy() {
     this.removeEventListeners()
+    this.paddle.removePointerLockEventListeners()
   }
 
   createBricks(brickWidthComputed: number) {
@@ -355,11 +357,20 @@ export class Game {
     this.paddle.update()
     this.ball.update()
 
+    if (!this.gameInProgress) {
+      this.updateBallPositionOnPaddle()
+    }
+
     this.draw()
   }
+
+  updateBallPositionOnPaddle() {
+    this.ball.x = this.paddle.x + this.paddle.width / 2 - this.ball.width / 2
+  }
+
   // Возвращаем шарик на платформу
   returnBallToPlatfom() {
-    this.ball.x = this.paddle.x + this.paddle.width / 2 - this.ball.width / 2
+    this.updateBallPositionOnPaddle()
     this.ball.y = this.paddle.y - this.paddle.height - 1
     this.ball.dx = 0
     this.ball.dy = 0
@@ -382,12 +393,14 @@ export class Game {
         // Если игра остановлена, то при движении платформы обновляем положение мячика
         if (!this.gameInProgress) {
           this.ball.dx = -this.paddle.speed
+          this.updateBallPositionOnPaddle()
         }
       } else if (key === 'ArrowRight') {
         this.paddle.dx = this.paddle.speed
         // Если игра остановлена, то при движении платформы обновляем положение мячика
         if (!this.gameInProgress) {
           this.ball.dx = this.paddle.speed
+          this.updateBallPositionOnPaddle()
         }
       }
       if (key === ' ') {
@@ -412,6 +425,7 @@ export class Game {
       if (!this.gameInProgress) {
         this.ball.dx = 0
         this.returnBallToPlatfom()
+        this.updateBallPositionOnPaddle()
       }
     }
   }
