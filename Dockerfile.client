@@ -3,8 +3,6 @@ ARG CLIENT_PORT=80
 
 FROM node:$NODE_VERSION-buster as base
 
-RUN apt-get update && apt-get install -y curl
-
 WORKDIR /app
 
 FROM base as builder
@@ -23,7 +21,12 @@ WORKDIR /app
 COPY --from=builder /app/packages/client/dist/ /app/dist/
 COPY --from=builder /app/packages/client/server/ /app/server/
 COPY --from=builder /app/packages/client/package.json /app/package.json
+
 RUN yarn install --production=true
 
+RUN apt-get update && apt-get install -y netcat -y curl
+COPY ./utils/wait-for.sh /app/wait-for.sh
+RUN chmod +x /app/wait-for.sh
+
+
 EXPOSE $CLIENT_PORT
-CMD [ "node", "/app/server/index.js" ]

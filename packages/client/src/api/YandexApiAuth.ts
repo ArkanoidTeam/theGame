@@ -1,20 +1,27 @@
 import { ENDPOINTS } from '../utils/constants/api'
 import { axiosInstance } from './AxiosInstance'
+import { BASE_API_URI } from '../utils/constants/api'
+
+const headers = {
+  'Content-Type': 'application/json',
+}
+
+const instance = axiosInstance(BASE_API_URI, headers, true)
 
 export const YandexApiAuth = {
   signin(data: SignInData) {
-    return axiosInstance.post(ENDPOINTS.SIGN_IN, data)
+    return instance.post(ENDPOINTS.SIGN_IN, data)
   },
 
   signup(data: SignupData) {
-    return axiosInstance.post(ENDPOINTS.SIGN_UP, data)
+    return instance.post(ENDPOINTS.SIGN_UP, data)
   },
 
   logout() {
-    return axiosInstance.post(ENDPOINTS.LOGOUT)
+    return instance.post(ENDPOINTS.LOGOUT)
   },
 
   user() {
-    return axiosInstance.get(ENDPOINTS.USER)
+    return instance.get(ENDPOINTS.USER)
   },
 }
