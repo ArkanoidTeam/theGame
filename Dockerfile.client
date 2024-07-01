@@ -22,11 +22,12 @@ COPY --from=builder /app/packages/client/dist/ /app/dist/
 COPY --from=builder /app/packages/client/server/ /app/server/
 COPY --from=builder /app/packages/client/package.json /app/package.json
 
-RUN yarn install --production=true
-
-RUN apt-get update && apt-get install -y netcat -y curl
+RUN apt-get update && apt-get install -y netcat -y curl -y dos2unix
 COPY ./utils/wait-for.sh /app/wait-for.sh
 RUN chmod +x /app/wait-for.sh
+RUN dos2unix /app/wait-for.sh
+
+RUN yarn install --production=true
 
 
 EXPOSE $CLIENT_PORT

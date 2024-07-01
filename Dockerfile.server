@@ -1,4 +1,4 @@
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18
 ARG SERVER_PORT=3001
 
 FROM node:$NODE_VERSION-buster as base
@@ -22,11 +22,12 @@ WORKDIR /app
 COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/package.json /app/package.json
 
-RUN yarn install --production=true
-
-RUN apt-get update && apt-get install -y netcat -y curl
+RUN apt-get update && apt-get install -y netcat -y curl -y dos2unix
 COPY ./utils/wait-for.sh /app/wait-for.sh
 RUN chmod +x /app/wait-for.sh
+RUN dos2unix /app/wait-for.sh
+
+RUN yarn install --production=true
 
 
 EXPOSE $SERVER_PORT
