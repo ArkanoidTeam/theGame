@@ -6,6 +6,7 @@ export const mockMessages = [
     user_name: 'Иван Иванов',
     date: '2024-06-02T12:45:32.000Z',
     is_author: true,
+    emoji: '😀',
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const mockMessages = [
     user_name: 'Иван Иванов',
     date: '2024-06-02T13:55:11.000Z',
     is_author: true,
+    emoji: '',
   },
   {
     id: 3,
@@ -22,5 +24,6 @@ export const mockMessages = [
     user_name: 'Василий Васильев',
     date: '2024-06-02T16:21:40.000Z',
     is_author: false,
+    emoji: '',
   },
 ]
