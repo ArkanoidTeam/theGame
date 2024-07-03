@@ -38,8 +38,11 @@ export const useAuth = () => {
 
         setIsAuth(true)
       } catch (error) {
-        console.log(error)
-        setIsAuth(false)
+        const err = error as Record<string, Record<string, Record<string, unknown>>>
+
+        if (err.response.data.reason === "User already in system") {
+          setIsAuth(true)
+        } else setIsAuth(false)
       }
     }
 
