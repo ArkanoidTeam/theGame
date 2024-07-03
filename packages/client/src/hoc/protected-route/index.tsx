@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react'
-import { Navigate, useSearchParams } from 'react-router-dom'
+import { FC } from 'react'
+import { Navigate } from 'react-router-dom'
 
 import { Page } from '../../utils/constants/navigation'
 import { useAuth } from '../../hooks/auth-status'
