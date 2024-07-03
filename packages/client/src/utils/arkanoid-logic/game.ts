@@ -1,9 +1,10 @@
 import { BrickParams, WallSize } from '../constants/game_utils'
-import { levels } from '../constants/levels'
+import { levels, type Bonus } from '../constants/levels'
 import { Ball } from './ball'
 import { Drawer } from './drawer'
 import { Paddle } from './paddle'
 import { Brick } from './brick'
+import { Tooltip } from './tooltip'
 
 interface CollidableObject {
   x: number
@@ -22,11 +23,14 @@ export class Game {
   brickWidthComputed: number
   gameInProgress: boolean
   score: number
+  // Множитель очков, умножает выбитые очки если активен бонус увеличения очков
+  scoreMultiplier = 1
   scoreSubscribers = new Set<(score: number) => void>()
   lifeCountSubsribers = new Set<(lifesCount: number) => void>()
   lifesCount: number
   _lifesCount: number
   private animationFrameId: number | null = null
+  tooltips: Tooltip[] = [] // Массив для хранения активных подсказок
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -49,7 +53,8 @@ export class Game {
       this.canvas,
       this.ball,
       this.paddle,
-      this.bricks
+      this.bricks,
+      this.tooltips
     )
     this.gameInProgress = false
     this.score = 0
@@ -61,6 +66,14 @@ export class Game {
 
     // Добавляем обработчик события изменения размера окна
     window.addEventListener('resize', () => this.resizeCanvas())
+  }
+
+  addTooltip(x: number, y: number, text: string) {
+    this.tooltips.push(new Tooltip(x, y, text, 2000)) // Продолжительность отображения 2 секунды
+  }
+
+  removeInactiveTooltips() {
+    this.tooltips = this.tooltips.filter(tooltip => tooltip.active)
   }
 
   resizeCanvas() {
@@ -140,10 +153,12 @@ export class Game {
       this.canvas,
       this.ball,
       this.paddle,
-      this.bricks
+      this.bricks,
+      this.tooltips
     )
     this.gameInProgress = false
     this.score = 0
+    this.scoreMultiplier = 1
     this.lifesCount = this._lifesCount
     this.scoreSubscribers = new Set<(score: number) => void>()
     this.lifeCountSubsribers = new Set<(lifesCount: number) => void>()
@@ -154,17 +169,20 @@ export class Game {
     this.createBricks(this.brickWidthComputed)
     this.loop()
     this.addEventListeners()
+    this.paddle.addPointerLockEventListeners()
   }
 
   destroy() {
     this.removeEventListeners()
+    this.paddle.removePointerLockEventListeners()
   }
 
   createBricks(brickWidthComputed: number) {
     const currentLevel = levels[this.level]
     for (let row = 0; row < currentLevel.length; row++) {
       for (let col = 0; col < currentLevel[row].length; col++) {
-        const brickCode = currentLevel[row][col]
+        const brickCode = currentLevel[row][col].brickCode as string
+        const brickBonus = currentLevel[row][col].brickBonus as Bonus
         this.bricks.push(
           new Brick({
             x: WallSize + (brickWidthComputed + BrickParams.gap) * col,
@@ -172,6 +190,7 @@ export class Game {
             width: brickWidthComputed,
             height: BrickParams.height,
             brickCode,
+            brickBonus,
           })
         )
       }
@@ -222,32 +241,83 @@ export class Game {
       // берём очередной кирпич
       const brick = this.bricks[i]
 
-      // если было касание
-      if (this.collides(this.ball, brick)) {
-        // Уменьшаем прочность кирпича при столкновении
-        brick.durability--
+      if (brick.visible) {
+        // если было касание
+        if (this.collides(this.ball, brick)) {
+          // Уменьшаем прочность кирпича при столкновении
+          brick.durability -= this.ball.power
 
-        // Удаляем кирпич из массива, если его прочность достигла нуля
-        if (brick.durability <= 0) {
-          this.score += this.bricks[i].scoreVal
-          this.notifyScoreSubscribers()
-          this.bricks.splice(i, 1)
-          i-- // Уменьшаем индекс, чтобы корректно продолжить обход массива
-        }
+          // Удаляем кирпич из массива, если его прочность достигла нуля
+          if (brick.durability <= 0) {
+            // Делаем шарик невидимым
+            brick.visible = false
+            // Обрабатываем бонусы если есть
+            if (brick.bonus) {
+              console.log(brick.bonus)
+              const { entity, property, value, time } = brick.bonus
+              if (entity === 'brick') {
+                if (property === 'score') {
+                  this.scoreMultiplier *= value
+                  setTimeout(() => {
+                    this.scoreMultiplier = 1
+                  }, time)
+                }
+              }
+              if (entity === 'paddle') {
+                this.paddle.activateBonus(
+                  property as 'width' | 'speed',
+                  value,
+                  time as number
+                )
+              }
+              if (brick.bonus.entity === 'ball') {
+                if (property === 'speed') {
+                  // Запоминаем предыдущие значения
+                  const dx = this.ball.dx
+                  const dy = this.ball.dy
+                  this.ball.dx *= value
+                  this.ball.dy *= value
+                  setTimeout(() => {
+                    // Возвращаем предыдущие значения
+                    this.ball.dx = dx
+                    this.ball.dy = dy
+                  }, time)
+                }
+                this.ball.activateBonus(
+                  property as 'power',
+                  value,
+                  time as number
+                )
+              }
+              if (brick.bonus.entity === 'game') {
+                if (property === 'lifesCount') {
+                  this.lifesCount += value
+                  this.notifyLifesSubscribers()
+                }
+              }
+            }
+            const score = this.bricks[i].scoreVal * this.scoreMultiplier
+            // Увеличиваем очки и оповещаем слушателей
+            this.score += score
+            // Добавляем подсказку с количеством очков
+            this.addTooltip(brick.x, brick.y, `+${score}`)
+            this.notifyScoreSubscribers()
+          }
 
-        // если шарик коснулся кирпича сверху или снизу — меняем направление движения шарика по оси Y
-        if (
-          this.ball.y + this.ball.height - this.ball.speed <= brick.y ||
-          this.ball.y >= brick.y + brick.height - this.ball.speed
-        ) {
-          this.ball.dy *= -1
+          // если шарик коснулся кирпича сверху или снизу — меняем направление движения шарика по оси Y
+          if (
+            this.ball.y + this.ball.height - this.ball.speed <= brick.y ||
+            this.ball.y >= brick.y + brick.height - this.ball.speed
+          ) {
+            this.ball.dy *= -1
+          }
+          // в противном случае меняем направление движения шарика по оси X
+          else {
+            this.ball.dx *= -1
+          }
+          // как нашли касание — сразу выходим из цикла проверки
+          break
         }
-        // в противном случае меняем направление движения шарика по оси X
-        else {
-          this.ball.dx *= -1
-        }
-        // как нашли касание — сразу выходим из цикла проверки
-        break
       }
     }
     // Выход шарика за пределы поля
@@ -288,11 +358,20 @@ export class Game {
     this.paddle.update()
     this.ball.update()
 
+    if (!this.gameInProgress) {
+      this.updateBallPositionOnPaddle()
+    }
+
     this.draw()
   }
+
+  updateBallPositionOnPaddle() {
+    this.ball.x = this.paddle.x + this.paddle.width / 2 - this.ball.width / 2
+  }
+
   // Возвращаем шарик на платформу
   returnBallToPlatfom() {
-    this.ball.x = this.paddle.x + this.paddle.width / 2 - this.ball.width / 2
+    this.updateBallPositionOnPaddle()
     this.ball.y = this.paddle.y - this.paddle.height - 1
     this.ball.dx = 0
     this.ball.dy = 0
@@ -309,30 +388,33 @@ export class Game {
       e.preventDefault()
     }
 
-    if (key === 'ArrowLeft') {
-      this.paddle.dx = -this.paddle.speed
-      // Если игра остановлена, то при движении платформы обновляем положение мячика
-      if (!this.gameInProgress) {
-        this.ball.dx = -this.paddle.speed
-      }
-    } else if (key === 'ArrowRight') {
-      this.paddle.dx = this.paddle.speed
-      // Если игра остановлена, то при движении платформы обновляем положение мячика
-      if (!this.gameInProgress) {
-        this.ball.dx = this.paddle.speed
-      }
-    }
-
-    if (key === ' ') {
-      if (this.ball.dx === 0 && this.ball.dy === 0) {
-        // При нажатии пробела нужно убедитсья что мячик на платформе
+    if (this.lifesCount > 0) {
+      if (key === 'ArrowLeft') {
+        this.paddle.dx = -this.paddle.speed
+        // Если игра остановлена, то при движении платформы обновляем положение мячика
         if (!this.gameInProgress) {
-          this.returnBallToPlatfom()
-          this.gameInProgress = true
+          this.ball.dx = -this.paddle.speed
+          this.updateBallPositionOnPaddle()
         }
-        this.ball.dx = this.ball.speed
-        this.ball.dy = this.ball.speed
-        this.paddle.update()
+      } else if (key === 'ArrowRight') {
+        this.paddle.dx = this.paddle.speed
+        // Если игра остановлена, то при движении платформы обновляем положение мячика
+        if (!this.gameInProgress) {
+          this.ball.dx = this.paddle.speed
+          this.updateBallPositionOnPaddle()
+        }
+      }
+      if (key === ' ') {
+        if (this.ball.dx === 0 && this.ball.dy === 0) {
+          // При нажатии пробела нужно убедитсья что мячик на платформе
+          if (!this.gameInProgress) {
+            this.returnBallToPlatfom()
+            this.gameInProgress = true
+          }
+          this.ball.dx = this.ball.speed
+          this.ball.dy = this.ball.speed
+          this.paddle.update()
+        }
       }
     }
   }
@@ -344,6 +426,7 @@ export class Game {
       if (!this.gameInProgress) {
         this.ball.dx = 0
         this.returnBallToPlatfom()
+        this.updateBallPositionOnPaddle()
       }
     }
   }

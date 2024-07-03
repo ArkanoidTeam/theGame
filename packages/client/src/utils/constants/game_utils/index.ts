@@ -26,6 +26,7 @@ export const BallParams = {
   size: 16,
   speed: 3,
   color: '#273443',
+  power: 1,
 }
 
 export const PaddleParams = {

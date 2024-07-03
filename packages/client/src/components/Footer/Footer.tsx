@@ -33,9 +33,12 @@ const StyledFooter = styled('footer')(({ isFill }: TFooterProps) => {
   return {
     width: '100%',
     padding: '20px',
-    backgroundColor: isFill
-      ? theme.palette.layout.headerAndFooterBackgroundColor
-      : 'transparent',
+    backgroundColor:
+      //TODO настроить тему для ssr
+      // isFill
+      //   ? theme.palette.layout.headerAndFooterBackgroundColor
+      //   :
+      'transparent',
   }
 })
 

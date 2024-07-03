@@ -39,6 +39,7 @@ const ForumTheme: FC = () => {
       user_name: 'Петр Петров',
       date: new Date().toISOString(),
       is_author: false,
+      emoji: '',
     }
     const newMessages = [...messages, newMessage]
     setMessages(newMessages)
