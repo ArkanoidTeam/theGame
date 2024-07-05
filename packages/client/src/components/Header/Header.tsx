@@ -9,7 +9,6 @@ const StyledHeader = styled('header')(({ isFill }: THeaderProps) => {
   const theme = useTheme()
 
   return {
-    width: '100%',
     padding: '20px',
     backgroundColor:
       //TODO настроить тему для ssr
