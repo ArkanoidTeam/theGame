@@ -28,10 +28,16 @@ export const ThemeMeta = styled('span')({
   gap: '0.3rem',
   fontSize: '12px',
   color: 'grey',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
 })
 
 export const ThemeMetaUser = styled('span')({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.3rem',
+})
+
+export const ThemeEmoji = styled('span')({
   display: 'flex',
   alignItems: 'center',
   gap: '0.3rem',

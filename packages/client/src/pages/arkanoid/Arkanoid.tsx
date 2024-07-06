@@ -10,6 +10,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { Header, Footer, Page, Modal, GameDialog } from '../../components'
 import { Typography } from '../../components/Typography'
+import { YandexApiLeaderboard } from '../../api/YandexApiLeaderboard'
 
 interface LevelProps {
   levelNumber: number
@@ -50,11 +51,13 @@ const Arkanoid: FC = () => {
   const [endGameModalOpen, setEndGameModalOpen] = useState(false)
   const [score, setScore] = useState(0)
   const [lifesCount, setLifesCount] = useState(3)
+  const [currentScore, setCurrentScore] = useState<number[]>([])
   const [gameInstance, setGameInstance] = useState<Game | null>(null)
 
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}')
+  const userName = userData.login || ''
+  const userAvatar = userData.avatar || ''
   const initialLevel = 1 // Заглушка для номера уровня
-  // const initialScore = 0 // Заглушка для значения очков
-  const userName = 'user_name' // Заглушка для пользователя
 
   const handleStart = () => {
     setOpen(false)
@@ -65,10 +68,12 @@ const Arkanoid: FC = () => {
     setOpen(false)
     navigate('/')
   }
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const handleScoreChange = (score: number) => {
     setScore(score)
+    currentScore.push(score)
   }
 
   const handleLifesCountChange = (lifesCount: number) => {
@@ -91,6 +96,27 @@ const Arkanoid: FC = () => {
 
   const handleGameEnd = () => {
     setEndGameModalOpen(true)
+    sendDataToLeaderboard()
+  }
+
+  const sendDataToLeaderboard = async () => {
+    const finalScore = Number(currentScore[currentScore.length - 1])
+    const data = {
+      data: {
+        scoreArkanoidTeam: finalScore,
+        userName: `${userName}`,
+        userAvatar: `${userAvatar}`,
+      },
+      ratingFieldName: 'scoreArkanoidTeam',
+      teamName: 'arkanoid-team',
+    }
+
+    try {
+      await YandexApiLeaderboard.leaderboard(data)
+      setCurrentScore([])
+    } catch (error) {
+      console.error('Failed to send data to leaderboard', error)
+    }
   }
 
   useEffect(() => {

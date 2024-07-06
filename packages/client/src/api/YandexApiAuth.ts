@@ -22,6 +22,6 @@ export const YandexApiAuth = {
   },
 
   user() {
-    return instance.get(ENDPOINTS.USER)
+    return instance.get<User>(ENDPOINTS.USER)
   },
 }
