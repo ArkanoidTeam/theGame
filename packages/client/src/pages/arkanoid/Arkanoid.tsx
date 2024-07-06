@@ -112,9 +112,8 @@ const Arkanoid: FC = () => {
     }
 
     try {
-      const response = await YandexApiLeaderboard.leaderboard(data)
+      await YandexApiLeaderboard.leaderboard(data)
       setCurrentScore([])
-      console.log(response.data)
     } catch (error) {
       console.error('Failed to send data to leaderboard', error)
     }
