@@ -41,10 +41,31 @@ type ChangePasswordData = {
 }
 
 type OAuthServiceIdData = {
-  service_id: string;
+  service_id: string
 }
 
 type OAuthSignInData = {
   code: string
   redirect_uri: string
+}
+
+type LeaderboardData = {
+  data: {
+    scoreArkanoidTeam: number
+    userName: string
+    userAvatar: string
+  }
+  ratingFieldName: string
+  teamName: string
+}
+type LeaderboardALLData = {
+  ratingFieldName: string
+  cursor: number
+  limit: number
+}
+
+type Player = {
+  userName: string
+  userAvatar: string
+  scoreArkanoidTeam: number
 }

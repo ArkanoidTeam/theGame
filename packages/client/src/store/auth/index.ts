@@ -31,9 +31,9 @@ export const authSlice = createSlice({
       state.accessToken = action.payload.accessToken
     },
     logout: (state: IAuthState) => {
-      ;(state.isAuth = false),
-        (state.accessToken = null),
-        (state.user = { name: '', email: '' })
+      state.isAuth = false
+      state.accessToken = null
+      state.user = { name: '', email: '' }
     },
   },
 })

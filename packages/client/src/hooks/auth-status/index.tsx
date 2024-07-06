@@ -32,15 +32,21 @@ export const useAuth = () => {
               accessToken: null,
             })
           )
+
+          localStorage.setItem('userData', JSON.stringify(userData))
         } else {
-          await YandexApiAuth.user()
+          const { data: userData } = await YandexApiAuth.user()
+          localStorage.setItem('userData', JSON.stringify(userData))
         }
 
         setIsAuth(true)
       } catch (error) {
-        const err = error as Record<string, Record<string, Record<string, unknown>>>
+        const err = error as Record<
+          string,
+          Record<string, Record<string, unknown>>
+        >
 
-        if (err.response.data.reason === "User already in system") {
+        if (err.response.data.reason === 'User already in system') {
           setIsAuth(true)
         } else setIsAuth(false)
       }
