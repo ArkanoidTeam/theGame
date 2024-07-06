@@ -1,19 +1,44 @@
-import { FC, useState, Fragment } from 'react'
+import { FC, useState, Fragment, useEffect } from 'react'
 import { ThemeCard } from './components'
 import { List, Fab, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import { StyledListItem, StyledDivider, AddThemeButtonWrapper } from './styled'
+import {
+  StyledListItem,
+  StyledDivider,
+  AddThemeButtonWrapper,
+  CircularProgressWrapper,
+} from './styled'
 import { AddThemeModal } from './components'
 import { Footer, Header, Page, ForumContent } from '../../components'
 import { mockThemes, mockUserData } from '.'
 import { ArrowBack } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress'
+import getTopicsRequest from './api/getTopicsRequest'
 
 const Forum: FC = () => {
   const [themes, setThemes] = useState(mockThemes)
   const [modalOpen, setModalOpen] = useState(false)
   const [currentUser, setCurrentUser] = useState(mockUserData)
   const navigate = useNavigate()
+
+  const [loading, setLoading] = useState(false)
+
+  const fetchData = async () => {
+    setLoading(true)
+    try {
+      const data = await getTopicsRequest()
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const onAddThemeClick = () => {
     setModalOpen(true)
@@ -45,30 +70,36 @@ const Forum: FC = () => {
           Вернуться на главную
         </Button>
       </Header>
-      <ForumContent pageTitle="Форум">
-        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-          {themes.map(item => {
-            return (
-              <Fragment key={item.id}>
-                <StyledListItem>
-                  <ThemeCard {...item} />
-                </StyledListItem>
-                <StyledDivider variant="inset" component="li" />
-              </Fragment>
-            )
-          })}
-        </List>
-        <AddThemeButtonWrapper>
-          <Fab color="primary" aria-label="add" onClick={onAddThemeClick}>
-            <AddIcon />
-          </Fab>
-          <AddThemeModal
-            modalOpen={modalOpen}
-            onClose={onModalClose}
-            onAddTheme={onAddTheme}
-          />
-        </AddThemeButtonWrapper>
-      </ForumContent>
+      {loading ? (
+        <CircularProgressWrapper>
+          <CircularProgress disableShrink />
+        </CircularProgressWrapper>
+      ) : (
+        <ForumContent pageTitle="Форум">
+          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            {themes.map(item => {
+              return (
+                <Fragment key={item.id}>
+                  <StyledListItem>
+                    <ThemeCard {...item} />
+                  </StyledListItem>
+                  <StyledDivider variant="inset" component="li" />
+                </Fragment>
+              )
+            })}
+          </List>
+          <AddThemeButtonWrapper>
+            <Fab color="primary" aria-label="add" onClick={onAddThemeClick}>
+              <AddIcon />
+            </Fab>
+            <AddThemeModal
+              modalOpen={modalOpen}
+              onClose={onModalClose}
+              onAddTheme={onAddTheme}
+            />
+          </AddThemeButtonWrapper>
+        </ForumContent>
+      )}
       <Footer hasLinks />
     </Page>
   )

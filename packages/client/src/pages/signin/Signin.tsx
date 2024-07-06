@@ -9,7 +9,10 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch'
 import { ValidationType, validationPatterns } from '../../utils/validation'
 import { StyledError, StyledForm } from './styled'
 import { YandexApiOAuth } from '../../api/YandexApiOAuth'
-import { YANDEX_OAUTH_API_URI, YANDEX_OAUTH_REDIRECT_URI } from '../../utils/constants/api'
+import {
+  YANDEX_OAUTH_API_URI,
+  YANDEX_OAUTH_REDIRECT_URI,
+} from '../../utils/constants/api'
 import YandexImage from '../../assets/images/yandex.png'
 
 const Signin: FC = () => {
@@ -45,17 +48,17 @@ const Signin: FC = () => {
   }
 
   const handleOAuthSignIn = useCallback(async () => {
-    const { data, status, statusText } = await YandexApiOAuth.getServiceId();
+    const { data, status, statusText } = await YandexApiOAuth.getServiceId()
 
     if (status !== 200) {
-      setErrorMessage(statusText);
-      return;
+      setErrorMessage(statusText)
+      return
     }
 
-    const { service_id } = data;
-    const url = `${YANDEX_OAUTH_API_URI}&client_id=${service_id}&redirect_uri=${YANDEX_OAUTH_REDIRECT_URI}`;
-    window.location.replace(url);
-  }, []);
+    const { service_id } = data
+    const url = `${YANDEX_OAUTH_API_URI}&client_id=${service_id}&redirect_uri=${YANDEX_OAUTH_REDIRECT_URI}`
+    window.location.replace(url)
+  }, [])
 
   return (
     <Page justifyContent="space-around" alignItems="center">
@@ -102,16 +105,13 @@ const Signin: FC = () => {
               </Button>
             </Grid>
             <Stack
-              flexDirection='row'
-              alignItems='center'
-              justifyContent='center'
-              gap={1}
-            >
-              <Typography>
-                Войти через
-              </Typography>
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center"
+              gap={1}>
+              <Typography>Войти через</Typography>
               <IconButton onClick={handleOAuthSignIn}>
-                <Box component='img' src={YandexImage} sx={{ height: 30 }} />
+                <Box component="img" src={YandexImage} sx={{ height: 30 }} />
               </IconButton>
             </Stack>
           </Stack>

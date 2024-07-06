@@ -1,12 +1,19 @@
 import { ENDPOINTS } from '../utils/constants/api'
 import { axiosInstance } from './AxiosInstance'
+import { BASE_API_URI } from '../utils/constants/api'
+
+const headers = {
+  'Content-Type': 'application/json',
+}
+
+const instance = axiosInstance(BASE_API_URI, headers, true)
 
 export const YandexApiLeaderboard = {
   leaderboard(data: LeaderboardData) {
-    return axiosInstance.post(ENDPOINTS.LEADERBOARD, data)
+    return instance.post(ENDPOINTS.LEADERBOARD, data)
   },
 
   leaderboardAll(data: LeaderboardALLData) {
-    return axiosInstance.post(ENDPOINTS.LEADERBOARDALL, data)
+    return instance.post(ENDPOINTS.LEADERBOARDALL, data)
   },
 }
