@@ -26,7 +26,6 @@ export const StyledContainer = styled(Container)<StyledContainerProps>(() => ({
   display: 'flex',
   justifyContent: 'center',
   width: '90%',
-  backgroundColor: '#fff',
   border: '1px solid #ddd',
   borderRadius: '8px',
   alignItems: 'center',

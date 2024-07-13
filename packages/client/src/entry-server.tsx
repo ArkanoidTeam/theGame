@@ -63,11 +63,9 @@ export const render = async (req: ExpressRequest) => {
   const router = createStaticRouter(dataRoutes, context)
 
   const html = ReactDOM.renderToString(
-    <ThemeProvider>
-      <Provider store={store}>
-        <StaticRouterProvider router={router} context={context} />
-      </Provider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <StaticRouterProvider router={router} context={context} />
+    </Provider>
   )
 
   return { html }

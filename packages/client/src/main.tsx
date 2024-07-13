@@ -5,12 +5,15 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store'
 import AppRoutes from './routes'
+import { ThemeProvider } from './theme'
 
 const router = createBrowserRouter(AppRoutes)
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </Provider>
 )
 
