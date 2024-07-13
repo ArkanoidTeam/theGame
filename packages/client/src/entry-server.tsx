@@ -6,7 +6,6 @@ import {
   StaticRouterProvider,
 } from 'react-router-dom/server'
 
-import { ThemeProvider } from './theme'
 import AppRoutes from './routes'
 import { Provider } from 'react-redux'
 import store from './store'

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Tooltip } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleTheme } from '../../store/theme'
@@ -12,10 +12,6 @@ const ThemeToggle = () => {
     dispatch(toggleTheme())
     // сохранение темы на бэке
   }
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme)
-  }, [theme])
 
   const tooltipTitle =
     theme === 'light' ? 'Включить темную тему' : 'Включить светлую тему'
