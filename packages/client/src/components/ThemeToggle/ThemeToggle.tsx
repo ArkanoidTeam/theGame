@@ -10,6 +10,7 @@ const ThemeToggle = () => {
 
   const handleToggle = () => {
     dispatch(toggleTheme())
+    // сохранение темы на бэке
   }
 
   useEffect(() => {
