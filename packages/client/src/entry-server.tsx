@@ -9,6 +9,7 @@ import {
 import AppRoutes from './routes'
 import { Provider } from 'react-redux'
 import store from './store'
+import { ThemeProvider } from './theme'
 
 export const createFetchRequest = (req: ExpressRequest) => {
   const url = new URL(
@@ -63,7 +64,9 @@ export const render = async (req: ExpressRequest) => {
 
   const html = ReactDOM.renderToString(
     <Provider store={store}>
-      <StaticRouterProvider router={router} context={context} />
+      <ThemeProvider>
+        <StaticRouterProvider router={router} context={context} />
+      </ThemeProvider>
     </Provider>
   )
 

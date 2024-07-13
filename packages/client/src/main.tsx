@@ -5,8 +5,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Provider, useDispatch } from 'react-redux'
 import store from './store'
 import AppRoutes from './routes'
-import { ThemeProvider } from './theme'
 import { setTheme } from './store/theme'
+import { ThemeProvider } from './theme'
 
 const router = createBrowserRouter(AppRoutes)
 

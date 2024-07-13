@@ -13,7 +13,6 @@ export const getDesignTokens = (mode: PaletteMode): PaletteOptions => ({
         },
       }
     : {
-        // TODO: добавить стили для темной темы
         layout: {
           fontColor: '#F3F8FE',
           pageBackgroundColor: '#121212',
