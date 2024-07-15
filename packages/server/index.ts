@@ -5,6 +5,7 @@ import express from 'express'
 // import { createClientAndConnect } from './db'
 import baseRoutes from './routes/baseRoutes'
 import forumRoutes from './routes/forumRoutes'
+import authRoutes from './routes/auth'
 import { syncDatabase } from './syncDatabase'
 import bodyParser from 'body-parser'
 import swaggerOptions from './swaggerConfig'
@@ -22,6 +23,7 @@ app.use(swaggerOptions)
 
 app.use('/', baseRoutes)
 app.use('/api/forum', forumRoutes)
+app.use('/api/auth', authRoutes)
 
 app.listen(port, () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`)

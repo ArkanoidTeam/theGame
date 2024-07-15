@@ -250,6 +250,113 @@ const options: Options = {
           },
         },
       },
+      '/auth/register': {
+        post: {
+          summary: 'Регистрация пользователя',
+          tags: ['Auth'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiUserCreate',
+                },
+              },
+            },
+          },
+          responses: {
+            '201': {
+              description: 'Успешное создание пользователя',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'string',
+                    schema: { $ref: '#/components/schemas/ApiUserCreate' },
+                  },
+                  example: {
+                    message: 'User created successfully',
+                  },
+                },
+              },
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+      },
+      '/auth/login': {
+        post: {
+          summary: 'Авторизация пользователя',
+          tags: ['Auth'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiUserLogin',
+                },
+              },
+            },
+          },
+          responses: {
+            '201': {
+              description: 'Успешная авторизация пользователя',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'string',
+                    schema: { $ref: '#/components/schemas/ApiUserLogin' },
+                  },
+                  example: {
+                    accessToken: '<token>',
+                    refreshToken: '<refresh-token>',
+                  },
+                },
+              },
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+      },
+      '/auth/refresh-token': {
+        post: {
+          summary: 'Обновление токена',
+          tags: ['Auth'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/RefreshToken',
+                },
+              },
+            },
+          },
+          responses: {
+            '201': {
+              description: 'Успешное обновление токена',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'string',
+                    schema: { $ref: '#/components/schemas/RefreshToken' },
+                  },
+                  example: {
+                    accessToken: '<token>',
+                    refreshToken: '<refresh-token>',
+                  },
+                },
+              },
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+      },
     },
     components: {
       schemas: {
@@ -313,6 +420,64 @@ const options: Options = {
             user_login: {
               type: 'string',
               description: 'Логин пользователя, создавшего сообщение',
+            },
+          },
+        },
+        ApiUserCreate: {
+          type: 'object',
+          required: {
+            username: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+            },
+          },
+          properties: {
+            username: {
+              type: 'string',
+              description: 'Логин',
+              required: true,
+            },
+            password: {
+              type: 'string',
+              description: 'Пароль',
+              required: true,
+            },
+          },
+        },
+        ApiUserLogin: {
+          type: 'object',
+          required: {
+            accessToken: {
+              type: 'string',
+            },
+            refreshToken: {
+              type: 'string',
+            },
+          },
+          properties: {
+            username: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+            },
+          },
+        },
+        RefreshToken: {
+          type: 'object',
+          required: {
+            accessToken: {
+              type: 'string',
+            },
+            refreshToken: {
+              type: 'string',
+            },
+          },
+          properties: {
+            token: {
+              type: 'string',
             },
           },
         },

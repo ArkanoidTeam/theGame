@@ -7,7 +7,6 @@ export const APP_API =
   ':' +
   (import.meta.env.SERVER_PORT || '3001') +
   '/api'
-// const url = new URL(import.meta.url).origin
 
 export enum ENDPOINTS {
   SIGN_IN = '/auth/signin',
