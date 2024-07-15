@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Footer,
   FullscreenButton,
+  ThemeToggle,
   Header,
   Page,
   PageContent,
@@ -24,7 +25,10 @@ const Main = () => {
         <Button variant="text" onClick={onExitClick}>
           Выйти
         </Button>
-        <FullscreenButton />
+        <div>
+          <ThemeToggle />
+          <FullscreenButton />
+        </div>
       </Header>
       <PageContent title="Arkanoid" subtitle="2d-аркада">
         <Button type="submit" onClick={() => navigate('/arkanoid')}>

@@ -1,13 +1,18 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import authReducer from './auth'
-// store
+import themeReducer from './theme'
 
 enum ReducerName {
   Auth = 'auth',
 }
 
+enum ThemeName {
+  Theme = 'theme',
+}
+
 const rootReducer = combineReducers({
   [ReducerName.Auth]: authReducer,
+  [ThemeName.Theme]: themeReducer,
 })
 
 const store = configureStore({
