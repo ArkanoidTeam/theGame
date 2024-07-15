@@ -17,11 +17,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    const decoded = jwt.verify(token, APP_API_KEY as string)
-    console.log(token)
-    console.log(APP_API_KEY)
-    console.log(decoded)
-    // req.user = decoded as { id: number };
+    jwt.verify(token, APP_API_KEY as string)
     next()
   } catch (error) {
     res.status(400).json({ message: 'Invalid token' })
