@@ -38,6 +38,7 @@ services:
           POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
           POSTGRES_DB: ${POSTGRES_DB}
           POSTGRES_PORT: ${POSTGRES_PORT}
+          APP_API_KEY: ${APP_API_KEY}
         
         networks:
           - api
