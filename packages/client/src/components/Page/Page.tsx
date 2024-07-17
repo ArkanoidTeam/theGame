@@ -9,9 +9,7 @@ const Page = ({ children, ...stackProps }: PropsWithChildren & StackProps) => {
       justifyContent="space-between"
       useFlexGap
       sx={{
-        // todo решить вопрос с провайдером темы
-        // backgroundColor: theme.palette.layout.pageBackgroundColor
-        backgroundColor: '#F3F8FE',
+        backgroundColor: theme.palette.layout.pageBackgroundColor,
       }}
       minHeight="100vh"
       {...stackProps}>

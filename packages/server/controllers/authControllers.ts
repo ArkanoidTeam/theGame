@@ -5,6 +5,7 @@ import RefreshToken from '../models/RefreshToken'
 import { v4 as uuidv4 } from 'uuid'
 
 const { APP_API_KEY } = process.env
+const EXPIRY_DAYS = 7
 
 const generateAccessToken = (userId: number) => {
   return jwt.sign({ id: userId }, APP_API_KEY as string, { expiresIn: '15m' })
@@ -13,7 +14,7 @@ const generateAccessToken = (userId: number) => {
 const generateRefreshToken = async (userId: number) => {
   const token = uuidv4()
   const expiryDate = new Date()
-  expiryDate.setDate(expiryDate.getDate() + 7)
+  expiryDate.setDate(expiryDate.getDate() + EXPIRY_DAYS)
 
   await RefreshToken.create({
     token,

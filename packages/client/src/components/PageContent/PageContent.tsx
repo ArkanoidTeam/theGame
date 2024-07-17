@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react'
-import { Stack, StackProps, Typography } from '@mui/material'
+import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 
 type TPageProps = {
   title?: string
@@ -12,10 +12,12 @@ const PageContent = ({
   children,
   ...stackProps
 }: PropsWithChildren & StackProps & TPageProps) => {
+  const theme = useTheme()
+
   return (
     <Stack
       sx={{
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.layout.pageContentBackgroundColor,
         borderRadius: '5px',
         border: '1px solid #ddd',
         maxWidth: '650px',

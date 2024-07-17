@@ -6,10 +6,10 @@ import {
   StaticRouterProvider,
 } from 'react-router-dom/server'
 
-import { ThemeProvider } from './theme'
 import AppRoutes from './routes'
 import { Provider } from 'react-redux'
 import store from './store'
+import { ThemeProvider } from './theme'
 
 export const createFetchRequest = (req: ExpressRequest) => {
   const url = new URL(
@@ -63,11 +63,11 @@ export const render = async (req: ExpressRequest) => {
   const router = createStaticRouter(dataRoutes, context)
 
   const html = ReactDOM.renderToString(
-    <ThemeProvider>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider>
         <StaticRouterProvider router={router} context={context} />
-      </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   )
 
   return { html }

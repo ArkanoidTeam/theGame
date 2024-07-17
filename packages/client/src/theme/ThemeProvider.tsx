@@ -4,6 +4,8 @@ import {
   createTheme,
   ThemeProvider as MUIThemeProvider,
 } from '@mui/material/styles'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 import { getDesignTokens } from './palette'
 import { components, fontFamily } from './components'
 
@@ -12,6 +14,7 @@ declare module '@mui/material/styles/createPalette' {
     fontColor: string
     pageBackgroundColor: string
     headerAndFooterBackgroundColor: string
+    pageContentBackgroundColor: string
   }
 
   interface Palette {
@@ -24,8 +27,8 @@ declare module '@mui/material/styles/createPalette' {
 }
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
-  // TODO: Сделать переключение темы
-  const mode = 'light'
+  const mode = useSelector((state: RootState) => state.theme.theme)
+
   const palette = getDesignTokens(mode)
 
   const theme = createTheme({

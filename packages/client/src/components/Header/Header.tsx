@@ -10,12 +10,9 @@ const StyledHeader = styled('header')(({ isFill }: THeaderProps) => {
 
   return {
     padding: '20px',
-    backgroundColor:
-      //TODO настроить тему для ssr
-      // isFill
-      //   ? theme.palette.layout.headerAndFooterBackgroundColor
-      //   :
-      'transparent',
+    backgroundColor: isFill
+      ? theme.palette.layout.headerAndFooterBackgroundColor
+      : 'transparent',
   }
 })
 
