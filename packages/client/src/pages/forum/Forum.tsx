@@ -26,7 +26,6 @@ const Forum: FC = () => {
     setLoading(true)
     try {
       const { data } = await AppApiForum.getThemes()
-      console.log(data)
       setThemes(data)
     } catch (error) {
       console.log(error)
