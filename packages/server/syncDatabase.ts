@@ -1,6 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from './models/Topic'
 import { Message } from './models/Message'
+import { apiUserInit } from './apiUserInit'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -23,6 +24,8 @@ const syncDatabase = async () => {
     console.log('All models were synchronized successfully.')
   } catch (error) {
     console.error('Unable to synchronize the database:', error)
+  } finally {
+    apiUserInit()
   }
 }
 
