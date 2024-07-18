@@ -10,16 +10,14 @@ import {
 } from './styled'
 import { AddThemeModal } from './components'
 import { Footer, Header, Page, ForumContent } from '../../components'
-import { mockThemes, mockUserData } from '.'
 import { ArrowBack } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
-import getTopicsRequest from './api/getTopicsRequest'
+import { AppApiForum } from '../../api/AppApiForum'
 
 const Forum: FC = () => {
-  const [themes, setThemes] = useState(mockThemes)
+  const [themes, setThemes] = useState<ForumThemeVm[]>([])
   const [modalOpen, setModalOpen] = useState(false)
-  const [currentUser, setCurrentUser] = useState(mockUserData)
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
@@ -27,8 +25,9 @@ const Forum: FC = () => {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const data = await getTopicsRequest()
+      const { data } = await AppApiForum.getThemes()
       console.log(data)
+      setThemes(data)
     } catch (error) {
       console.log(error)
     } finally {
@@ -43,23 +42,17 @@ const Forum: FC = () => {
   const onAddThemeClick = () => {
     setModalOpen(true)
   }
+
   const onModalClose = () => {
     setModalOpen(false)
   }
-  const onAddTheme = (newTheme: { title: string; text: string }) => {
-    const theme = {
-      id: 112365464,
-      title: newTheme.title,
-      text: newTheme.text,
-      user_avatar: currentUser.avatar as string,
-      user_name: currentUser.first_name + ' ' + currentUser.second_name,
-      date: new Date().toISOString(),
-      answers_count: 0,
-    }
-    const newThemes = [theme, ...themes]
-    setThemes(newThemes)
+
+  const onAddTheme = async (theme: ForumThemeDto) => {
+    await AppApiForum.createTheme(theme)
+    await fetchData()
     setModalOpen(false)
   }
+
   return (
     <Page>
       <Header alignItems="flex-start">

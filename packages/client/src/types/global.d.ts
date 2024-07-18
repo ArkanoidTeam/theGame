@@ -69,3 +69,20 @@ type Player = {
   userAvatar: string
   scoreArkanoidTeam: number
 }
+
+type ForumThemeVm = {
+  id?: number
+  title: string
+  text: string
+  user_login: string
+  user_avatar: string
+  createdAt: string
+  updatedAt: string
+  answers_count: number
+}
+
+type ForumThemeDto = {
+  title: string
+  text: string
+  user_login: string
+}

@@ -12,21 +12,14 @@ import {
   ThemeMetaUser,
   StyledChatBubbleOutlinedIcon,
 } from './styled'
+import { RESOURCES_LINK } from '../../../../utils/constants/api'
 
-type ThemeCardProps = {
-  title: string
-  text: string
-  user_avatar: string
-  user_name: string
-  date: string
-  answers_count: number
-  id: number
-}
-const ThemeCard: FC<ThemeCardProps> = (props: ThemeCardProps) => {
-  const { title, text, user_avatar, user_name, date, answers_count, id } = props
+const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
+  const { title, text, user_avatar, user_login, createdAt, answers_count, id } =
+    props
   const dateString = useMemo(
-    () => getDateTimeString(date, 'fullNoSecs'),
-    [date]
+    () => getDateTimeString(createdAt, 'fullNoSecs'),
+    [createdAt]
   )
   const linkStyle = {
     color: '#1976d2',
@@ -53,10 +46,10 @@ const ThemeCard: FC<ThemeCardProps> = (props: ThemeCardProps) => {
           <ThemeMetaUser>
             <Avatar
               alt="Remy Sharp"
-              src={user_avatar}
+              src={user_avatar ? RESOURCES_LINK + user_avatar : ''}
               sx={{ width: 16, height: 16, fontSize: '0.7rem' }}
             />
-            <span>{user_name}</span>
+            <span>{user_login}</span>
           </ThemeMetaUser>
           <span>{dateString}</span>
         </ThemeMeta>
