@@ -35,7 +35,7 @@ const AddThemeModal: FC<AddThemeModalProps> = ({
       const theme: ForumThemeDto = {
         title,
         text,
-        user_login: currentUser.first_name + ' ' + currentUser.second_name,
+        user_login: currentUser.login,
       }
       onAddTheme(theme)
       setTitle('')
