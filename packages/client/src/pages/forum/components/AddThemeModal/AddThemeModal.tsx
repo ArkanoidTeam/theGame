@@ -3,7 +3,6 @@ import { Modal } from '../../../../components'
 import { Box, Button, TextField } from '@mui/material'
 import { green } from '@mui/material/colors'
 import { StyledModalBody, Textarea } from './styled'
-import { mockUserData } from '../..'
 
 type AddThemeModalProps = {
   modalOpen: boolean
