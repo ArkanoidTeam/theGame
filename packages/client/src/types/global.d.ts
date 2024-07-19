@@ -77,7 +77,7 @@ type ForumThemeVm = {
   user_login: string
   createdAt: string
   updatedAt: string
-  answers_count: number
+  messages_count: number
   messages?: ForumMessageVm[]
 }
 

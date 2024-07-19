@@ -16,7 +16,7 @@ import { RESOURCES_LINK } from '../../../../utils/constants/api'
 import { YandexApiUsers } from '../../../../api/YandexApiUsers'
 
 const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
-  const { title, text, user_login, createdAt, answers_count, id } = props
+  const { title, text, user_login, createdAt, messages_count, id } = props
   const [userAvatar, setUserAvatar] = useState<string>()
 
   const dateString = useMemo(
@@ -60,7 +60,7 @@ const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
       <ThemeMetaWrapper>
         <ThemeMeta>
           <StyledChatBubbleOutlinedIcon />
-          <span>{answers_count}</span>
+          <span>{messages_count}</span>
         </ThemeMeta>
         <ThemeMeta>
           <ThemeMetaUser>
