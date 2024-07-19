@@ -75,13 +75,13 @@ const ThemeMessage: FC<ForumMessageVm> = ({ text, user_login, createdAt }) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {/* <EmojiPicker
+        <EmojiPicker
           onEmojiClick={handleEmojiClicked}
           autoFocusSearch={false}
           lazyLoadEmojis={true}
           skinTonesDisabled={true}
           searchDisabled={true}
-        /> */}
+        />
       </Popover>
       <span>{text}</span>
       <ThemeMeta>
