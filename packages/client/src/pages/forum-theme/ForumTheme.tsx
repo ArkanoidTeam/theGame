@@ -93,11 +93,14 @@ const ForumTheme: FC = () => {
       ) : (
         <MainContent>
           <StyledContainer component="main" maxWidth="md">
-            <Typography component="h6" variant="h6" context={theme?.title} />
+            <Typography component="h4" variant="h4" context={theme?.title} />
+            <Typography component="h6" variant="h6" context={theme?.text} />
             <MessagesContainer>
-              {messages.map(item => (
-                <ThemeMessage key={item.id} {...item} />
-              ))}
+              {messages.length > 0 ? (
+                messages.map(item => <ThemeMessage key={item.id} {...item} />)
+              ) : (
+                <Typography context="Сообщения отсутствуют" />
+              )}
             </MessagesContainer>
             <StyledDivider variant="inset" component="span" />
             <InputMessageForm onSubmit={onSubmit}>
