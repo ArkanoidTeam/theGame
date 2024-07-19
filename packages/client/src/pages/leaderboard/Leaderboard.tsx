@@ -12,8 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowBack } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { YandexApiLeaderboard } from '../../api/YandexApiLeaderboard'
-
-const RESOURCES_LINK = `https://ya-praktikum.tech/api/v2/resources`
+import { RESOURCES_LINK } from '../../utils/constants/api'
 
 const Leaderboard = () => {
   const navigate = useNavigate()
