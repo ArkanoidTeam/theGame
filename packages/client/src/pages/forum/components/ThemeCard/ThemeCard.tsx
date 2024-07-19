@@ -15,12 +15,12 @@ import {
 import { RESOURCES_LINK } from '../../../../utils/constants/api'
 
 const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
-  const { title, text, user_avatar, user_login, createdAt, answers_count, id } =
-    props
+  const { title, text, user_login, createdAt, answers_count, id } = props
   const dateString = useMemo(
     () => getDateTimeString(createdAt, 'fullNoSecs'),
     [createdAt]
   )
+  const userAvatar = useMemo(() => '', [])
   const linkStyle = {
     color: '#1976d2',
     textDecoration: 'none',
@@ -46,7 +46,7 @@ const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
           <ThemeMetaUser>
             <Avatar
               alt="Remy Sharp"
-              src={user_avatar ? RESOURCES_LINK + user_avatar : ''}
+              src={userAvatar ? RESOURCES_LINK + userAvatar : ''}
               sx={{ width: 16, height: 16, fontSize: '0.7rem' }}
             />
             <span>{user_login}</span>
