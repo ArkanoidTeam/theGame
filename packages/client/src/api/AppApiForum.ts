@@ -9,7 +9,19 @@ const headers = {
 const instance = axiosInstance(APP_API, headers)
 
 export const AppApiForum = {
-  getTopics() {
-    return instance.get(APP_API_ENDPOINTS.FORUM + '/topics')
+  getThemes() {
+    return instance.get<ForumThemeVm[]>(APP_API_ENDPOINTS.THEMES)
+  },
+
+  createTheme(data: ForumThemeDto) {
+    return instance.post(APP_API_ENDPOINTS.THEMES, data)
+  },
+
+  getTheme(id: number) {
+    return instance.get<ForumThemeVm>(`${APP_API_ENDPOINTS.THEMES}/${id}`)
+  },
+
+  createMessage(data: ForumMessageDto) {
+    return instance.post(APP_API_ENDPOINTS.MESSAGES, data)
   },
 }
