@@ -32,11 +32,14 @@ export const useAuth = () => {
               accessToken: null,
             })
           )
-
-          localStorage.setItem('userData', JSON.stringify(userData))
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('userData', JSON.stringify(userData))
+          }
         } else {
           const { data: userData } = await YandexApiAuth.user()
-          localStorage.setItem('userData', JSON.stringify(userData))
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('userData', JSON.stringify(userData))
+          }
         }
 
         setIsAuth(true)

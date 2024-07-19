@@ -2,6 +2,18 @@ import { APP_API_ENDPOINTS } from '../utils/constants/api'
 import { axiosInstance } from './AxiosInstance'
 import { APP_API } from '../utils/constants/api'
 
+const ACCESS_TOKEN_KEY = 'accessToken'
+const REFRESH_TOKEN_KEY = 'refreshToken'
+
+// Установка токенов в localStorage
+const setTokens = (accessToken: string, refreshToken: string) => {
+  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
+  localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
+}
+
+// Получение токенов из localStorage
+const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY)
+
 const headers = {
   'Content-Type': 'application/json',
 }
@@ -9,14 +21,43 @@ const headers = {
 const instance = axiosInstance(APP_API, headers)
 
 export const AppApiAuth = {
-  register(data: { username: string; password: string }) {
-    return instance.post(APP_API_ENDPOINTS.AUTH + '/register', data)
+  async register(data: { username: string; password: string }) {
+    try {
+      const response = await instance.post(
+        APP_API_ENDPOINTS.AUTH + '/register',
+        data
+      )
+      return response
+    } catch (err) {
+      console.log(err)
+    }
   },
-  login(data: { username: string; password: string }) {
-    console.log('data', data)
-    return instance.post(APP_API_ENDPOINTS.AUTH + '/login', data)
+  async login(data: { username: string; password: string }) {
+    try {
+      const response = await instance.post(
+        APP_API_ENDPOINTS.AUTH + '/login',
+        data
+      )
+      const { accessToken, refreshToken } = response.data
+      setTokens(accessToken, refreshToken)
+    } catch (err) {
+      console.log(err)
+      throw new Error('Error occured by user login')
+    }
   },
-  refreshToken(data: { token: string }) {
-    return instance.post(APP_API_ENDPOINTS.AUTH + '/refresh-token', data)
+  async refreshToken() {
+    const token = getRefreshToken()
+    if (!token) throw new Error('No refresh token available')
+    try {
+      const response = await instance.post(
+        APP_API_ENDPOINTS.AUTH + '/refresh-token',
+        { token }
+      )
+      const { accessToken, refreshToken } = response.data
+      setTokens(accessToken, refreshToken)
+    } catch (err) {
+      console.log(err)
+      throw new Error('Error occured by refresing token')
+    }
   },
 }
