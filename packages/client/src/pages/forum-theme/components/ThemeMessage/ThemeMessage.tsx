@@ -7,7 +7,7 @@ import {
 } from './styled'
 import { Avatar, Popover } from '@mui/material'
 import getDateTimeString from '../../../../utils/getDateTimeString'
-import EmojiPicker from 'emoji-picker-react'
+// import EmojiPicker from 'emoji-picker-react'
 type ThemeMessageProps = {
   message_text: string
   user_avatar: string
@@ -60,13 +60,13 @@ const ThemeMessage: FC<ThemeMessageProps> = ({
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <EmojiPicker
+        {/* <EmojiPicker
           onEmojiClick={handleEmojiClicked}
           autoFocusSearch={false}
           lazyLoadEmojis={true}
           skinTonesDisabled={true}
           searchDisabled={true}
-        />
+        /> */}
       </Popover>
       <span>{message_text}</span>
       <ThemeMeta>

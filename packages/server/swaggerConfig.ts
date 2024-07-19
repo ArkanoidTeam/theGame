@@ -357,6 +357,210 @@ const options: Options = {
           },
         },
       },
+      '/themes': {
+        post: {
+          summary: 'Создание новой темы',
+          tags: ['Themes'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/SiteTheme',
+                },
+              },
+            },
+          },
+          responses: {
+            '201': {
+              description: 'Тема успешно создана',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/SiteTheme' },
+                  example: {
+                    id: 1,
+                    theme: 'Dark Theme',
+                  },
+                },
+              },
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+        get: {
+          summary: 'Возвращает список всех тем',
+          tags: ['Themes'],
+          responses: {
+            '200': {
+              description: 'Список тем',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: { $ref: '#/components/schemas/SiteTheme' },
+                  },
+                  example: [
+                    {
+                      id: 1,
+                      theme: 'Dark Theme',
+                    },
+                  ],
+                },
+              },
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+      },
+      '/themes/{id}': {
+        get: {
+          summary: 'Получение темы по id',
+          tags: ['Themes'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: {
+                type: 'integer',
+              },
+              description: 'id темы',
+            },
+          ],
+          responses: {
+            '200': {
+              description: 'Успешный ответ',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/SiteTheme' },
+                  example: {
+                    id: 1,
+                    theme: 'Dark Theme',
+                  },
+                },
+              },
+            },
+            '404': {
+              description: 'Тема не найдена',
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+        put: {
+          summary: 'Обновление темы по id',
+          tags: ['Themes'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: {
+                type: 'integer',
+              },
+              description: 'id темы',
+            },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/SiteTheme',
+                },
+              },
+            },
+          },
+          responses: {
+            '200': {
+              description: 'Тема успешно обновлена',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/SiteTheme' },
+                  example: {
+                    id: 1,
+                    theme: 'Updated Theme',
+                  },
+                },
+              },
+            },
+            '404': {
+              description: 'Тема не найдена',
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+        delete: {
+          summary: 'Удаление темы по id',
+          tags: ['Themes'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: {
+                type: 'integer',
+              },
+              description: 'id темы',
+            },
+          ],
+          responses: {
+            '204': {
+              description: 'Тема успешно удалена',
+            },
+            '404': {
+              description: 'Тема не найдена',
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+      },
+      '/themes/user/{user_id}': {
+        get: {
+          summary: 'Получение темы по id пользователя',
+          tags: ['Themes'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'user_id',
+              required: true,
+              schema: {
+                type: 'integer',
+              },
+              description: 'id пользователя',
+            },
+          ],
+          responses: {
+            '200': {
+              description: 'Успешный ответ',
+              content: {
+                'application/json': {
+                  schema: { $ref: '#/components/schemas/SiteTheme' },
+                  example: {
+                    id: 1,
+                    theme: 'Dark Theme',
+                  },
+                },
+              },
+            },
+            '404': {
+              description: 'Тема не найдена для этого пользователя',
+            },
+            '500': {
+              description: 'Ошибка сервера',
+            },
+          },
+        },
+      },
     },
     components: {
       schemas: {
@@ -420,6 +624,20 @@ const options: Options = {
             user_login: {
               type: 'string',
               description: 'Логин пользователя, создавшего сообщение',
+            },
+          },
+        },
+        SiteTheme: {
+          type: 'object',
+          required: ['theme'],
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'ID темы',
+            },
+            theme: {
+              type: 'string',
+              description: 'Название темы',
             },
           },
         },
