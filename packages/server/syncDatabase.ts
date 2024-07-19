@@ -1,6 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from './models/Topic'
 import { Message } from './models/Message'
+import { Reaction } from './models/Reaction'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -12,7 +13,7 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: [Topic, Message],
+  models: [Topic, Message, Reaction],
 }
 
 const sequelize = new Sequelize(sequelizeOptions)
@@ -26,4 +27,4 @@ const syncDatabase = async () => {
   }
 }
 
-export { sequelize, syncDatabase, Topic, Message }
+export { sequelize, syncDatabase, Topic, Message, Reaction }
