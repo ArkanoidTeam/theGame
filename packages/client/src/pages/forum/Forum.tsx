@@ -22,19 +22,19 @@ const Forum: FC = () => {
 
   const [loading, setLoading] = useState(false)
 
-  const fetchData = async () => {
-    setLoading(true)
-    try {
-      const { data } = await AppApiForum.getThemes()
-      setThemes(data)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const { data } = await AppApiForum.getThemes()
+        setThemes(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchData()
   }, [])
 
@@ -47,8 +47,8 @@ const Forum: FC = () => {
   }
 
   const onAddTheme = async (theme: ForumThemeDto) => {
-    await AppApiForum.createTheme(theme)
-    await fetchData()
+    const { data: newTheme } = await AppApiForum.createTheme(theme)
+    setThemes([...themes, newTheme])
     setModalOpen(false)
   }
 
