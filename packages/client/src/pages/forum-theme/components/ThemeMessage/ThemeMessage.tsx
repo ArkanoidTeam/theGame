@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import {
   MessageContainer,
   ThemeEmoji,
@@ -8,8 +8,10 @@ import {
 import { Avatar, Popover } from '@mui/material'
 import getDateTimeString from '../../../../utils/getDateTimeString'
 import EmojiPicker from 'emoji-picker-react'
+import { YandexApiUsers } from '../../../../api/YandexApiUsers'
 
 const ThemeMessage: FC<ForumMessageVm> = ({ text, user_login, createdAt }) => {
+  const [userAvatar, setUserAvatar] = useState<string>()
   const userData = localStorage.getItem('userData')
   const currentUser = userData ? JSON.parse(userData) : ''
 
@@ -18,11 +20,27 @@ const ThemeMessage: FC<ForumMessageVm> = ({ text, user_login, createdAt }) => {
     [createdAt]
   )
   const isAuthor = useMemo(() => currentUser.login === user_login, [user_login])
-  const userAvatar = useMemo(() => '', [])
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const handleContextMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget as HTMLButtonElement)
   }
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        const { data: users } = await YandexApiUsers.search(user_login)
+        const user = users.find(user => user.login === user_login)
+
+        if (user && user.avatar) {
+          setUserAvatar(user.avatar)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchAvatar()
+  }, [user_login])
 
   //TODO подключить получение и отправку emoji с/на бэк после завершения задачи на хранение emoji
   const open = Boolean(anchorEl)
