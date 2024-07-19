@@ -25,7 +25,7 @@ app.use(swaggerOptions)
 app.use('/', baseRoutes)
 app.use('/api/forum', forumRoutes)
 app.use('/api/auth', authRoutes)
-app.use('/theme', themeRoutes)
+app.use('/api', themeRoutes)
 
 app.listen(port, () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`)

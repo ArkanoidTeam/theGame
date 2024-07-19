@@ -1,6 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from './models/Topic'
 import { Message } from './models/Message'
+import { SiteTheme } from './models/Theme'
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
@@ -12,7 +13,7 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: [Topic, Message],
+  models: [Topic, Message, SiteTheme],
 }
 
 const sequelize = new Sequelize(sequelizeOptions)

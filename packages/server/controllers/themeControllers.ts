@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { SiteTheme } from '../models/Theme'
+import User from '../models/User'
 
 export const getThemes = async (_: Request, res: Response) => {
   try {
@@ -69,15 +70,19 @@ export const createTheme = async (req: Request, res: Response) => {
 }
 
 export const getUserTheme = async (req: Request, res: Response) => {
-  const { user_id } = req.params
+  const { id } = req.params
 
   try {
-    const userTheme = await SiteTheme.findOne({
-      where: { user_id },
-    })
+    const user = await User.findByPk(id, {})
 
-    if (userTheme) {
-      res.status(200).json(userTheme)
+    if (!user) {
+      res.status(404).json({ error: 'Theme not found for this user' })
+    }
+
+    const theme = await SiteTheme.findByPk(user?.themeId, {})
+
+    if (theme) {
+      res.status(200).json(theme)
     } else {
       res.status(404).json({ error: 'Theme not found for this user' })
     }

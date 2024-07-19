@@ -32,7 +32,7 @@ User.init(
     },
     themeId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'SiteThemes',
         key: 'id',
@@ -50,10 +50,5 @@ User.init(
     },
   }
 )
-
-User.belongsTo(SiteTheme, {
-  foreignKey: 'themeId',
-  as: 'theme',
-})
 
 export default User
