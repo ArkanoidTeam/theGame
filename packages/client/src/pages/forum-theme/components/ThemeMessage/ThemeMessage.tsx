@@ -9,6 +9,7 @@ import { Avatar, Popover } from '@mui/material'
 import getDateTimeString from '../../../../utils/getDateTimeString'
 import EmojiPicker from 'emoji-picker-react'
 import { YandexApiUsers } from '../../../../api/YandexApiUsers'
+import { RESOURCES_LINK } from '../../../../utils/constants/api'
 
 const ThemeMessage: FC<ForumMessageVm> = ({ text, user_login, createdAt }) => {
   const [userAvatar, setUserAvatar] = useState<string>()
@@ -28,6 +29,11 @@ const ThemeMessage: FC<ForumMessageVm> = ({ text, user_login, createdAt }) => {
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
+        if (user_login == currentUser.login) {
+          setUserAvatar(currentUser.avatar)
+          return
+        }
+
         const { data: users } = await YandexApiUsers.search(user_login)
         const user = users.find(user => user.login === user_login)
 
@@ -82,7 +88,7 @@ const ThemeMessage: FC<ForumMessageVm> = ({ text, user_login, createdAt }) => {
         <ThemeMetaUser>
           <Avatar
             alt={user_login}
-            src={userAvatar}
+            src={userAvatar ? RESOURCES_LINK + userAvatar : ''}
             sx={{ width: 16, height: 16, fontSize: '0.7rem' }}
           />
           <span>{user_login}</span>

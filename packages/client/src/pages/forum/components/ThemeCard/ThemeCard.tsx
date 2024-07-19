@@ -18,6 +18,8 @@ import { YandexApiUsers } from '../../../../api/YandexApiUsers'
 const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
   const { title, text, user_login, createdAt, messages_count, id } = props
   const [userAvatar, setUserAvatar] = useState<string>()
+  const userData = localStorage.getItem('userData')
+  const currentUser = userData ? JSON.parse(userData) : ''
 
   const dateString = useMemo(
     () => getDateTimeString(createdAt, 'fullNoSecs'),
@@ -27,6 +29,11 @@ const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
+        if (user_login == currentUser.login) {
+          setUserAvatar(currentUser.avatar)
+          return
+        }
+
         const { data: users } = await YandexApiUsers.search(user_login)
         const user = users.find(user => user.login === user_login)
 
