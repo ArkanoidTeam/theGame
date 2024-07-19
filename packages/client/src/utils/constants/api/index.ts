@@ -30,4 +30,5 @@ export enum ENDPOINTS {
 export enum APP_API_ENDPOINTS {
   FORUM = '/forum',
   THEMES = '/forum/topics',
+  MESSAGES = '/forum/messages',
 }

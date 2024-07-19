@@ -71,18 +71,35 @@ type Player = {
 }
 
 type ForumThemeVm = {
-  id?: number
+  id: number
   title: string
   text: string
   user_login: string
-  user_avatar: string
   createdAt: string
   updatedAt: string
   answers_count: number
+  messages?: ForumMessageVm[]
 }
 
 type ForumThemeDto = {
   title: string
+  text: string
+  user_login: string
+}
+
+type ForumMessageVm = {
+  id: number
+  topic_id: number
+  title: string
+  text: string
+  user_login: string
+  createdAt: string
+  updatedAt: string
+}
+
+type ForumMessageDto = {
+  topic_id: number
+  parent_id: number | null
   text: string
   user_login: string
 }
