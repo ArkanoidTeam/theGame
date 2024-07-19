@@ -12,10 +12,8 @@ services:
         restart: always
         ports:
             - "${CLIENT_PORT}:${CLIENT_PORT}"
-        environment:
-          - CLIENT_PORT=${CLIENT_PORT}
-          - SERVER_URI=${SERVER_URI}
-          - SERVER_PORT=${SERVER_PORT}
+        env_file:
+          ./.env
         networks:
           - api
         depends_on: 
@@ -39,7 +37,8 @@ services:
           POSTGRES_DB: ${POSTGRES_DB}
           POSTGRES_PORT: ${POSTGRES_PORT}
           APP_API_KEY: ${APP_API_KEY}
-        
+          APP_API_USER_LOGIN: ${APP_API_USER_LOGIN}
+          APP_API_USER_PASSWORD: ${APP_API_USER_PASSWORD}
         networks:
           - api
           - db

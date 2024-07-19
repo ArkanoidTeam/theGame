@@ -5,7 +5,7 @@ import { YandexApiOAuth } from '../../api/YandexApiOAuth'
 import { useAppDispatch } from '../../hooks/use-app-dispatch'
 import { YANDEX_OAUTH_REDIRECT_URI } from '../../utils/constants/api'
 import { login as loginLayer } from '../../store/auth'
-
+import { apiAuth } from '../../utils/apiAuth'
 export const useAuth = () => {
   const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
@@ -49,6 +49,8 @@ export const useAuth = () => {
         if (err.response.data.reason === 'User already in system') {
           setIsAuth(true)
         } else setIsAuth(false)
+      } finally {
+        apiAuth()
       }
     }
 
