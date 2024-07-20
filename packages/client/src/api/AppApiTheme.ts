@@ -21,15 +21,34 @@ export const ThemeApi = {
     return instance.get(`${ENDPOINTS.THEMES}/${id}`)
   },
 
-  update(id: number, data: object) {
-    return instance.put(`${ENDPOINTS.THEMES}/${id}`, data)
-  },
-
   delete(id: number) {
     return instance.delete(`${ENDPOINTS.THEMES}/${id}`)
   },
 
-  getUserTheme() {
-    return instance.get(ENDPOINTS.USER_THEME)
+  getUserTheme(userId: number) {
+    return instance.get(`${ENDPOINTS.USER_THEME}/${userId}`)
   },
+
+  updateUserTheme(userId: number, data: object) {
+    return instance.put(`${ENDPOINTS.USER_THEME}/${userId}`, data)
+  },
+}
+
+export const fetchUserTheme = async (userId: number) => {
+  console.log('aaa')
+  try {
+    const response = await ThemeApi.getUserTheme(userId)
+    return response.data.theme
+  } catch (error) {
+    console.error('Failed to fetch user theme:', error)
+    return 'light'
+  }
+}
+
+export const saveUserTheme = async (userId: number, theme: number) => {
+  try {
+    await ThemeApi.updateUserTheme(userId, { theme })
+  } catch (error) {
+    console.error('Failed to save user theme:', error)
+  }
 }

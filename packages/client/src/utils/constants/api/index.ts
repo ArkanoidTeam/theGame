@@ -28,7 +28,7 @@ export enum ENDPOINTS {
 
   THEMES = '/themes',
   THEME = '/themes/:id',
-  USER_THEME = '/user/theme',
+  USER_THEME = '/themes/user',
 }
 
 export enum APP_API_ENDPOINTS {
