@@ -5,7 +5,7 @@ const headers = {
   'Content-Type': 'application/json',
 }
 
-const instance = axiosInstance(APP_API, headers, true)
+const instance = axiosInstance(APP_API, headers, false)
 
 export const ThemeApi = {
   create(data: object) {

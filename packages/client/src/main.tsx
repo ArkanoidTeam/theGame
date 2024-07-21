@@ -18,7 +18,7 @@ const App = () => {
     const user = JSON.parse(localStorage.getItem('userData') || '')
     const defaultTheme = await fetchUserTheme(user?.id)
     console.log(defaultTheme)
-    dispatch(setTheme(defaultTheme))
+    dispatch(setTheme(defaultTheme === 1 ? 'light' : 'dark'))
   }
 
   useEffect(() => {
