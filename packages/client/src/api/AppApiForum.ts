@@ -1,5 +1,5 @@
 import { APP_API_ENDPOINTS } from '../utils/constants/api'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { APP_API } from '../utils/constants/api'
 import { AppApiAuth } from './AppApiAuth'
 
@@ -19,11 +19,30 @@ export const AppApiForum = {
       try {
         const accessToken = getAccessToken()
         headers['Authorization'] = `Bearer ${accessToken}`
-        const response = await axios.get(APP_API_ENDPOINTS.FORUM + '/topics', {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        })
+        const response = await axios.get(
+          APP_API + APP_API_ENDPOINTS.FORUM + '/topics',
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        )
+        return response
       } catch (err) {
-        console.log(err)
+        const error = err as AxiosError
+        if (error.response && error.response.status === 401) {
+          // Попытка обновить токен при 401 ошибке (неавторизован)
+          await AppApiAuth.refreshToken()
+          const accessToken = getAccessToken()
+          headers['Authorization'] = `Bearer ${accessToken}`
+          const response = await axios.get(
+            APP_API_ENDPOINTS.FORUM + '/topics',
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          )
+          return response
+        } else {
+          throw error
+        }
       }
     }
   },
