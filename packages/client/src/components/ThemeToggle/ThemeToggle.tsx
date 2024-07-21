@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Tooltip } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleTheme } from '../../store/theme'
+import { setTheme } from '../../store/theme'
 import { RootState } from '../../store'
 import { saveUserTheme } from '../../api/AppApiTheme'
 
@@ -11,9 +11,10 @@ const ThemeToggle = () => {
 
   const handleToggle = async () => {
     const user = JSON.parse(localStorage.getItem('userData') || '')
-    const newTheme = theme === 'light' ? 1 : 2
-    dispatch(toggleTheme())
-    await saveUserTheme(user.id, newTheme)
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    dispatch(setTheme(newTheme))
+    const newThemeId = newTheme === 'light' ? 1 : 2
+    await saveUserTheme(user.id, newThemeId)
   }
 
   const tooltipTitle =
@@ -21,7 +22,7 @@ const ThemeToggle = () => {
 
   return (
     <Tooltip title={tooltipTitle}>
-      <Switch onChange={handleToggle} checked={theme === 'dark'} />
+      <Switch onChange={handleToggle} checked={theme !== 'light'} />
     </Tooltip>
   )
 }

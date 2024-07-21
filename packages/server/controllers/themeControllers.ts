@@ -69,7 +69,7 @@ export const getUserTheme = async (req: Request, res: Response) => {
 }
 export const updateUserTheme = async (req: Request, res: Response) => {
   const { id } = req.params
-  const { theme } = req.body
+  const { themeId } = req.body
 
   try {
     const user = await User.findByPk(id)
@@ -79,14 +79,14 @@ export const updateUserTheme = async (req: Request, res: Response) => {
       return
     }
 
-    const newTheme = await SiteTheme.findByPk(theme)
+    const newTheme = await SiteTheme.findByPk(themeId)
 
     if (!newTheme) {
       res.status(404).json({ error: 'Theme not found' })
       return
     }
 
-    user.themeId = theme
+    user.themeId = themeId
     await user.save()
 
     res.status(200).json(user)
