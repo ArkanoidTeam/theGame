@@ -34,7 +34,6 @@ export const ThemeApi = {
 }
 
 export const fetchUserTheme = async (userId: number) => {
-  console.log('aaa')
   try {
     const response = await ThemeApi.getUserTheme(userId)
     return response.data.theme
@@ -44,9 +43,9 @@ export const fetchUserTheme = async (userId: number) => {
   }
 }
 
-export const saveUserTheme = async (userId: number, theme: number) => {
+export const saveUserTheme = async (userId: number, themeId: number) => {
   try {
-    await ThemeApi.updateUserTheme(userId, { theme })
+    await ThemeApi.updateUserTheme(userId, { themeId })
   } catch (error) {
     console.error('Failed to save user theme:', error)
   }
