@@ -1,12 +1,11 @@
-import { ENDPOINTS } from '../utils/constants/api'
+import { APP_API, ENDPOINTS } from '../utils/constants/api'
 import { axiosInstance } from './AxiosInstance'
-import { BASE_API_URI } from '../utils/constants/api'
 
 const headers = {
   'Content-Type': 'application/json',
 }
 
-const instance = axiosInstance(BASE_API_URI, headers, true)
+const instance = axiosInstance(APP_API, headers, true)
 
 export const ThemeApi = {
   create(data: object) {

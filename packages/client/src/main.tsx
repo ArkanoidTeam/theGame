@@ -11,12 +11,6 @@ import { fetchUserTheme } from './api/AppApiTheme'
 
 const router = createBrowserRouter(AppRoutes)
 
-// function loadDefaultTheme() {
-//   // логика получения темы с сервера в рамках задачи ARK-90
-//   const theme: 'light' | 'dark' = 'light'
-//   return theme
-// }
-
 const App = () => {
   const dispatch = useDispatch()
 
