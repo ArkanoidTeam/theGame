@@ -1,0 +1,52 @@
+import { APP_API, ENDPOINTS } from '../utils/constants/api'
+import { axiosInstance } from './AxiosInstance'
+
+const headers = {
+  'Content-Type': 'application/json',
+}
+
+const instance = axiosInstance(APP_API, headers, false)
+
+export const ThemeApi = {
+  create(data: object) {
+    return instance.post(ENDPOINTS.THEMES, data)
+  },
+
+  getAll() {
+    return instance.get(ENDPOINTS.THEMES)
+  },
+
+  getById(id: number) {
+    return instance.get(`${ENDPOINTS.THEMES}/${id}`)
+  },
+
+  delete(id: number) {
+    return instance.delete(`${ENDPOINTS.THEMES}/${id}`)
+  },
+
+  getUserTheme(userId: number) {
+    return instance.get(`${ENDPOINTS.USER_THEME}/${userId}`)
+  },
+
+  updateUserTheme(userId: number, data: object) {
+    return instance.put(`${ENDPOINTS.USER_THEME}/${userId}`, data)
+  },
+}
+
+export const fetchUserTheme = async (userId: number) => {
+  try {
+    const response = await ThemeApi.getUserTheme(userId)
+    return response.data.theme
+  } catch (error) {
+    console.error('Failed to fetch user theme:', error)
+    return 'light'
+  }
+}
+
+export const saveUserTheme = async (userId: number, themeId: number) => {
+  try {
+    await ThemeApi.updateUserTheme(userId, { themeId })
+  } catch (error) {
+    console.error('Failed to save user theme:', error)
+  }
+}

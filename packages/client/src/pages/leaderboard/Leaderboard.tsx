@@ -12,12 +12,16 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowBack } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import { YandexApiLeaderboard } from '../../api/YandexApiLeaderboard'
-
-const RESOURCES_LINK = `https://ya-praktikum.tech/api/v2/resources`
+import { RESOURCES_LINK } from '../../utils/constants/api'
 
 const Leaderboard = () => {
   const navigate = useNavigate()
-  const userData = localStorage.getItem('userData')
+  let userData = null
+
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('userData')
+  }
+
   const userName = userData ? JSON.parse(userData).login : ''
 
   const [players, setPlayers] = useState<Player[]>([])

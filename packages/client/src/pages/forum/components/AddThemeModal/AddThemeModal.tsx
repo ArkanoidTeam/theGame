@@ -7,19 +7,27 @@ import { StyledModalBody, Textarea } from './styled'
 type AddThemeModalProps = {
   modalOpen: boolean
   onClose: () => void
-  onAddTheme: (newTheme: { title: string; text: string }) => void
+  onAddTheme: (theme: ForumThemeDto) => void
 }
 const AddThemeModal: FC<AddThemeModalProps> = ({
   modalOpen,
   onClose,
   onAddTheme,
 }) => {
-  const [themeTitle, setThemeTitle] = useState<string>('')
-  const [themeText, setThemeText] = useState<string>('')
+  const [title, setTitle] = useState<string>('')
+  const [text, setText] = useState<string>('')
+
+  let userData = null
+
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('userData')
+  }
+
+  const currentUser = userData ? JSON.parse(userData) : null
 
   const buttonSx = {
-    ...(themeTitle &&
-      themeText && {
+    ...(title &&
+      text && {
         bgcolor: green[500],
         '&:hover': {
           bgcolor: green[700],
@@ -27,21 +35,22 @@ const AddThemeModal: FC<AddThemeModalProps> = ({
       }),
   }
   const onSubmit = () => {
-    if (themeTitle && themeText) {
-      const obj = {
-        title: themeTitle,
-        text: themeText,
+    if (title && text) {
+      const theme: ForumThemeDto = {
+        title,
+        text,
+        user_login: currentUser ? currentUser.login : null,
       }
-      onAddTheme(obj)
-      setThemeTitle('')
-      setThemeText('')
+      onAddTheme(theme)
+      setTitle('')
+      setText('')
     }
   }
   const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setThemeTitle(event.target.value)
+    setTitle(event.target.value)
   }
   const onThemeTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setThemeText(event.target.value)
+    setText(event.target.value)
   }
   return (
     <Modal
@@ -53,7 +62,7 @@ const AddThemeModal: FC<AddThemeModalProps> = ({
           <Button
             variant="contained"
             sx={buttonSx}
-            disabled={!themeTitle || !themeText}
+            disabled={!title || !text}
             color="primary"
             onClick={onSubmit}>
             Сохранить
@@ -69,7 +78,7 @@ const AddThemeModal: FC<AddThemeModalProps> = ({
           name="theme-title"
           placeholder="Название темы"
           type="text"
-          value={themeTitle}
+          value={title}
           autoComplete="off"
           onChange={onTitleChange}
         />
