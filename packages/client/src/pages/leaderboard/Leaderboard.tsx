@@ -16,7 +16,12 @@ import { RESOURCES_LINK } from '../../utils/constants/api'
 
 const Leaderboard = () => {
   const navigate = useNavigate()
-  const userData = localStorage.getItem('userData')
+  let userData = null
+
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('userData')
+  }
+
   const userName = userData ? JSON.parse(userData).login : ''
 
   const [players, setPlayers] = useState<Player[]>([])

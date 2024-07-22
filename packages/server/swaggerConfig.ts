@@ -18,6 +18,7 @@ const options: Options = {
         url: `http://localhost:${process.env.SERVER_PORT}/api`,
       },
     ],
+    security: [{ bearerAuth: [] }],
     paths: {
       '/forum/topics': {
         post: {
@@ -574,6 +575,13 @@ const options: Options = {
       },
     },
     components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
       schemas: {
         Topic: {
           type: 'object',

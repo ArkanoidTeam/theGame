@@ -17,8 +17,13 @@ const AddThemeModal: FC<AddThemeModalProps> = ({
   const [title, setTitle] = useState<string>('')
   const [text, setText] = useState<string>('')
 
-  const userData = localStorage.getItem('userData')
-  const currentUser = userData ? JSON.parse(userData) : ''
+  let userData = null
+
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('userData')
+  }
+
+  const currentUser = userData ? JSON.parse(userData) : null
 
   const buttonSx = {
     ...(title &&
@@ -34,7 +39,7 @@ const AddThemeModal: FC<AddThemeModalProps> = ({
       const theme: ForumThemeDto = {
         title,
         text,
-        user_login: currentUser.login,
+        user_login: currentUser ? currentUser.login : null,
       }
       onAddTheme(theme)
       setTitle('')

@@ -25,8 +25,13 @@ const ForumTheme: FC = () => {
   const [newMessageText, setNewMessageText] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const userData = localStorage.getItem('userData')
-  const currentUser = userData ? JSON.parse(userData) : ''
+  let userData = null
+
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('userData')
+  }
+
+  const currentUser = userData ? JSON.parse(userData) : null
 
   const { id } = useParams()
 
@@ -34,11 +39,12 @@ const ForumTheme: FC = () => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const {
-          data: { messages = [], ...themeData },
-        } = await AppApiForum.getTheme(Number(id))
-        setTheme(themeData)
-        setMessages(messages)
+        const result = await AppApiForum.getTheme(Number(id))
+        if (result) {
+          const data = result.data as ForumThemeVm
+          setTheme(data)
+          setMessages(data.messages ? data.messages : [])
+        }
       } catch (error) {
         console.log(error)
       } finally {
@@ -68,12 +74,15 @@ const ForumTheme: FC = () => {
       topic_id: theme.id,
       parent_id: null,
       text: newMessageText,
-      user_login: currentUser.login,
+      user_login: currentUser ? currentUser.login : null,
     }
 
-    const { data: newMessage } = await AppApiForum.createMessage(message)
-    setMessages([...messages, newMessage])
-    setNewMessageText('')
+    const result = (await AppApiForum.createMessage(message)) as unknown
+    if (result) {
+      const newMessageRes = result as Record<string, unknown>
+      setMessages([...messages, newMessageRes.data as ForumMessageVm])
+      setNewMessageText('')
+    }
   }
 
   return (
