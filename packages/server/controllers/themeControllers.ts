@@ -53,9 +53,10 @@ export const getUserTheme = async (req: Request, res: Response) => {
 
     if (!user) {
       res.status(404).json({ error: 'Theme not found for this user' })
+      return
     }
 
-    const theme = await SiteTheme.findByPk(user?.themeId, {})
+    const theme = await SiteTheme.findByPk(user.themeId, {})
 
     if (theme) {
       res.status(200).json(theme)
@@ -67,16 +68,21 @@ export const getUserTheme = async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message })
   }
 }
+
 export const updateUserTheme = async (req: Request, res: Response) => {
   const { id } = req.params
   const { themeId } = req.body
 
   try {
-    const user = await User.findByPk(id)
+    let user = await User.findByPk(id)
 
     if (!user) {
-      res.status(404).json({ error: 'User not found' })
-      return
+      user = await User.create({
+        id,
+        username: `user${id}`,
+        password: 'defaultPassword',
+        themeId,
+      })
     }
 
     const newTheme = await SiteTheme.findByPk(themeId)
