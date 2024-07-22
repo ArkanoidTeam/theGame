@@ -25,7 +25,7 @@ export const YandexApiUsers = {
     return instance.put(ENDPOINTS.PASSWORD, data)
   },
 
-  search(data: FormData) {
-    return instance.post(ENDPOINTS.SEARCH, data)
+  search(login: string) {
+    return instance.post<User[]>(ENDPOINTS.SEARCH, { login })
   },
 }

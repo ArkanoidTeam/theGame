@@ -46,6 +46,21 @@ export const AppApiForum = {
       }
     }
   },
+  getThemes() {
+    return instance.get<ForumThemeVm[]>(APP_API_ENDPOINTS.THEMES)
+  },
+
+  createTheme(data: ForumThemeDto) {
+    return instance.post(APP_API_ENDPOINTS.THEMES, data)
+  },
+
+  getTheme(id: number) {
+    return instance.get<ForumThemeVm>(`${APP_API_ENDPOINTS.THEMES}/${id}`)
+  },
+
+  createMessage(data: ForumMessageDto) {
+    return instance.post(APP_API_ENDPOINTS.MESSAGES, data)
+  },
 }
 
 const checkAccessTokenExist = async () => {

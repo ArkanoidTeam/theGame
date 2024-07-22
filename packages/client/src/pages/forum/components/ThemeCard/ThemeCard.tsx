@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { Typography } from '../../../../components/Typography'
 import { Link } from 'react-router-dom'
 import { Avatar } from '@mui/material'
@@ -12,22 +12,42 @@ import {
   ThemeMetaUser,
   StyledChatBubbleOutlinedIcon,
 } from './styled'
+import { RESOURCES_LINK } from '../../../../utils/constants/api'
+import { YandexApiUsers } from '../../../../api/YandexApiUsers'
 
-type ThemeCardProps = {
-  title: string
-  text: string
-  user_avatar: string
-  user_name: string
-  date: string
-  answers_count: number
-  id: number
-}
-const ThemeCard: FC<ThemeCardProps> = (props: ThemeCardProps) => {
-  const { title, text, user_avatar, user_name, date, answers_count, id } = props
+const ThemeCard: FC<ForumThemeVm> = (props: ForumThemeVm) => {
+  const { title, text, user_login, createdAt, messages_count, id } = props
+  const [userAvatar, setUserAvatar] = useState<string>()
+  const userData = localStorage.getItem('userData')
+  const currentUser = userData ? JSON.parse(userData) : ''
+
   const dateString = useMemo(
-    () => getDateTimeString(date, 'fullNoSecs'),
-    [date]
+    () => getDateTimeString(createdAt, 'fullNoSecs'),
+    [createdAt]
   )
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        if (user_login == currentUser.login) {
+          setUserAvatar(currentUser.avatar)
+          return
+        }
+
+        const { data: users } = await YandexApiUsers.search(user_login)
+        const user = users.find(user => user.login === user_login)
+
+        if (user && user.avatar) {
+          setUserAvatar(user.avatar)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchAvatar()
+  }, [user_login])
+
   const linkStyle = {
     color: '#1976d2',
     textDecoration: 'none',
@@ -47,16 +67,16 @@ const ThemeCard: FC<ThemeCardProps> = (props: ThemeCardProps) => {
       <ThemeMetaWrapper>
         <ThemeMeta>
           <StyledChatBubbleOutlinedIcon />
-          <span>{answers_count}</span>
+          <span>{messages_count}</span>
         </ThemeMeta>
         <ThemeMeta>
           <ThemeMetaUser>
             <Avatar
-              alt="Remy Sharp"
-              src={user_avatar}
+              alt={user_login}
+              src={userAvatar ? RESOURCES_LINK + userAvatar : ''}
               sx={{ width: 16, height: 16, fontSize: '0.7rem' }}
             />
-            <span>{user_name}</span>
+            <span>{user_login}</span>
           </ThemeMetaUser>
           <span>{dateString}</span>
         </ThemeMeta>
