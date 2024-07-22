@@ -1,5 +1,5 @@
 import { APP_API_ENDPOINTS } from '../utils/constants/api'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { APP_API } from '../utils/constants/api'
 import { AppApiAuth } from './AppApiAuth'
 
@@ -13,34 +13,138 @@ const headers: { 'Content-Type': string; Authorization?: string } = {
 // const instance = axiosInstance(APP_API, headers)
 
 export const AppApiForum = {
-  async getTopics() {
+  async getThemes() {
     const accessTokenExist = await checkAccessTokenExist()
     if (accessTokenExist) {
       try {
         const accessToken = getAccessToken()
         headers['Authorization'] = `Bearer ${accessToken}`
-        const response = await axios.get(APP_API_ENDPOINTS.FORUM + '/topics', {
+        const response = await axios.get(APP_API + APP_API_ENDPOINTS.THEMES, {
           headers: { Authorization: `Bearer ${accessToken}` },
         })
+        return response
       } catch (err) {
-        console.log(err)
+        const error = err as AxiosError
+        if (error.response && error.response.status === 401) {
+          // Попытка обновить токен при 401 ошибке (неавторизован)
+          await AppApiAuth.refreshToken()
+          const accessToken = getAccessToken()
+          headers['Authorization'] = `Bearer ${accessToken}`
+          const response = await axios.get(APP_API + APP_API_ENDPOINTS.THEMES, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          })
+          return response
+        } else {
+          throw error
+        }
       }
     }
   },
-  getThemes() {
-    return instance.get<ForumThemeVm[]>(APP_API_ENDPOINTS.THEMES)
+
+  async createTheme(data: ForumThemeDto) {
+    const accessTokenExist = await checkAccessTokenExist()
+    if (accessTokenExist) {
+      try {
+        const accessToken = getAccessToken()
+        headers['Authorization'] = `Bearer ${accessToken}`
+        const response = await axios.post(
+          APP_API + APP_API_ENDPOINTS.THEMES,
+          data,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        )
+        return response
+      } catch (err) {
+        const error = err as AxiosError
+        if (error.response && error.response.status === 401) {
+          // Попытка обновить токен при 401 ошибке (неавторизован)
+          await AppApiAuth.refreshToken()
+          const accessToken = getAccessToken()
+          headers['Authorization'] = `Bearer ${accessToken}`
+          const response = await axios.post(
+            APP_API + APP_API_ENDPOINTS.THEMES,
+            data,
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          )
+          return response
+        } else {
+          throw error
+        }
+      }
+    }
   },
 
-  createTheme(data: ForumThemeDto) {
-    return instance.post(APP_API_ENDPOINTS.THEMES, data)
+  async getTheme(id: number) {
+    const accessTokenExist = await checkAccessTokenExist()
+    if (accessTokenExist) {
+      try {
+        const accessToken = getAccessToken()
+        headers['Authorization'] = `Bearer ${accessToken}`
+        const response = await axios.get(
+          APP_API + `${APP_API_ENDPOINTS.THEMES}/${id}`,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        )
+        return response
+      } catch (err) {
+        const error = err as AxiosError
+        if (error.response && error.response.status === 401) {
+          // Попытка обновить токен при 401 ошибке (неавторизован)
+          await AppApiAuth.refreshToken()
+          const accessToken = getAccessToken()
+          headers['Authorization'] = `Bearer ${accessToken}`
+          const response = await axios.get(
+            APP_API + `${APP_API_ENDPOINTS.THEMES}/${id}`,
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          )
+          return response
+        } else {
+          throw error
+        }
+      }
+    }
   },
 
-  getTheme(id: number) {
-    return instance.get<ForumThemeVm>(`${APP_API_ENDPOINTS.THEMES}/${id}`)
-  },
-
-  createMessage(data: ForumMessageDto) {
-    return instance.post(APP_API_ENDPOINTS.MESSAGES, data)
+  async createMessage(data: ForumMessageDto) {
+    const accessTokenExist = await checkAccessTokenExist()
+    if (accessTokenExist) {
+      try {
+        const accessToken = getAccessToken()
+        headers['Authorization'] = `Bearer ${accessToken}`
+        const response = await axios.post(
+          APP_API + APP_API_ENDPOINTS.MESSAGES,
+          data,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        )
+        return response
+      } catch (err) {
+        const error = err as AxiosError
+        if (error.response && error.response.status === 401) {
+          // Попытка обновить токен при 401 ошибке (неавторизован)
+          await AppApiAuth.refreshToken()
+          const accessToken = getAccessToken()
+          headers['Authorization'] = `Bearer ${accessToken}`
+          const response = await axios.post(
+            APP_API + APP_API_ENDPOINTS.MESSAGES,
+            data,
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          )
+          return response
+        } else {
+          throw error
+        }
+      }
+    }
   },
 }
 
