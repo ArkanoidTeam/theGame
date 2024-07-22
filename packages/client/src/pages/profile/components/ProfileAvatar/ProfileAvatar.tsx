@@ -5,8 +5,7 @@ import { Button, CircularProgress, Box } from '@mui/material'
 import { green } from '@mui/material/colors'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import saveAvatarRequest from '../../api/saveAvatarRequest'
-
-const RESOURCES_LINK = `https://ya-praktikum.tech/api/v2/resources`
+import { RESOURCES_LINK } from '../../../../utils/constants/api'
 
 interface IAvatarProps {
   propUserData: User

@@ -7,21 +7,21 @@ import store from './store'
 import AppRoutes from './routes'
 import { setTheme } from './store/theme'
 import { ThemeProvider } from './theme'
+import { fetchUserTheme } from './api/AppApiTheme'
 
 const router = createBrowserRouter(AppRoutes)
-
-function loadDefaultTheme() {
-  // логика получения темы с сервера в рамках задачи ARK-90
-  const theme: 'light' | 'dark' = 'light'
-  return theme
-}
 
 const App = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const defaultTheme = loadDefaultTheme()
+  const loadTheme = async () => {
+    const user = JSON.parse(localStorage.getItem('userData') || '')
+    const defaultTheme = await fetchUserTheme(user?.id)
     dispatch(setTheme(defaultTheme))
+  }
+
+  useEffect(() => {
+    loadTheme()
   }, [dispatch])
 
   return <RouterProvider router={router} />
