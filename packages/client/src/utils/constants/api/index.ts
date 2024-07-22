@@ -25,6 +25,10 @@ export enum ENDPOINTS {
 
   LEADERBOARD = '/leaderboard',
   LEADERBOARDALL = '/leaderboard/all',
+
+  THEMES = '/themes',
+  THEME = '/themes/:id',
+  USER_THEME = '/themes/user',
 }
 
 export enum APP_API_ENDPOINTS {
