@@ -5,13 +5,11 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
-  HasMany,
 } from 'sequelize-typescript'
-import { Topic } from './Topic'
-import { Reaction } from './Reaction'
+import { Message } from './Message'
 
 @Table
-export class Message extends Model {
+export class Reaction extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -19,24 +17,18 @@ export class Message extends Model {
   })
   declare id: number
 
-  @ForeignKey(() => Topic)
+  @ForeignKey(() => Message)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  declare topic_id: number
+  declare message_id: number
 
   @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  declare parent_id: number
-
-  @Column({
-    type: DataType.TEXT,
+    type: DataType.STRING,
     allowNull: false,
   })
-  declare text: string
+  declare emoji: string
 
   @Column({
     type: DataType.STRING,
@@ -44,9 +36,6 @@ export class Message extends Model {
   })
   declare user_login: string
 
-  @BelongsTo(() => Topic)
-  declare topic: Topic
-
-  @HasMany(() => Reaction)
-  declare reactions: Reaction[]
+  @BelongsTo(() => Message)
+  declare message: Message
 }

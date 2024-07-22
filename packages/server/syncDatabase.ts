@@ -1,6 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Topic } from './models/Topic'
 import { Message } from './models/Message'
+import { Reaction } from './models/Reaction'
 import { apiUserInit } from './apiUserInit'
 import { SiteTheme } from './models/Theme'
 const {
@@ -18,7 +19,7 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: [Topic, Message, SiteTheme],
+  models: [Topic, Message, SiteTheme, Reaction],
 }
 
 const sequelize = new Sequelize(sequelizeOptions)
@@ -34,4 +35,4 @@ const syncDatabase = async () => {
   }
 }
 
-export { sequelize, syncDatabase, Topic, Message }
+export { sequelize, syncDatabase, Topic, Message, Reaction }
