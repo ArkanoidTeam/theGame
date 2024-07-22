@@ -2,7 +2,6 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 dotenv.config()
 import express from 'express'
-// import { createClientAndConnect } from './db'
 import baseRoutes from './routes/baseRoutes'
 import forumRoutes from './routes/forumRoutes'
 import authRoutes from './routes/auth'
@@ -15,8 +14,6 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 const port = Number(process.env.SERVER_PORT) || 3001
-
-// createClientAndConnect()
 
 syncDatabase()
 
