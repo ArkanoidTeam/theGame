@@ -10,8 +10,6 @@ const headers: { 'Content-Type': string; Authorization?: string } = {
   'Content-Type': 'application/json',
 }
 
-// const instance = axiosInstance(APP_API, headers)
-
 export const AppApiForum = {
   async getThemes() {
     const accessTokenExist = await checkAccessTokenExist()
