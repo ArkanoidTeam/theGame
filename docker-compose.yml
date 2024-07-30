@@ -67,3 +67,14 @@ networks:
     db:
         driver: bridge
         
+   nginx:  
+    image: nginx:latest  
+    volumes:  
+      - ./nginx.conf:/etc/nginx/nginx.conf  
+      - ./ssl:/etc/nginx/ssl # Путь к SSL
+    ports:  
+      - "80:80"  
+      - "443:443"  
+    depends_on:  
+      - prakticum-client 
+      - prakticum-server 
