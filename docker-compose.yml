@@ -70,6 +70,9 @@ services:
       context: .  
       dockerfile: Dockerfile.nginx  
     restart: always  
+    volumes:
+      - ./data/certbot/www:/var/www/certbot/:ro
+      - ./data/certbot/conf/:/etc/nginx/ssl/:ro
     ports:  
       - "80:80"  
       - "443:443"  
