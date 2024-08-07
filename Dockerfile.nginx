@@ -7,3 +7,6 @@ COPY ./ssl /etc/nginx/ssl
 
 # Указываем рабочую директорию
 WORKDIR /etc/nginx
+
+EXPOSE 80
+EXPOSE 443
