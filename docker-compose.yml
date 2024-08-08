@@ -1,100 +1,99 @@
-version: "3.9"  
+version: "3.9"
 
-services:  
-  client:  
-    container_name: prakticum-client  
-    image: prakticum-client  
-    build:  
-      context: .  
-      dockerfile: Dockerfile.client  
-      args:  
-        CLIENT_PORT: ${CLIENT_PORT}  
-    restart: always  
-    ports:  
-      - "${CLIENT_PORT}:${CLIENT_PORT}"  
-    environment:  
-      - CLIENT_PORT=${CLIENT_PORT}  
-    env_file:  
-      ./.env  
-    networks:  
-      - api  
-    depends_on:   
-      - server  
-    command: /app/wait-for.sh server:${SERVER_PORT} -- node /app/server/index.js  
+services:
+  client:
+    container_name: prakticum-client
+    image: prakticum-client
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+      args:
+        CLIENT_PORT: ${CLIENT_PORT}
+    restart: always
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    environment:
+      - CLIENT_PORT=${CLIENT_PORT}
+    env_file:
+      ./.env
+    networks:
+      - api
+    depends_on:
+      - server
+    command: /app/wait-for.sh server:${SERVER_PORT} -- node /app/server/index.js
 
-  server:  
-    container_name: prakticum-server  
-    image: prakticum-server  
-    build:  
-      context: .  
-      dockerfile: Dockerfile.server  
-      args:  
-        SERVER_PORT: ${SERVER_PORT}  
-    restart: always  
-    ports:  
-      - "${SERVER_PORT}:${SERVER_PORT}"  
-    environment:  
-      SERVER_PORT: ${SERVER_PORT}  
-      POSTGRES_URI: ${POSTGRES_URI}  
-      POSTGRES_USER: ${POSTGRES_USER}  
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  
-      POSTGRES_DB: ${POSTGRES_DB}  
-      POSTGRES_PORT: ${POSTGRES_PORT}  
-      APP_API_KEY: ${APP_API_KEY}  
-      APP_API_USER_LOGIN: ${APP_API_USER_LOGIN}  
-      APP_API_USER_PASSWORD: ${APP_API_USER_PASSWORD}  
-    networks:  
-      - api  
-      - db  
-    depends_on:   
-      - postgres  
-    command: /app/wait-for.sh postgres:${POSTGRES_PORT} -- node /app/index.js  
+  server:
+    container_name: prakticum-server
+    image: prakticum-server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+      args:
+        SERVER_PORT: ${SERVER_PORT}
+    restart: always
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+      POSTGRES_URI: ${POSTGRES_URI}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      APP_API_KEY: ${APP_API_KEY}
+      APP_API_USER_LOGIN: ${APP_API_USER_LOGIN}
+      APP_API_USER_PASSWORD: ${APP_API_USER_PASSWORD}
+    networks:
+      - api
+      - db
+    depends_on:
+      - postgres
+    command: /app/wait-for.sh postgres:${POSTGRES_PORT} -- node /app/index.js
 
-  postgres:  
-    image: postgres:14  
-    ports:  
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"  
-    environment:  
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  
-      POSTGRES_USER: ${POSTGRES_USER}  
-      POSTGRES_DB: ${POSTGRES_DB}  
-    volumes:  
-      - ./tmp/pgdata:/var/lib/postgresql/data  
-      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql  
-    networks:  
-      - db  
+  postgres:
+    image: postgres:14
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./tmp/pgdata:/var/lib/postgresql/data
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - db
 
   nginx:
-    container_name: prakticum-nginx  
-    build:  
-      context: .  
-      dockerfile: Dockerfile.nginx  
-    restart: always  
+    container_name: prakticum-nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./data/certbot/conf:/etc/letsencrypt:ro  
-      - ./cert/www:/var/www/certbot:rw  
-    ports:  
-      - "80:80"  
-      - "443:443"  
-    environment:  
-      - CLIENT_PORT=${CLIENT_PORT}  
-    depends_on:  
-      - client  
-      - server  
-      - certbot  
-    networks:  
-      - api  
+      - ./data/certbot/conf:/etc/letsencrypt:ro
+      - ./cert/www:/var/www/certbot:rw
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - CLIENT_PORT=${CLIENT_PORT}
+    depends_on:
+      - client
+      - server
+      - certbot
+    networks:
+      - api
 
   certbot:
     image: certbot/certbot
-    volumes:  
-      - ./data/certbot/conf:/etc/letsencrypt/:rw  
-      - ./cert/www:/var/www/certbot/:rw  
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt:rw
+      - ./cert/www:/var/www/certbot:rw
 
-# Настройки созданной сети между сервисами  
-networks:  
-  api:  
-    driver: bridge  
-  db:  
+networks:
+  api:
+    driver: bridge
+  db:
     driver: bridge
