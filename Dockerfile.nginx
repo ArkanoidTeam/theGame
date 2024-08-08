@@ -1,6 +1,12 @@
+# Используем официальный образ Nginx
 FROM nginx:latest
 
-COPY nginx.conf /etc/nginx/nginx.conf  
+# Копируем наши конфигурационные файлы Nginx
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./ssl /etc/nginx/ssl
+
+# Указываем рабочую директорию
+WORKDIR /etc/nginx
 
 EXPOSE 80
-EXPOSE 443  
+EXPOSE 443
