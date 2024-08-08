@@ -86,12 +86,12 @@ services:
     networks:  
       - api  
 
-certbot:  
-  image: certbot/certbot:latest  
-  volumes:  
-    - ./data/certbot/conf:/etc/letsencrypt/:rw  
-    - ./cert/www:/var/www/certbot/:rw  
-  entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  certbot:  
+    image: certbot/certbot:latest  
+    volumes:  
+      - ./data/certbot/conf:/etc/letsencrypt/:rw  
+      - ./cert/www:/var/www/certbot/:rw  
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 # Настройки созданной сети между сервисами  
 networks:  
