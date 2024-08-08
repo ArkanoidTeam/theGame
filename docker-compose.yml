@@ -65,22 +65,32 @@ services:
       - db  
 
   nginx:
-    build: .
-    ports:
-      - "80:80"
-      - "443:443"
+    container_name: prakticum-nginx  
+    build:  
+      context: .  
+      dockerfile: Dockerfile.nginx  
+    restart: always  
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
-      - /var/www/certbot:/var/www/certbot
-    depends_on:
-      - client
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./data/certbot/conf:/etc/letsencrypt:ro  
+      - ./cert/www:/var/www/certbot:rw  
+    ports:  
+      - "80:80"  
+      - "443:443"  
+    environment:  
+      - CLIENT_PORT=${CLIENT_PORT}  
+    depends_on:  
+      - client  
+      - server  
+      - certbot  
+    networks:  
+      - api  
 
   certbot:
     image: certbot/certbot
-    volumes:
-      - /var/www/certbot:/var/www/certbot
-      - ./ssl:/etc/letsencrypt
+    volumes:  
+      - ./data/certbot/conf:/etc/letsencrypt/:rw  
+      - ./cert/www:/var/www/certbot/:rw  
 
 # Настройки созданной сети между сервисами  
 networks:  
