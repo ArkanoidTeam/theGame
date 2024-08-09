@@ -65,13 +65,16 @@ services:
   #     - db  
 
   nginx:
-    image: nginx:latest
+    container_name: prakticum-nginx 
+    build:  
+      context: .  
+      dockerfile: Dockerfile.nginx  
     ports:
       - 80:80
       - 443:443
     restart: always
     volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./nginx.conf/:/etc/nginx/conf.d/:ro
       - ./certbot/www/:/var/www/certbot/:ro
   certbot:
     image: certbot/certbot:latest
