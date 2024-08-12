@@ -8,7 +8,7 @@ import { login as loginLayer } from '../../store/auth'
 import { apiAuth } from '../../utils/apiAuth'
 export const useAuth = () => {
   const dispatch = useAppDispatch()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [isAuth, setIsAuth] = useState(true)
 
   useEffect(() => {
@@ -34,6 +34,7 @@ export const useAuth = () => {
           )
           if (typeof window !== 'undefined') {
             localStorage.setItem('userData', JSON.stringify(userData))
+            setSearchParams({})
           }
         } else {
           const { data: userData } = await YandexApiAuth.user()
