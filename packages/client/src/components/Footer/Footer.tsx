@@ -18,7 +18,7 @@ type TPage = {
 const pages: TPage[] = [
   { key: 'profile', label: 'Аккаунт', path: '/profile' },
   { key: 'forum', label: 'Форум', path: '/forum' },
-  { key: 'help', label: 'Справка', path: '/help' },
+  // { key: 'help', label: 'Справка', path: '/help' },
   { key: 'leaderboard', label: 'Рейтинг', path: '/leaderboard' },
 ]
 

@@ -1,9 +1,9 @@
 export const brickProps: { [key: string]: Record<string, string | number> } = {
-  I: { color: '#949494', durability: Infinity },
-  R: { color: '#FF3E3E', durability: 4 },
-  O: { color: '#F28A4F', durability: 3 },
-  Y: { color: '#E3E800', durability: 2 },
-  G: { color: '#4FC95C', durability: 1 },
+  I: { color: '#1d3557', durability: Infinity },
+  R: { color: '#e63946', durability: 4 },
+  O: { color: '#457b9d', durability: 3 },
+  Y: { color: '#a8dadc', durability: 2 },
+  G: { color: '#bde0fe', durability: 1 },
 }
 
 export const brickScoresMap: { [key: string]: number } = {
