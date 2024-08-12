@@ -28,7 +28,7 @@ export class Drawer {
     this.tooltips = tooltips
   }
 
-  public draw() {
+  public draw(brickWidthComputed: number) {
     // Рисование подсказок
     this.context.font = '14px Arial'
     this.context.fillStyle = 'black'
@@ -83,7 +83,7 @@ export class Drawer {
       this.context.closePath()
       // Рисование иконок бонусов, если они есть
       if (brick.bonus) {
-        this.drawBonusIcon(brick.x, brick.y, brick.bonus)
+        this.drawBonusIcon(brick.x, brick.y, brick.bonus, brickWidthComputed)
       }
     })
 
@@ -120,7 +120,12 @@ export class Drawer {
     this.context.fill()
   }
 
-  private drawBonusIcon(x: number, y: number, bonus: Bonus) {
+  private drawBonusIcon(
+    x: number,
+    y: number,
+    bonus: Bonus,
+    brickWidthComputed: number
+  ) {
     const size = 16 // Размер иконки
     let icon = ''
 
@@ -143,7 +148,7 @@ export class Drawer {
       this.context.textBaseline = 'middle'
       this.context.fillText(
         icon,
-        x + 18 + BrickParams.width / 2,
+        x + brickWidthComputed / 2,
         y + 1 + BrickParams.height / 2
       )
     }

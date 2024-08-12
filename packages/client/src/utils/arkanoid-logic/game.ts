@@ -377,7 +377,7 @@ export class Game {
   }
 
   draw() {
-    this.drawer.draw()
+    this.drawer.draw(this.brickWidthComputed)
   }
 
   keydownListener = (e: KeyboardEvent) => {
